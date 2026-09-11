@@ -120,5 +120,6 @@ export const CUSTOM_VEHICLES: CustomVehicleTemplate[] = [
  * maps=[] 表示全地图可用；否则仅包含当前地图的载具。
  */
 export function vehiclesForMap(mapId: string): CustomVehicleTemplate[] {
-  return CUSTOM_VEHICLES.filter((v) => v.maps.length === 0 || v.maps.includes(mapId))
+  // 摩格旧城区沿用完整通用载具库；避免为每个模板重复维护同一地图 ID。
+  return CUSTOM_VEHICLES.filter((v) => v.maps.length === 0 || v.maps.includes(mapId) || mapId === 'mogoldtown')
 }

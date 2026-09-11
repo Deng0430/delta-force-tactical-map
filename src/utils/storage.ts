@@ -109,7 +109,7 @@ function normalizeBuildings(buildings: unknown): Record<Side, BuildingUnit[]> {
     .filter((item): item is BuildingUnit => Boolean(item && typeof item === 'object' && typeof (item as BuildingUnit).uid === 'string'))
     .map((item) => ({
       ...item,
-      kind: (['fixed-machine-gun', 'fixed-anti-air', 'coastal-gun'].includes(item.kind) ? item.kind : 'fixed-machine-gun') as BuildingUnit['kind'],
+      kind: (['fixed-machine-gun', 'fixed-anti-air', 'coastal-gun', 'phalanx'].includes(item.kind) ? item.kind : 'fixed-machine-gun') as BuildingUnit['kind'],
       side: item.side === 'defense' ? 'defense' : 'attack',
       team: (['A', 'B', 'C', 'D', 'E'].includes(item.team ?? '') ? item.team : undefined) as OperatorTeam | undefined,
       rotation: typeof item.rotation === 'number' && Number.isFinite(item.rotation) ? ((item.rotation % 360) + 360) % 360 : 0,

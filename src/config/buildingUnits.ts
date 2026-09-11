@@ -23,6 +23,7 @@ export const BUILDING_UNIT_OPTIONS: BuildingUnitConfig[] = [
   createBuilding('fixed-machine-gun', '固定机枪', 'q_gdjq', '压制步兵与轻型目标', '#f08c2a'),
   createBuilding('fixed-anti-air', '固定防空炮', 'q_gdaap', '防御低空航空单位', '#e0453a'),
   createBuilding('coastal-gun', '岸防炮', 'q_afp', '封锁岸线与水上通道', '#d63f3f'),
+  createBuilding('phalanx', '密集阵', 'q_mjz', '近程拦截空中与来袭目标', '#32b8c6'),
 ]
 
 export function buildingUnitOf(kind: BuildingUnitKind): BuildingUnitConfig {

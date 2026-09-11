@@ -193,6 +193,22 @@ export const MAPS: MapConfig[] = [
     northEast: [-230, 300],
     initCenter: [-115, 110],
   },
+  {
+    id: 'mogoldtown',
+    name: '摩格旧城区',
+    enName: 'MogOldTown',
+    layerName: 'map_mgjcq',
+    tileUrl: `${TILE_BASE}/map_mgjcq/{z}_{x}_{y}.jpg`,
+    minZoom: 2.5,
+    initZoom: 2.5,
+    maxZoom: 8,
+    maxNativeZoom: 4,
+    boundsW: -300,
+    boundsH: 300,
+    southWest: [0, -80],
+    northEast: [-230, 300],
+    initCenter: [-136, 127],
+  },
 ]
 
 export const MAP_BY_ID: Record<string, MapConfig> = Object.fromEntries(

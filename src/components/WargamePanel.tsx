@@ -555,7 +555,7 @@ export default function WargamePanel({
         </button>
         <button type="button" role="tab" aria-selected={activeUnit === 'building'} className={activeUnit === 'building' ? 'active' : ''} onClick={() => setActiveUnit('building')}>
           <i className="fa-solid fa-building-shield" aria-hidden="true" />
-          <span><b>建筑单位</b><small>碉堡 · 固定火力</small></span>
+          <span><b>建筑单位</b><small>固定火力 · 密集阵</small></span>
           <em>{buildings.length}</em>
         </button>
       </div>
@@ -709,12 +709,12 @@ export default function WargamePanel({
         <section className="wg-unit-pane building" role="tabpanel">
           <div className="wg-building-head">
             <div>
-              <b>碉堡</b>
+              <b>建筑兵棋</b>
               <small>可选择阵营与队伍；无队伍时使用阵营色</small>
             </div>
           </div>
           <div className="wg-building-controls">
-            <div className="veh-own-switch" role="radiogroup" aria-label="碉堡阵营">
+            <div className="veh-own-switch" role="radiogroup" aria-label="建筑兵棋阵营">
               <button type="button" className={`veh-own-opt own ${customOwn ? 'active' : ''}`} onClick={() => onCustomOwnChange(true)} role="radio" aria-checked={customOwn}><span className="own-dot own" />本方</button>
               <button type="button" className={`veh-own-opt enemy ${!customOwn ? 'active' : ''}`} onClick={() => onCustomOwnChange(false)} role="radio" aria-checked={!customOwn}><span className="own-dot enemy" />敌方</button>
             </div>

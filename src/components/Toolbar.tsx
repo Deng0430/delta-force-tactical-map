@@ -5,23 +5,10 @@ import { IconFullscreen } from './icons'
 import ShortcutHelp from './ShortcutHelp'
 import { platform } from '../platform'
 import type { GameDataPlatform } from '../config/gameDataPlatform'
+import { MAPS } from '../config/maps'
 import ToolbarSelect, { type ToolbarSelectOption } from './ToolbarSelect'
 
 type ToolbarMenu = 'map' | 'mode' | 'device'
-
-const MAPS: { id: string; name: string }[] = [
-  { id: 'ascent', name: '攀升' },
-  { id: 'flashpoint', name: '临界点' },
-  { id: 'fault', name: '断层' },
-  { id: 'brokentrack', name: '断轨' },
-  { id: 'colosseum', name: '克劳狄斗兽场' },
-  { id: 'stormeye', name: '风暴眼' },
-  { id: 'ember', name: '烬区' },
-  { id: 'pyramid', name: '金字塔' },
-  { id: 'trench', name: '堑壕战' },
-  { id: 'umuscanal', name: '乌姆斯运河' },
-  { id: 'aftershock', name: '余震' },
-]
 
 const MAP_OPTIONS: ToolbarSelectOption[] = MAPS.map((map) => ({ value: map.id, label: map.name }))
 

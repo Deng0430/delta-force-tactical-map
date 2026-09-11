@@ -761,7 +761,7 @@ if (D.vehicles && D.vehicles.length) {
 }
 
 /* ---------- 建筑兵棋 ---------- */
-const buildingMeta = ${JSON.stringify(Object.fromEntries((['fixed-machine-gun', 'fixed-anti-air', 'coastal-gun'] as const).map((kind) => [kind, buildingUnitOf(kind)])))};
+const buildingMeta = ${JSON.stringify(Object.fromEntries((['fixed-machine-gun', 'fixed-anti-air', 'coastal-gun', 'phalanx'] as const).map((kind) => [kind, buildingUnitOf(kind)])))};
 const buildingLayer = L.layerGroup().addTo(map);
 (D.buildings || []).forEach((building) => {
   const meta = buildingMeta[building.kind] || buildingMeta['fixed-machine-gun'];

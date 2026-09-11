@@ -24,7 +24,7 @@ import type {
   VehicleItem,
   WargameState,
 } from './types'
-import { MAP_BY_ID } from './config/maps'
+import { MAPS, MAP_BY_ID } from './config/maps'
 import { APP_STORAGE_VERSION, applyTacticalBucket, buildingsBucketOf, createEmptyMapState, createTacticalRound, fieldSupportsBucketOf, loadState, normalizeDrawingGeoJson, normalizeTacticalBucket, saveState, snapshotTacticalBucket, syncActiveTacticalBucket, tacticalBucketKey, tacticalContextKey, vehiclesBucketOf, operatorsBucketOf, connectionsBucketOf, teamsBucketOf, routesBucketOf, wargameOf } from './utils/storage'
 import { emptyGeoJson, genUid } from './utils/geo'
 import { buildTacticalHtml, downloadText } from './utils/exportTactical'
@@ -61,7 +61,7 @@ import { useDeviceType } from './hooks/useDeviceType'
 import { propsForPlatform, stagesForPlatform, type GameDataPlatform } from './config/gameDataPlatform'
 import { evaluateVehicleRefreshRule } from './utils/vehicleRefreshRuntime'
 
-const DEFAULT_MAP_IDS = ['ascent', 'flashpoint', 'fault', 'brokentrack', 'colosseum', 'stormeye', 'ember', 'pyramid', 'trench', 'umuscanal', 'aftershock']
+const DEFAULT_MAP_IDS = MAPS.map((map) => map.id)
 const DEFAULT_PROP_VIS: PropVisibility = {
   载具补给站: true,
   固定防空炮: true,
@@ -1967,7 +1967,7 @@ export default function App() {
     const building: BuildingUnit = {
       uid: genUid('building'),
       kind,
-      name: `${buildingConfig.name}碉堡`,
+      name: kind === 'phalanx' ? buildingConfig.name : `${buildingConfig.name}碉堡`,
       side: own ? view : (view === 'attack' ? 'defense' : 'attack'),
       team,
       lat: center.lat,
@@ -4351,7 +4351,8 @@ export default function App() {
             <div className="startup-notice-thanks">
               <i className="fa-solid fa-heart" aria-hidden="true" />
               <p>
-                感谢社区贡献者 <a href="https://github.com/aeuicey" target="_blank" rel="noreferrer">@aeuicey</a>，以及所有参与测试、数据整理和意见反馈的玩家。
+                感谢社区贡献者 <a href="https://github.com/aeuicey" target="_blank" rel="noreferrer">aeuicey</a>，
+                感谢 <a href="https://space.bilibili.com/3546918758124069?spm_id_from=333.337.0.0" target="_blank" rel="noreferrer">TJU丶宇生</a> 对地图适配工作的贡献，以及所有参与测试、数据整理和意见反馈的玩家。
               </p>
             </div>
             <button type="button" className="startup-notice-enter" autoFocus onClick={() => setStartupNoticeOpen(false)}>

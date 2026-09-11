@@ -6,6 +6,7 @@ import mobileAttackDefenseOfficial from './mobileAttackDefenseOfficial.json'
 import mobilePcParitySnapshot from './mobilePcParitySnapshot.json'
 import mobileDeploySnapshot from './mobileDeploySnapshot.json'
 import pcAttackDefenseOfficial from './pcAttackDefenseOfficial.json'
+import mogOldTownOfficial from './mogOldTownOfficial.json'
 import { DEPLOY_BY_MAP, localDeployIconUrl, type DeployVehicleEntry, type StageDeploy } from './deployVehicles'
 import { vehicleLegendAssetUrl } from './vehicleLegendAssets'
 import { normalizeAttackDefenseData } from './attackDefenseSpawns'
@@ -68,6 +69,7 @@ function buildMobileStages(): Record<string, StageConfig[]> {
   for (const [mapId, map] of Object.entries(mobileAttackDefenseOfficial.maps)) {
     result[mapId] = map.stages as unknown as StageConfig[]
   }
+  result.mogoldtown = structuredClone(mogOldTownOfficial.mobile.stages) as unknown as StageConfig[]
   return result
 }
 
@@ -80,20 +82,24 @@ const PC_OFFICIAL_MAPS = pcAttackDefenseOfficial.maps as unknown as Record<strin
 const RAW_PC_STAGES_BY_MAP: Record<string, StageConfig[]> = {
   ...STAGES_BY_MAP,
   ...Object.fromEntries(Object.entries(PC_OFFICIAL_MAPS).map(([mapId, map]) => [mapId, structuredClone(map.stages)])),
+  mogoldtown: structuredClone(mogOldTownOfficial.pc.stages) as unknown as StageConfig[],
 }
 const PC_MAP_PROPS: Record<string, MapProp[]> = {
   ...MAP_PROPS,
   ...Object.fromEntries(Object.entries(PC_OFFICIAL_MAPS).map(([mapId, map]) => [mapId, structuredClone(map.props)])),
+  mogoldtown: structuredClone(mogOldTownOfficial.pc.props) as unknown as MapProp[],
 }
 const RAW_PC_DEPLOY_BY_MAP: Record<string, Record<string, StageDeploy>> = {
   ...DEPLOY_BY_MAP,
   ...Object.fromEntries(Object.entries(PC_OFFICIAL_MAPS).map(([mapId, map]) => [mapId, structuredClone(map.deploy)])),
+  mogoldtown: structuredClone(mogOldTownOfficial.pc.deploy) as unknown as Record<string, StageDeploy>,
 }
 export const MOBILE_MAP_PROPS: Record<string, MapProp[]> = {
   ...MAP_PROPS,
   ...(MOBILE_OFFICIAL_DATA.props as unknown as Record<string, MapProp[]>),
   ...Object.fromEntries(Object.entries(mobilePcParitySnapshot.maps).map(([mapId, snapshot]) => [mapId, structuredClone(snapshot.props)])) as Record<string, MapProp[]>,
   ...Object.fromEntries(Object.entries(mobileAttackDefenseOfficial.maps).map(([mapId, map]) => [mapId, map.props])) as Record<string, MapProp[]>,
+  mogoldtown: structuredClone(mogOldTownOfficial.mobile.props) as unknown as MapProp[],
 }
 
 type SnapshotDeployEntry = Omit<DeployVehicleEntry, 'iconUrl' | 'spawnUid'>
@@ -125,6 +131,7 @@ const MOBILE_DEPLOY_BY_MAP: Record<string, Record<string, StageDeploy>> = {
   ...Object.fromEntries(
     Object.entries(mobileAttackDefenseOfficial.maps).map(([mapId, map]) => [mapId, map.deploy]),
   ) as unknown as Record<string, Record<string, StageDeploy>>,
+  mogoldtown: structuredClone(mogOldTownOfficial.mobile.deploy) as unknown as Record<string, StageDeploy>,
 }
 
 const PC_ATTACK_DEFENSE_DATA = normalizeAttackDefenseData('pc', RAW_PC_STAGES_BY_MAP, RAW_PC_DEPLOY_BY_MAP)

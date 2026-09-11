@@ -288,7 +288,7 @@ export interface GameModeProfile {
 }
 
 export interface ModeConfigStore {
-  version: 34
+  version: 35
   activeModeId: string
   profiles: GameModeProfile[]
 }
@@ -353,7 +353,7 @@ export interface VehicleItem {
 }
 
 /** 兵棋推演中的固定建筑单位；仅区分阵营，不隶属于任何小队。 */
-export type BuildingUnitKind = 'fixed-machine-gun' | 'fixed-anti-air' | 'coastal-gun'
+export type BuildingUnitKind = 'fixed-machine-gun' | 'fixed-anti-air' | 'coastal-gun' | 'phalanx'
 
 export interface BuildingUnit {
   uid: string

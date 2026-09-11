@@ -32,7 +32,7 @@ import { makeWinnerSpawnUid } from '../config/attackDefenseSpawns'
 export const MODE_CONFIG_STORAGE_KEY = 'deltaforce-mode-configs-v1'
 export const MODE_CONFIG_SYNC_CHANNEL = 'deltaforce-mode-config-sync-v1'
 export const MODE_CONFIG_SYNC_MESSAGE = 'deltaforce-mode-config-sync'
-const MODE_STORAGE_VERSION = 34 as const
+const MODE_STORAGE_VERSION = 35 as const
 
 const SIDES: Side[] = ['attack', 'defense']
 const VERIFICATIONS: ModeConfigVerification[] = ['draft', 'confirmed']
@@ -113,6 +113,10 @@ interface OfficialModeMapData {
 
 /** 将编辑器导出的正式版地图数据还原为可继续编辑、可持久化的模式地图。 */
 function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): ModeMapOverride {
+  const refreshIds = new Set((official.vehicleRefreshPoints ?? []).map((point) => point.uid))
+  for (const rule of official.vehicleRefreshRules ?? []) {
+    if (rule.refreshPointUid && !refreshIds.has(rule.refreshPointUid)) throw new Error(`${mapId}：刷新规则关联的位置不存在。`)
+  }
   const zones: ModeZone[] = []
   const spawns: ModeSpawnPoint[] = []
   const objectives: ModeObjectivePoint[] = []
@@ -185,6 +189,10 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
         lng: point[1],
       }))
       const deployments = official.deploy[stage.id]?.[side] ?? []
+      for (const vehicle of deployments) {
+        const matches = sourceSpawns.filter((spawn) => vehicle.spawnUid ? vehicle.spawnUid === spawn.uid : vehicle.note === spawn.name)
+        if (matches.length !== 1) throw new Error(`${mapId} ${stage.id} ${vehicle.name}：复活点关联缺失或不唯一，请修正后导入。`)
+      }
       sourceSpawns.forEach((spawn) => {
         const deployVehicles = deployments
           .filter((vehicle) => vehicle.spawnUid ? vehicle.spawnUid === spawn.uid : vehicle.note === spawn.name)
@@ -218,7 +226,7 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
     objectives,
     props: official.props.map((prop, index) => ({
       uid: `builtin_wta_${mapId}_prop-${index}`,
-      stageId: '*',
+      stageId: prop.stage || '*',
       name: prop.name,
       icon: prop.icon,
       lat: prop.lat,
@@ -338,7 +346,7 @@ export function syncModeMapFromAttackDefense(
     propKeys.add(key)
     props.push({
       uid: `sync_${mapId}_prop-${props.length}`,
-      stageId: '*',
+      stageId: prop.stage || '*',
       name: prop.name,
       icon: prop.icon,
       lat: prop.lat,
@@ -488,7 +496,7 @@ function normalizeProp(value: unknown): ModeMapProp | null {
   if (typeof prop.uid !== 'string' || !Number.isFinite(lat) || !Number.isFinite(lng)) return null
   return {
     uid: prop.uid,
-    stageId: '*',
+    stageId: typeof prop.stageId === 'string' && prop.stageId ? prop.stageId : '*',
     name: typeof prop.name === 'string' && prop.name.trim() ? prop.name : '未命名道具',
     icon: typeof prop.icon === 'string' && prop.icon ? prop.icon : 'q_gddyx',
     lat,
@@ -565,7 +573,7 @@ function normalizeMapOverride(mapId: string, value: unknown): ModeMapOverride {
   const props = (Array.isArray(map.props)
     ? map.props.map(normalizeProp).filter((prop): prop is ModeMapProp => prop != null)
     : []).filter((prop) => {
-      const key = `${prop.name}:${prop.icon}:${prop.lat}:${prop.lng}`
+      const key = `${prop.stageId}:${prop.name}:${prop.icon}:${prop.lat}:${prop.lng}`
       if (propKeys.has(key)) return false
       propKeys.add(key)
       return true
@@ -584,8 +592,12 @@ function normalizeMapOverride(mapId: string, value: unknown): ModeMapOverride {
     : fallbackStages
   if (stages.length === 0) stages.push({ id: 'S1', label: '第一阶段' })
   for (const point of objectives) {
-    let zone = zones.find((item) => item.uid === point.captureZoneUid)
-    if (!zone) zone = zones.find((item) => item.role === 'capture' && item.name.includes(point.name))
+    let zone = zones.find((item) => item.uid === point.captureZoneUid && item.stageId === point.stageId)
+    if (!zone) {
+      const candidates = zones.filter((item) => item.stageId === point.stageId && item.role === 'capture'
+        && (item.objectiveUid === point.uid || item.name === `${point.stageId} · ${point.name}占领区`))
+      if (candidates.length === 1) zone = candidates[0]
+    }
     if (!zone) continue
     point.captureZoneUid = zone.uid
     zone.role = 'capture'
@@ -1139,6 +1151,30 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
       winner.maps = winner.platformMaps.pc ?? winner.maps
       winner.updatedAt = Date.now()
     }
+    // v35 新增腾讯官方“摩格旧城区”底图与双端攻防数据。
+    // 老用户保留已有地图编辑，只补入此前不存在的新地图；官方尚未发布该图的
+    // 胜者为王数据，因此胜者档案暂以攻防底稿初始化，供模式配置器继续编辑。
+    if (sourceVersion < 35) {
+      for (const gameDataPlatform of ['pc', 'mobile'] as const) {
+        const attackMaps: Record<string, ModeMapOverride> = attackDefense.platformMaps?.[gameDataPlatform] ?? {}
+        const attackBuiltin = syncModeMapFromAttackDefense(
+          'mogoldtown',
+          stagesForPlatform(gameDataPlatform).mogoldtown ?? [],
+          propsForPlatform(gameDataPlatform),
+          deployForPlatform(gameDataPlatform),
+        )
+        if (!attackMaps.mogoldtown) attackMaps.mogoldtown = attackBuiltin
+        attackDefense.platformMaps = { ...attackDefense.platformMaps, [gameDataPlatform]: attackMaps }
+
+        const winnerMaps: Record<string, ModeMapOverride> = winner.platformMaps?.[gameDataPlatform] ?? {}
+        if (!winnerMaps.mogoldtown) winnerMaps.mogoldtown = structuredClone(attackBuiltin)
+        winner.platformMaps = { ...winner.platformMaps, [gameDataPlatform]: winnerMaps }
+      }
+      attackDefense.maps = attackDefense.platformMaps?.pc ?? attackDefense.maps
+      winner.maps = winner.platformMaps?.pc ?? winner.maps
+      attackDefense.updatedAt = Date.now()
+      winner.updatedAt = Date.now()
+    }
   }
   return { version: MODE_STORAGE_VERSION, activeModeId, profiles }
 }
@@ -1157,19 +1193,11 @@ export function modeMapsForPlatform(
 }
 
 export interface ModeConfigImportResult {
+  mapId?: string
+  gameDataPlatform?: GameDataPlatform
   store: ModeConfigStore
   profileId: string
   kind: 'backup' | 'official'
-}
-
-function mergeItemsByUid<T extends { uid: string }>(current: T[], incoming: T[]): T[] {
-  const replacements = new Map(incoming.map((item) => [item.uid, item]))
-  const merged = current.map((item) => replacements.get(item.uid) ?? item)
-  const existingUids = new Set(merged.map((item) => item.uid))
-  incoming.forEach((item) => {
-    if (!existingUids.has(item.uid)) merged.push(item)
-  })
-  return merged
 }
 
 function mergeImportedMaps(
@@ -1180,13 +1208,24 @@ function mergeImportedMaps(
   const maps = { ...current }
   for (const [mapId, imported] of Object.entries(incoming)) {
     const existing = current[mapId]
-    maps[mapId] = existing && zonesOnly
-      ? {
-          ...existing,
-          zones: mergeItemsByUid(existing.zones, imported.zones),
-          updatedAt: Date.now(),
-        }
-      : imported
+    if (existing && zonesOnly) {
+      const zones = [...existing.zones]
+      for (const zone of imported.zones) {
+        const objective = imported.objectives.find((point) => point.captureZoneUid === zone.uid)
+        const targets = existing.zones.filter((item) => item.stageId === zone.stageId && (
+          item.uid === zone.uid || (zone.role !== 'capture' && zone.role !== 'custom' && item.role === zone.role)
+          || (objective && existing.objectives.some((point) => point.stageId === objective.stageId
+            && point.name === objective.name && point.captureZoneUid === item.uid))
+        ))
+        if (targets.length !== 1) throw new Error(`${mapId} ${zone.name}：无法唯一匹配现有区域，请使用完整地图导入。`)
+        const target = targets[0]
+        zones[zones.findIndex((item) => item.uid === target.uid)] = { ...target, points: zone.points }
+      }
+      maps[mapId] = { ...existing, zones, updatedAt: Date.now() }
+      continue
+    }
+    if (zonesOnly) throw new Error(`${mapId}：没有现有地图可供区域更新。`)
+    maps[mapId] = imported
   }
   return maps
 }
@@ -1213,6 +1252,7 @@ export function importModeConfigData(
   const source = value as {
     format?: unknown
     importScope?: unknown
+    gameDataPlatform?: unknown
     mode?: { id?: unknown; name?: unknown; description?: unknown }
     maps?: unknown
   }
@@ -1227,6 +1267,11 @@ export function importModeConfigData(
     || Array.isArray(source.maps)
   ) return null
 
+  if (source.gameDataPlatform != null && source.gameDataPlatform !== 'pc' && source.gameDataPlatform !== 'mobile') {
+    throw new Error('文件中的游戏数据端无效。')
+  }
+  gameDataPlatform = source.gameDataPlatform as GameDataPlatform | undefined ?? gameDataPlatform
+
   const importedMaps: Record<string, ModeMapOverride> = {}
   try {
     for (const map of MAPS) {
@@ -1237,8 +1282,8 @@ export function importModeConfigData(
       if (!Array.isArray(official.stages) || !Array.isArray(official.props) || !official.deploy || typeof official.deploy !== 'object') return null
       importedMaps[map.id] = modeMapFromOfficial(map.id, official as OfficialModeMapData)
     }
-  } catch {
-    return null
+  } catch (error) {
+    throw new Error(`地图数据导入失败：${error instanceof Error ? error.message : String(error)}`)
   }
   if (Object.keys(importedMaps).length === 0) return null
 
@@ -1286,6 +1331,8 @@ export function importModeConfigData(
     store: { ...currentStore, version: MODE_STORAGE_VERSION, profiles },
     profileId,
     kind: 'official',
+    mapId: Object.keys(importedMaps)[0],
+    gameDataPlatform,
   }
 }
 
@@ -1349,6 +1396,16 @@ export function buildOfficialModeData(
   for (const map of targetMaps) {
     const profileMaps = modeMapsForPlatform(profile, gameDataPlatform)
     const config = profileMaps[map.id] ?? emptyModeMapOverride(map.id)
+    for (const point of config.objectives) {
+      if (point.captureZoneUid && !config.zones.some((zone) => zone.uid === point.captureZoneUid && zone.stageId === point.stageId)) {
+        throw new Error(`${map.name} ${point.name}：占领区关联已失效，请重新绑定后导出。`)
+      }
+    }
+    for (const rule of config.vehicleRefreshRules) {
+      if (rule.refreshPointUid && !config.vehicleRefreshPoints.some((point) => point.uid === rule.refreshPointUid)) {
+        throw new Error(`${map.name}：刷新载具“${rule.vehicle.name}”关联的位置不存在。`)
+      }
+    }
     const baseStages = stagesForPlatform(gameDataPlatform)[map.id] ?? []
     const stages = config.stages.map((definition): StageConfig => {
       const base = baseStages.find((stage) => stage.id === definition.id)
@@ -1406,7 +1463,7 @@ export function buildOfficialModeData(
         icon: prop.icon,
         lat: prop.lat,
         lng: prop.lng,
-        stage: '',
+        stage: prop.stageId === '*' ? '' : prop.stageId,
       })),
       deploy,
       vehicleRefreshPoints: config.vehicleRefreshPoints.map(({ verification: _verification, ...point }) => point),
@@ -1420,7 +1477,8 @@ export function buildOfficialModeData(
 
   return {
     format: 'deltaforce-map-mode',
-    schemaVersion: 1,
+    schemaVersion: 2,
+    gameDataPlatform,
     mode: { id: profile.id, name: profile.name, description: profile.description },
     maps,
   }

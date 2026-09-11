@@ -1049,6 +1049,14 @@ export default function ModeConfigWorkbench() {
 
   if (!config || !profile) return null
 
+  const exportCurrentMap = () => {
+    try {
+      downloadText(`deltaforce-${profile.id}-${mapId}-${editorDataPlatform}-official-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(buildOfficialModeData(profile, editorDataPlatform, mapId), null, 2))
+    } catch (error) {
+      showAlert('导出失败', error instanceof Error ? error.message : '请检查地图配置。')
+    }
+  }
+
   const selectedCount = session.selectedItems.length > 0 ? session.selectedItems.length : session.selected ? 1 : 0
   const renderContextControls = () => (
     <>
@@ -1112,7 +1120,7 @@ export default function ModeConfigWorkbench() {
           <div>
             <strong>保存与发布</strong>
             <button className="primary" onClick={syncToOfficial}><i className="fa-solid fa-cloud-arrow-up" /><span>同步到正式版</span></button>
-            <button onClick={() => downloadText(`deltaforce-${profile.id}-${mapId}-${editorDataPlatform}-official-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(buildOfficialModeData(profile, editorDataPlatform, mapId), null, 2))}><i className="fa-solid fa-code" /><span>导出当前地图</span></button>
+            <button onClick={exportCurrentMap}><i className="fa-solid fa-code" /><span>导出当前地图</span></button>
             <button onClick={() => downloadText(`deltaforce-mode-configs-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(store, null, 2))}><i className="fa-solid fa-box-archive" /><span>备份编辑配置</span></button>
             <button title="支持编辑配置备份与正式数据" onClick={() => importConfigRef.current?.click()}><i className="fa-solid fa-file-import" /><span>导入数据 JSON</span></button>
             <input
@@ -1128,11 +1136,16 @@ export default function ModeConfigWorkbench() {
                   const imported = importModeConfigData(store, JSON.parse(text), editorDataPlatform)
                   if (!imported) return showAlert('导入失败', '无法识别该 JSON。请选择“备份编辑配置”或“导出正式数据”生成的文件。')
                   setStore(imported.store)
+                  if (imported.mapId) setMapId(imported.mapId)
+                  if (imported.gameDataPlatform) {
+                    setEditorDataPlatform(imported.gameDataPlatform)
+                    window.localStorage.setItem('deltaforce-mode-editor-game-data-platform', imported.gameDataPlatform)
+                  }
                   setSession((current) => ({ ...current, profileId: imported.profileId, selected: null, selectedItems: [], zoneDraft: [] }))
                   setSyncStatus(imported.kind === 'official'
-                    ? `已导入正式数据${imported.profileId === 'attack-defense' || imported.profileId === 'winner-takes-all' ? ` · ${editorDataPlatform === 'pc' ? 'PC端' : 'PE端'}` : ''}`
+                    ? `已导入正式数据 · ${(imported.gameDataPlatform ?? editorDataPlatform) === 'pc' ? 'PC端' : 'PE端'} · ${imported.profileId === 'winner-takes-all' ? '胜者为王' : imported.profileId === 'attack-defense' ? '攻防模式' : imported.profileId}`
                     : '已恢复编辑配置备份')
-                }).catch(() => showAlert('导入失败', '文件不是有效的 JSON，或内容无法读取。'))
+                }).catch((error) => showAlert('导入失败', error instanceof Error ? error.message : '文件不是有效的 JSON，或内容无法读取。'))
               }}
             />
           </div>
@@ -1175,7 +1188,7 @@ export default function ModeConfigWorkbench() {
             <strong className="mode-mobile-more-title">数据</strong>
             <div className="mode-mobile-more-grid data">
               <button type="button" className="primary" onClick={syncToOfficial}><i className="fa-solid fa-cloud-arrow-up" /><span>同步正式版</span></button>
-              <button type="button" onClick={() => downloadText(`deltaforce-${profile.id}-${mapId}-${editorDataPlatform}-official-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(buildOfficialModeData(profile, editorDataPlatform, mapId), null, 2))}><i className="fa-solid fa-code" /><span>导出当前地图</span></button>
+              <button type="button" onClick={exportCurrentMap}><i className="fa-solid fa-code" /><span>导出当前地图</span></button>
               <button type="button" onClick={() => downloadText(`deltaforce-mode-configs-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(store, null, 2))}><i className="fa-solid fa-box-archive" /><span>备份配置</span></button>
               <button type="button" title="支持编辑配置备份与正式数据" onClick={() => { setMobileMoreOpen(false); importConfigRef.current?.click() }}><i className="fa-solid fa-file-import" /><span>导入数据</span></button>
             </div>
