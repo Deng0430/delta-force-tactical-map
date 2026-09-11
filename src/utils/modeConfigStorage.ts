@@ -32,7 +32,7 @@ import { makeWinnerSpawnUid } from '../config/attackDefenseSpawns'
 export const MODE_CONFIG_STORAGE_KEY = 'deltaforce-mode-configs-v1'
 export const MODE_CONFIG_SYNC_CHANNEL = 'deltaforce-mode-config-sync-v1'
 export const MODE_CONFIG_SYNC_MESSAGE = 'deltaforce-mode-config-sync'
-const MODE_STORAGE_VERSION = 35 as const
+const MODE_STORAGE_VERSION = 36 as const
 
 const SIDES: Side[] = ['attack', 'defense']
 const VERIFICATIONS: ModeConfigVerification[] = ['draft', 'confirmed']
@@ -84,14 +84,14 @@ function defaultStore(): ModeConfigStore {
         map.id,
         official
           ? modeMapFromOfficial(map.id, official)
-          : syncModeMapFromAttackDefense(map.id, stagesForPlatform('pc')[map.id] ?? [], propsForPlatform('pc'), deployForPlatform('pc')),
+          : structuredClone(pcMaps[map.id]),
       ]
     }),
   )
   const winnerMobileMaps = Object.fromEntries(
     MAPS.map((map) => {
       const official = (mobileWinnerTakesAllOfficial.maps as unknown as Partial<Record<string, OfficialModeMapData>>)[map.id]
-      return [map.id, official ? modeMapFromOfficial(map.id, official) : structuredClone(winnerPcMaps[map.id])]
+      return [map.id, official ? modeMapFromOfficial(map.id, official) : structuredClone(mobileMaps[map.id])]
     }),
   )
   winner.maps = winnerPcMaps
@@ -1173,6 +1173,26 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
       attackDefense.maps = attackDefense.platformMaps?.pc ?? attackDefense.maps
       winner.maps = winner.platformMaps?.pc ?? winner.maps
       attackDefense.updatedAt = Date.now()
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v36 修正摩格旧城区胜者底稿：每个数据端从对应攻防配置一次性深复制。
+  // 即使 v35 已创建过空白或错误底稿，也重新初始化；后续编辑不再相互联动。
+  if (sourceVersion < 36) {
+    const winner = profiles.find((profile) => profile.id === 'winner-takes-all')
+    if (winner) {
+      for (const gameDataPlatform of ['pc', 'mobile'] as const) {
+        const source = attackDefense.platformMaps?.[gameDataPlatform]?.mogoldtown
+          ?? syncModeMapFromAttackDefense('mogoldtown', stagesForPlatform(gameDataPlatform).mogoldtown ?? [], propsForPlatform(gameDataPlatform), deployForPlatform(gameDataPlatform))
+        winner.platformMaps = {
+          ...winner.platformMaps,
+          [gameDataPlatform]: {
+            ...winner.platformMaps?.[gameDataPlatform],
+            mogoldtown: structuredClone(source),
+          },
+        }
+      }
+      winner.maps = winner.platformMaps!.pc!
       winner.updatedAt = Date.now()
     }
   }
