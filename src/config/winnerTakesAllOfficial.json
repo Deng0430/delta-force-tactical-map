@@ -28451,7 +28451,7 @@
               "badge": "机",
               "category": "helo",
               "cd": 100,
-              "num": 2,
+              "num": 1,
               "allowTeammate": false,
               "note": "GTI8号阵地",
               "spawnUid": "spawn_wta_pc_umuscanal_s3_attack_1hybvjm"
@@ -28478,13 +28478,13 @@
               "badge": "机",
               "category": "helo",
               "cd": 100,
-              "num": 2,
+              "num": 1,
               "allowTeammate": false,
               "note": "哈夫克5号阵地",
               "spawnUid": "spawn_wta_pc_umuscanal_s3_defense_vt5k4t"
             },
             {
-              "name": "轮式突击炮",
+              "name": "FSV轮式突击炮",
               "icon": "lstjp",
               "iconUrl": "/icons/vehicles/legend/nav_lstjp.png",
               "legendKey": "nav_lstjp",

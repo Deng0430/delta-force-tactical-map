@@ -410,6 +410,25 @@ body:has(.platform-android.mobile-layout) .text-style-panel .tsp-head {
   left: calc(var(--left-panel-w, 0px) + var(--safe-left));
 }
 
+.mobile-layout .runtime-data-notice {
+  top: 8px;
+  width: min(330px, calc(100% - 16px));
+}
+
+.mobile-layout .runtime-data-notice-head {
+  min-height: 32px;
+  font-size: 10px;
+}
+
+.mobile-layout .runtime-data-notice-details {
+  max-height: min(42dvh, 260px);
+  overflow: auto;
+}
+
+.mobile-layout .map-region-error {
+  padding: 18px;
+}
+
 .mobile-layout.left-panel-closed .map-wrap .leaflet-top.leaflet-left {
   left: 4px;
 }

@@ -3053,6 +3053,10 @@ input[type='range']:focus-visible {
 }
 
 .tm-marker:hover .tm-route { display: inline-flex; }
+/* Demo-only simulated hover: reveal existing controls, never create substitutes. */
+.beginner-demo-app .tm-marker.demo-hover .tm-route,
+.beginner-demo-app .tm-marker.demo-hover .tm-fireline { display: inline-flex; }
+.beginner-demo-app .tm-marker.demo-hover .tm-action-fan { display: block; }
 .tm-marker .tm-route:hover { color: #111; background: var(--tm-team); }
 .tm-marker .tm-fireline {
   display: none;
@@ -4240,6 +4244,99 @@ input[type='range']:focus-visible {
 /* ================= 地图容器 ================= */
 /* z-index: 0 创建独立层叠上下文：Leaflet 内部 pane（z-index 400+）被封在本层，
    不会穿透到 .main 层级盖住左右浮动工具栏（z-index 100） */
+.runtime-data-notice {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 1200;
+  width: min(430px, calc(100% - 24px));
+  transform: translateX(-50%);
+  color: #f6f8f7;
+  background: rgba(11, 17, 18, .94);
+  border: 1px solid rgba(244, 207, 103, .65);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .38);
+  pointer-events: auto;
+}
+
+.runtime-data-notice-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 34px;
+  padding: 5px 8px 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.runtime-data-notice-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.runtime-data-notice-head span i { color: var(--gold); }
+.runtime-data-notice-head button,
+.runtime-data-notice-editor {
+  flex: 0 0 auto;
+  padding: 4px 7px;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid rgba(244, 207, 103, .55);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.runtime-data-notice-head button:hover,
+.runtime-data-notice-editor:hover { background: rgba(244, 207, 103, .12); }
+
+.runtime-data-notice-details {
+  padding: 0 10px 9px;
+  border-top: 1px solid rgba(244, 207, 103, .22);
+  color: var(--tx-3);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.runtime-data-notice-details p { margin: 7px 0 5px; }
+.runtime-data-notice-details ul { margin: 0 0 8px; padding-left: 16px; }
+.runtime-data-notice-details li { margin: 3px 0; }
+.runtime-data-notice-details li strong,
+.runtime-data-notice-details li span { display: block; }
+.runtime-data-notice-details li strong { color: var(--tx-2); font-size: 9px; }
+.runtime-data-notice-editor { width: 100%; }
+
+.map-region-error {
+  position: absolute;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  color: var(--tx-1);
+  text-align: center;
+  background: radial-gradient(circle at 50% 42%, rgba(224, 100, 91, .12), transparent 38%), rgba(8, 13, 15, .96);
+}
+
+.map-region-error-icon { color: #e0645b; font-size: 28px; }
+.map-region-error h2 { margin: 0; font-size: 17px; }
+.map-region-error p { max-width: 360px; margin: 0; color: var(--tx-3); font-size: 11px; line-height: 1.55; }
+.map-region-error-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin-top: 4px; }
+.map-region-error-actions button {
+  padding: 7px 11px;
+  color: #08110d;
+  background: var(--green);
+  border: 1px solid var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.map-region-error-actions button.secondary { color: var(--gold); background: transparent; border-color: rgba(244, 207, 103, .65); }
+
 .map-wrap {
   position: absolute;
   inset: 0;

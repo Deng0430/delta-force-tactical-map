@@ -6,8 +6,11 @@ import react from '@vitejs/plugin-react'
 const demoEntries = {
   cinematicDemoV001: 'demo/v0.0.1/app/cinematic-demo.html',
   cinematicDemoV010: 'demo/v0.1.0/app/cinematic-demo.html',
+  cinematicDemoV014: 'demo/v0.1.4/app/cinematic-demo.html',
   videoCoverV010: 'demo/v0.1.0/app/video-cover.html',
   videoCover4x3V010: 'demo/v0.1.0/app/video-cover-4x3.html',
+  videoCoverV014: 'demo/v0.1.4/app/video-cover.html',
+  videoCover4x3V014: 'demo/v0.1.4/app/video-cover-4x3.html',
 }
 
 export default defineConfig({

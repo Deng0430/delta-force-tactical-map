@@ -32,7 +32,7 @@ import { makeWinnerSpawnUid } from '../config/attackDefenseSpawns'
 export const MODE_CONFIG_STORAGE_KEY = 'deltaforce-mode-configs-v1'
 export const MODE_CONFIG_SYNC_CHANNEL = 'deltaforce-mode-config-sync-v1'
 export const MODE_CONFIG_SYNC_MESSAGE = 'deltaforce-mode-config-sync'
-const MODE_STORAGE_VERSION = 36 as const
+const MODE_STORAGE_VERSION = 38 as const
 
 const SIDES: Side[] = ['attack', 'defense']
 const VERIFICATIONS: ModeConfigVerification[] = ['draft', 'confirmed']
@@ -103,12 +103,41 @@ function defaultStore(): ModeConfigStore {
   }
 }
 
-interface OfficialModeMapData {
+export interface OfficialModeMapData {
   stages: StageConfig[]
   props: MapProp[]
   deploy: Record<string, StageDeploy>
   vehicleRefreshPoints?: ModeVehicleRefreshPoint[]
   vehicleRefreshRules?: ModeVehicleRefreshRule[]
+}
+
+/** 配置校验使用的稳定问题码；运行时与正式导出共享这套语义。 */
+export type ModeConfigIssueCode =
+  | 'missing-capture-zone'
+  | 'capture-zone-stage-mismatch'
+  | 'capture-zone-objective-mismatch'
+  | 'duplicate-uid'
+  | 'invalid-zone-coordinates'
+  | 'missing-refresh-point'
+
+export interface ModeConfigIssue {
+  mapId: string
+  stageId: string
+  entityUid: string
+  code: ModeConfigIssueCode
+  relatedUid?: string
+  message: string
+}
+
+export interface RuntimeModeMapData {
+  map: {
+    stages: StageConfig[]
+    props: MapProp[]
+    deploy: Record<string, StageDeploy>
+    vehicleRefreshPoints: Omit<ModeVehicleRefreshPoint, 'verification'>[]
+    vehicleRefreshRules: Omit<ModeVehicleRefreshRule, 'verification'>[]
+  }
+  issues: ModeConfigIssue[]
 }
 
 /** 将编辑器导出的正式版地图数据还原为可继续编辑、可持久化的模式地图。 */
@@ -242,6 +271,102 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
     })),
     updatedAt: Date.now(),
   }
+}
+
+/**
+ * 校验模式地图中的跨实体关联。
+ *
+ * 这层只读配置，不做修复、不抛异常，供运行时降级和正式导出共同使用。
+ * 空的 captureZoneUid 表示该据点没有可绘制的占领区（例如官方阶段只保留
+ * 据点标记），因此不是错误；一旦写入 UID，就必须在同阶段唯一有效。
+ */
+export function validateModeMapConfig(mapId: string, config: ModeMapOverride): ModeConfigIssue[] {
+  const issues: ModeConfigIssue[] = []
+  const push = (issue: Omit<ModeConfigIssue, 'mapId'>) => issues.push({ mapId, ...issue })
+
+  const checkDuplicateUids = (items: Array<{ uid: string }>) => {
+    const seen = new Set<string>()
+    for (const item of items) {
+      if (seen.has(item.uid)) {
+        push({
+          stageId: '',
+          entityUid: item.uid,
+          code: 'duplicate-uid',
+          relatedUid: item.uid,
+          message: `实体 UID “${item.uid}”重复。`,
+        })
+      }
+      seen.add(item.uid)
+    }
+  }
+
+  checkDuplicateUids(config.zones)
+  checkDuplicateUids(config.objectives)
+  checkDuplicateUids(config.spawns)
+  checkDuplicateUids(config.props)
+  checkDuplicateUids(config.vehicleRefreshPoints)
+  checkDuplicateUids(config.vehicleRefreshRules)
+
+  const zoneByUid = new Map<string, ModeZone>()
+  for (const zone of config.zones) {
+    if (zone.points.length < 3 || zone.points.some(([lat, lng]) => !Number.isFinite(lat) || !Number.isFinite(lng))) {
+      push({
+        stageId: zone.stageId,
+        entityUid: zone.uid,
+        code: 'invalid-zone-coordinates',
+        message: `区域“${zone.name}”的坐标无效，运行时将跳过该区域。`,
+      })
+    }
+    if (!zoneByUid.has(zone.uid)) zoneByUid.set(zone.uid, zone)
+  }
+
+  for (const point of config.objectives) {
+    if (!point.captureZoneUid) continue
+    const zone = zoneByUid.get(point.captureZoneUid)
+    if (!zone) {
+      push({
+        stageId: point.stageId,
+        entityUid: point.uid,
+        code: 'missing-capture-zone',
+        relatedUid: point.captureZoneUid,
+        message: `据点“${point.name}”关联的占领区不存在。`,
+      })
+      continue
+    }
+    if (zone.stageId !== point.stageId) {
+      push({
+        stageId: point.stageId,
+        entityUid: point.uid,
+        code: 'capture-zone-stage-mismatch',
+        relatedUid: zone.uid,
+        message: `据点“${point.name}”关联了 ${zone.stageId} 的占领区，当前阶段为 ${point.stageId}。`,
+      })
+      continue
+    }
+    if (zone.role !== 'capture' || zone.objectiveUid && zone.objectiveUid !== point.uid) {
+      push({
+        stageId: point.stageId,
+        entityUid: point.uid,
+        code: 'capture-zone-objective-mismatch',
+        relatedUid: zone.uid,
+        message: `据点“${point.name}”关联的区域不是唯一对应的占领区。`,
+      })
+    }
+  }
+
+  const refreshPointUids = new Set(config.vehicleRefreshPoints.map((point) => point.uid))
+  for (const rule of config.vehicleRefreshRules) {
+    if (!rule.refreshPointUid || refreshPointUids.has(rule.refreshPointUid)) continue
+    push({
+      stageId: '',
+      entityUid: rule.uid,
+      code: 'missing-refresh-point',
+      relatedUid: rule.refreshPointUid,
+      message: `刷新规则“${rule.vehicle.name}”关联的位置不存在。`,
+    })
+  }
+
+  return issues
 }
 
 export function syncModeMapFromAttackDefense(
@@ -1196,6 +1321,89 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
       winner.updatedAt = Date.now()
     }
   }
+  // v37 修复已确认的“烬区·移动端·C2”跨阶段关联。
+  // 旧版规范化在坐标为空时按重复名称回退，曾把 S4 C2 绑定到 S3 C2；
+  // 这里只处理稳定的内置 UID，用户自定义据点/区域和其他地图不参与迁移。
+  if (sourceVersion < 37) {
+    const repairKnownObjective = (
+      map: ModeMapOverride | undefined,
+      builtin: ModeMapOverride,
+      objectiveUid: string,
+      expectedName: string,
+    ): boolean => {
+      if (!map) return false
+      const point = map.objectives.find((item) => item.uid === objectiveUid && item.name === expectedName)
+      const builtinPoint = builtin.objectives.find((item) => item.uid === objectiveUid && item.name === expectedName)
+      if (!point || !builtinPoint || point.stageId !== builtinPoint.stageId) return false
+      const related = point.captureZoneUid ? map.zones.find((zone) => zone.uid === point.captureZoneUid) : undefined
+      const relationIsValid = Boolean(related && related.stageId === point.stageId)
+      if (relationIsValid) return false
+
+      const builtinZone = builtinPoint.captureZoneUid
+        ? builtin.zones.find((zone) => zone.uid === builtinPoint.captureZoneUid && zone.stageId === builtinPoint.stageId)
+        : undefined
+      if (builtinZone && !map.zones.some((zone) => zone.uid === builtinZone.uid)) {
+        map.zones = [...map.zones, structuredClone(builtinZone)]
+      }
+      point.captureZoneUid = builtinPoint.captureZoneUid
+      if (builtinPoint.captureZoneUid) {
+        map.zones = map.zones.map((zone) => zone.uid === builtinPoint.captureZoneUid
+          ? { ...zone, stageId: point.stageId, role: 'capture', objectiveUid: point.uid }
+          : zone)
+      }
+      map.updatedAt = Date.now()
+      return true
+    }
+
+    const mobileAttackMaps = attackDefense.platformMaps?.mobile
+    const attackBuiltin = syncModeMapFromAttackDefense(
+      'ember',
+      stagesForPlatform('mobile').ember ?? [],
+      propsForPlatform('mobile'),
+      deployForPlatform('mobile'),
+    )
+    repairKnownObjective(mobileAttackMaps?.ember, attackBuiltin, 'sync_ember_S4_objective-0', '据点C2')
+
+    const winner = profiles.find((profile) => profile.id === 'winner-takes-all')
+    const mobileWinnerMap = winner?.platformMaps?.mobile?.ember
+    if (mobileWinnerMap) {
+      const official = mobileWinnerTakesAllOfficial.maps.ember as unknown as OfficialModeMapData
+      const winnerBuiltin = modeMapFromOfficial('ember', official)
+      repairKnownObjective(mobileWinnerMap, winnerBuiltin, 'builtin_wta_ember_S3_objective-1', '据点C2')
+      repairKnownObjective(mobileWinnerMap, winnerBuiltin, 'builtin_wta_ember_S4_objective-0', '据点C2')
+      if (winner.platformMaps) winner.maps = winner.platformMaps.pc ?? winner.maps
+    }
+  }
+  // v38 固化 2026-09-12“乌姆斯运河·胜者为王”双端 S3 部署载具修订：
+  // PC / PE 攻守双方 F-45A 均由 2 架调整为 1 架；PC 同步统一轮式突击炮正式名称。
+  // 只更新两个内置复活点上的对应官方载具，不影响用户自建载具。
+  if (sourceVersion < 38) {
+    const winner = profiles.find((profile) => profile.id === 'winner-takes-all')
+    const targetSpawnUids = new Set([
+      'spawn_wta_pc_umuscanal_s3_attack_1hybvjm',
+      'spawn_wta_pc_umuscanal_s3_defense_vt5k4t',
+    ])
+    for (const gameDataPlatform of ['pc', 'mobile'] as const) {
+      const map = winner?.platformMaps?.[gameDataPlatform]?.umuscanal
+      if (!map) continue
+      map.spawns = map.spawns.map((spawn) => {
+        if (!targetSpawnUids.has(spawn.uid)) return spawn
+        return {
+          ...spawn,
+          deployVehicles: spawn.deployVehicles.map((vehicle) => {
+            if (vehicle.icon === 'f45azdj') return { ...vehicle, num: 1 }
+            if (gameDataPlatform === 'pc' && spawn.uid === 'spawn_wta_pc_umuscanal_s3_defense_vt5k4t' && vehicle.icon === 'lstjp') {
+              return { ...vehicle, name: 'FSV轮式突击炮' }
+            }
+            return vehicle
+          }),
+        }
+      })
+      map.updatedAt = Date.now()
+    }
+    if (winner?.platformMaps) winner.maps = winner.platformMaps.pc ?? winner.maps
+    if (winner) winner.updatedAt = Date.now()
+  }
   return { version: MODE_STORAGE_VERSION, activeModeId, profiles }
 }
 
@@ -1399,100 +1607,132 @@ export function publishModeConfigStore(store: ModeConfigStore): void {
  * 将编辑器模型转换为项目正式版直接使用的 StageConfig / MAP_PROPS / DEPLOY 数据形状。
  * uid、权限等编辑器元数据不会混入运行时配置。
  */
+type BuiltOfficialModeMap = RuntimeModeMapData['map']
+
+function formatModeConfigIssues(mapName: string, issues: ModeConfigIssue[]): string {
+  const details = issues.map((issue) => {
+    const stage = issue.stageId ? ` ${issue.stageId}` : ''
+    const related = issue.relatedUid ? `（关联 ${issue.relatedUid}）` : ''
+    return `${mapName}${stage} · ${issue.message}${related}`
+  })
+  return `地图数据校验失败：${details.join('；')}`
+}
+
+/** 将单张模式地图转换为运行时数据；已知关联问题只影响对应实体。 */
+function buildRuntimeModeMap(
+  mapId: string,
+  config: ModeMapOverride,
+  gameDataPlatform: GameDataPlatform,
+): BuiltOfficialModeMap {
+  const baseStages = stagesForPlatform(gameDataPlatform)[mapId] ?? []
+  const validZone = (zone: ModeZone) => zone.points.length >= 3
+    && zone.points.every(([lat, lng]) => Number.isFinite(lat) && Number.isFinite(lng))
+  const usableZones = config.zones.filter(validZone)
+  const zoneByUid = new Map(usableZones.map((zone) => [zone.uid, zone]))
+  const zoneForObjective = (point: ModeObjectivePoint): ModeZone | undefined => {
+    if (!point.captureZoneUid) return undefined
+    const zone = zoneByUid.get(point.captureZoneUid)
+    return zone?.stageId === point.stageId ? zone : undefined
+  }
+
+  const stages = config.stages.map((definition): StageConfig => {
+    const base = baseStages.find((stage) => stage.id === definition.id)
+    const zones = usableZones.filter((zone) => zone.stageId === definition.id)
+    const objectives = config.objectives.filter((point) => point.stageId === definition.id)
+    const attackSpawns = config.spawns.filter((spawn) => spawn.stageId === definition.id && spawn.side === 'attack')
+    const defenseSpawns = config.spawns.filter((spawn) => spawn.stageId === definition.id && spawn.side === 'defense')
+    const frontline = zones.find((zone) => zone.role === 'frontline')
+    const attackBase = zones.find((zone) => zone.role === 'attack-base')
+    const defenseBase = zones.find((zone) => zone.role === 'defense-base')
+    return {
+      id: definition.id,
+      label: definition.label,
+      zone: frontline ? { name: frontline.name, latlngs: frontline.points } : null,
+      spawns: [...attackSpawns, ...defenseSpawns].map((spawn) => ({
+        uid: spawn.uid,
+        stageId: definition.id,
+        name: spawn.name,
+        side: spawn.side,
+        lat: spawn.lat,
+        lng: spawn.lng,
+      })),
+      attackBaseZone: attackBase?.points ?? [],
+      defenseBaseZone: defenseBase?.points ?? [],
+      points: objectives.map((point) => ({
+        name: point.name,
+        note: point.note,
+        icon: point.icon,
+        lat: point.lat,
+        lng: point.lng,
+        // 运行时保留据点标记；坏关联只让该据点的占领区为空。
+        capturable: zoneForObjective(point)?.points ?? [],
+      })),
+      attackSpawns: attackSpawns.map((spawn) => [spawn.lat, spawn.lng]),
+      defenseSpawns: defenseSpawns.map((spawn) => [spawn.lat, spawn.lng]),
+      attackSpawnNames: attackSpawns.map((spawn) => spawn.name),
+      defenseSpawnNames: defenseSpawns.map((spawn) => spawn.name),
+      attackVehicles: base?.attackVehicles ?? [],
+      defenseVehicles: base?.defenseVehicles ?? [],
+    }
+  })
+
+  const deploy: Record<string, StageDeploy> = {}
+  for (const stage of stages) {
+    const stageSpawns = config.spawns.filter((spawn) => spawn.stageId === stage.id)
+    const entries = (side: Side): DeployVehicleEntry[] => stageSpawns
+      .filter((spawn) => spawn.side === side && spawn.vehicleDeploy)
+      .flatMap((spawn) => spawn.deployVehicles.map((vehicle) => ({ ...vehicle, spawnUid: spawn.uid, note: spawn.name })))
+    deploy[stage.id] = { attack: entries('attack'), defense: entries('defense') }
+  }
+
+  const refreshPointIds = new Set(config.vehicleRefreshPoints.map((point) => point.uid))
+  const vehicleRefreshRules = config.vehicleRefreshRules
+    .filter((rule) => Boolean(rule.refreshPointUid) && refreshPointIds.has(rule.refreshPointUid))
+    .map(({ verification: _verification, ...rule }) => ({
+      ...rule,
+      trigger: { ...rule.trigger },
+      vehicle: { ...rule.vehicle },
+    }))
+
+  return {
+    stages,
+    props: config.props.map((prop) => ({
+      name: prop.name,
+      icon: prop.icon,
+      lat: prop.lat,
+      lng: prop.lng,
+      stage: prop.stageId === '*' ? '' : prop.stageId,
+    })),
+    deploy,
+    vehicleRefreshPoints: config.vehicleRefreshPoints.map(({ verification: _verification, ...point }) => point),
+    vehicleRefreshRules,
+  }
+}
+
+export function buildRuntimeModeData(
+  profile: GameModeProfile,
+  gameDataPlatform: GameDataPlatform = 'pc',
+  mapId: string,
+): RuntimeModeMapData {
+  const profileMaps = modeMapsForPlatform(profile, gameDataPlatform)
+  const config = profileMaps[mapId] ?? emptyModeMapOverride(mapId)
+  const issues = validateModeMapConfig(mapId, config)
+  return { map: buildRuntimeModeMap(mapId, config, gameDataPlatform), issues }
+}
+
 export function buildOfficialModeData(
   profile: GameModeProfile,
   gameDataPlatform: GameDataPlatform = 'pc',
   mapId?: string,
 ) {
-  const maps: Record<string, {
-    stages: StageConfig[]
-    props: MapProp[]
-    deploy: Record<string, StageDeploy>
-    vehicleRefreshPoints: Omit<ModeVehicleRefreshPoint, 'verification'>[]
-    vehicleRefreshRules: Omit<ModeVehicleRefreshRule, 'verification'>[]
-  }> = {}
-
+  const maps: Record<string, BuiltOfficialModeMap> = {}
   const targetMaps = mapId ? MAPS.filter((map) => map.id === mapId) : MAPS
+  const profileMaps = modeMapsForPlatform(profile, gameDataPlatform)
   for (const map of targetMaps) {
-    const profileMaps = modeMapsForPlatform(profile, gameDataPlatform)
     const config = profileMaps[map.id] ?? emptyModeMapOverride(map.id)
-    for (const point of config.objectives) {
-      if (point.captureZoneUid && !config.zones.some((zone) => zone.uid === point.captureZoneUid && zone.stageId === point.stageId)) {
-        throw new Error(`${map.name} ${point.name}：占领区关联已失效，请重新绑定后导出。`)
-      }
-    }
-    for (const rule of config.vehicleRefreshRules) {
-      if (rule.refreshPointUid && !config.vehicleRefreshPoints.some((point) => point.uid === rule.refreshPointUid)) {
-        throw new Error(`${map.name}：刷新载具“${rule.vehicle.name}”关联的位置不存在。`)
-      }
-    }
-    const baseStages = stagesForPlatform(gameDataPlatform)[map.id] ?? []
-    const stages = config.stages.map((definition): StageConfig => {
-      const base = baseStages.find((stage) => stage.id === definition.id)
-      const zones = config.zones.filter((zone) => zone.stageId === definition.id)
-      const objectives = config.objectives.filter((point) => point.stageId === definition.id)
-      const attackSpawns = config.spawns.filter((spawn) => spawn.stageId === definition.id && spawn.side === 'attack')
-      const defenseSpawns = config.spawns.filter((spawn) => spawn.stageId === definition.id && spawn.side === 'defense')
-      const frontline = zones.find((zone) => zone.role === 'frontline')
-      const attackBase = zones.find((zone) => zone.role === 'attack-base')
-      const defenseBase = zones.find((zone) => zone.role === 'defense-base')
-      return {
-        id: definition.id,
-        label: definition.label,
-        zone: frontline ? { name: frontline.name, latlngs: frontline.points } : null,
-        spawns: [...attackSpawns, ...defenseSpawns].map((spawn) => ({
-          uid: spawn.uid,
-          stageId: definition.id,
-          name: spawn.name,
-          side: spawn.side,
-          lat: spawn.lat,
-          lng: spawn.lng,
-        })),
-        attackBaseZone: attackBase?.points ?? [],
-        defenseBaseZone: defenseBase?.points ?? [],
-        points: objectives.map((point) => ({
-          name: point.name,
-          note: point.note,
-          icon: point.icon,
-          lat: point.lat,
-          lng: point.lng,
-          capturable: zones.find((zone) => zone.uid === point.captureZoneUid)?.points ?? [],
-        })),
-        attackSpawns: attackSpawns.map((spawn) => [spawn.lat, spawn.lng]),
-        defenseSpawns: defenseSpawns.map((spawn) => [spawn.lat, spawn.lng]),
-        attackSpawnNames: attackSpawns.map((spawn) => spawn.name),
-        defenseSpawnNames: defenseSpawns.map((spawn) => spawn.name),
-        attackVehicles: base?.attackVehicles ?? [],
-        defenseVehicles: base?.defenseVehicles ?? [],
-      }
-    })
-
-    const deploy: Record<string, StageDeploy> = {}
-    for (const stage of stages) {
-      const stageSpawns = config.spawns.filter((spawn) => spawn.stageId === stage.id)
-      const entries = (side: Side): DeployVehicleEntry[] => stageSpawns
-        .filter((spawn) => spawn.side === side && spawn.vehicleDeploy)
-        .flatMap((spawn) => spawn.deployVehicles.map((vehicle) => ({ ...vehicle, spawnUid: spawn.uid, note: spawn.name })))
-      deploy[stage.id] = { attack: entries('attack'), defense: entries('defense') }
-    }
-
-    maps[map.id] = {
-      stages,
-      props: config.props.map((prop) => ({
-        name: prop.name,
-        icon: prop.icon,
-        lat: prop.lat,
-        lng: prop.lng,
-        stage: prop.stageId === '*' ? '' : prop.stageId,
-      })),
-      deploy,
-      vehicleRefreshPoints: config.vehicleRefreshPoints.map(({ verification: _verification, ...point }) => point),
-      vehicleRefreshRules: config.vehicleRefreshRules.map(({ verification: _verification, ...rule }) => ({
-        ...rule,
-        trigger: { ...rule.trigger },
-        vehicle: { ...rule.vehicle },
-      })),
-    }
+    const issues = validateModeMapConfig(map.id, config)
+    if (issues.length > 0) throw new Error(formatModeConfigIssues(map.name, issues))
+    maps[map.id] = buildRuntimeModeMap(map.id, config, gameDataPlatform)
   }
 
   return {

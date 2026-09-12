@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { createPortal } from 'react-dom'
+import { traceDemo } from '../demo/beginnerDemoDiagnostics'
 import { useMap } from 'react-leaflet'
 import * as L from 'leaflet'
 import type { Feature, FeatureCollection, Point } from 'geojson'
@@ -740,6 +741,7 @@ export default function LayerManager({
   /** 绘制操作提交：上报 before/after 给 App（App 统一入历史栈 + 落盘） */
   const commitDraw = useCallback(
     (before: string) => {
+      traceDemo('drawing-commit', () => ({ before, after: snapshotNow() }))
       onCommitDrawRef.current(before, snapshotNow())
     },
     [snapshotNow],
@@ -1399,12 +1401,14 @@ export default function LayerManager({
     map.addLayer(g)
     map.addLayer(h)
     fgRef.current = g
+    traceDemo('drawing-group-created')
     hlRef.current = h
     setFg(g)
     setHl(h)
     // 视角切换：历史栈由 App 按「地图+视角」分桶管理，LayerManager 无需清理
     return () => {
       map.removeLayer(g)
+      traceDemo('drawing-group-removed')
       map.removeLayer(h)
       // 第十五轮：视角切换时移除套索包围矩形（独立图层，不随 fg 清理）
       if (lassoBoxRef.current) {
@@ -2320,11 +2324,19 @@ export default function LayerManager({
   onFeatureClickRef.current = onFeatureClick
 
   // GeoJSON -> 图层（还原 + 绑定交互）
+  const restoredDrawingRef = useRef<{ group: typeof fg; view: Side; source: string } | null>(null)
   useEffect(() => {
     if (!fg || !hl) return
+    // A callback/selection rerender is not an external data replacement. During
+    // dragging Leaflet already holds the new geometry, while props still hold
+    // the pre-drag snapshot. Never restore that same old snapshot over the edit.
+    const restored = restoredDrawingRef.current
+    if (restored?.group === fg && restored.view === view && restored.source === geoJson) return
+    restoredDrawingRef.current = { group: fg, view, source: geoJson }
     // 本图层刚完成的真实交互已经直接修改了 Leaflet 对象；App 回写的 GeoJSON
     // 若与当前快照一致，无需先清空再还原，否则每次点击/拖动都会产生一帧闪烁。
     if (snapshotNow() === geoJson) return
+    traceDemo('drawing-restore-before', () => ({ incoming: geoJson, rendered: snapshotNow() }))
     fg.clearLayers()
     hl.clearLayers()
     // 第十二轮：重建后恢复选中高亮（套索移动/删除触发保存会重建图层，选中状态不应丢失）
@@ -2401,6 +2413,7 @@ export default function LayerManager({
     },
   })
   layer.eachLayer((l) => fg.addLayer(l))
+  traceDemo('drawing-restore-after')
   // 重建后恢复视觉状态：套索用绿色描边；普通编辑由蓝色选框/手柄表示选中。
   for (const uid of keep) highlight(uid, tool === 'lasso')
   // 第十五轮：重建后更新包围矩形（图层对象已替换，矩形位置按新图层重算）
@@ -2420,6 +2433,11 @@ export default function LayerManager({
 
     const isLineTool = tool === 'line' || tool === 'arrow' || tool === 'defense'
     const isSmooth = draw.curve === 'smooth'
+    const demoDraw = map.getContainer().closest('.beginner-demo-app') != null
+    const traceDemoDraw = (phase: string) => {
+      if (demoDraw) map.getContainer().dataset.demoDrawPhase = `${tool}:${phase}`
+    }
+    traceDemoDraw('ready')
 
     const st: {
       phase: 'idle' | 'drawing' | 'adjusting'
@@ -2609,7 +2627,7 @@ export default function LayerManager({
     }
 
     const onMouseDown = (e: L.LeafletMouseEvent) => {
-      if (editPointerActiveRef.current) return
+      if (editPointerActiveRef.current) { traceDemoDraw('blocked-by-edit'); return }
       const t = e.originalEvent.target as HTMLElement
       // 控制点自己处理按下（拖拽调整）；绘制层已有图形交给 onFeatureClick
       if (t.closest?.('.curve-ctrl, .curve-ctrl-wrap')) return
@@ -2622,6 +2640,7 @@ export default function LayerManager({
       }
       // idle：开始新绘制
       st.phase = 'drawing'
+      traceDemoDraw('pressed')
       st.start = e.latlng
       setDrawingGestureActive(map, true)
       setPreviews(e.latlng, e.latlng)
@@ -2642,6 +2661,7 @@ export default function LayerManager({
       }
       if (st.phase === 'drawing' && st.start) {
         st.end = e.latlng
+        traceDemoDraw('moving')
         setPreviews(st.start, e.latlng)
       } else if (st.phase === 'adjusting' && st.ctrlDragging && st.start && st.end) {
         // 拖控制点：实时更新曲线与手柄位置
@@ -2684,6 +2704,7 @@ export default function LayerManager({
           // 直线/矩形/圆：直接成稿
           clearPreviews()
           commitShape(st.start, end)
+          traceDemoDraw('committed')
           st.phase = 'idle'
         }
       } else if (st.phase === 'adjusting' && st.ctrlDragging) {
@@ -4579,6 +4600,7 @@ export default function LayerManager({
   /** 选中图形（key = 图形逻辑键；additive = Ctrl 多选追加） */
   const selectKey = useCallback(
     (key: string, additive: boolean) => {
+      traceDemo('selection-before', { key, additive })
       const layers = targetLayersOf(key)
       if (layers.length === 0) return
       closeSelPanelRef.current(true)
@@ -4638,7 +4660,6 @@ export default function LayerManager({
     [clearSelection],
   )
   clearEditSelectionRef.current = clearEditSelection
-
 
   /** 启动整体移动（按住已选中的图形本体 → 整个选中集合一起移动） */
   const startBodyMove = useCallback(

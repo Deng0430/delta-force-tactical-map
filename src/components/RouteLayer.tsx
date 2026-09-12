@@ -628,6 +628,9 @@ export default function RouteLayer({ routes, view, teams, operators, vehicles, b
   const mobileActionsRef = useRef<HTMLDivElement | null>(null)
   const routeHitAreasRef = useRef(new Map<string, L.Polyline>())
   const restoreRouteFocus = useCallback((uid: string) => {
+    // Demo 的操作指针不依赖 DOM 键盘焦点。路线重绘后立即 focus 旧 SVG
+    // 会触发 Leaflet 已解绑 Tooltip 的 focus 监听器，并留下持续的异常提示。
+    if (document.querySelector('.beginner-demo-app')) return
     window.requestAnimationFrame(() => {
       const element = routeHitAreasRef.current.get(uid)?.getElement() as HTMLElement | null | undefined
       element?.focus()
