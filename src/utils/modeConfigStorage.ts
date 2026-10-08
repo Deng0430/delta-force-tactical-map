@@ -32,7 +32,7 @@ import { makeWinnerSpawnUid } from '../config/attackDefenseSpawns'
 export const MODE_CONFIG_STORAGE_KEY = 'deltaforce-mode-configs-v1'
 export const MODE_CONFIG_SYNC_CHANNEL = 'deltaforce-mode-config-sync-v1'
 export const MODE_CONFIG_SYNC_MESSAGE = 'deltaforce-mode-config-sync'
-const MODE_STORAGE_VERSION = 38 as const
+const MODE_STORAGE_VERSION = 40 as const
 
 const SIDES: Side[] = ['attack', 'defense']
 const VERIFICATIONS: ModeConfigVerification[] = ['draft', 'confirmed']
@@ -1403,6 +1403,35 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
     }
     if (winner?.platformMaps) winner.maps = winner.platformMaps.pc ?? winner.maps
     if (winner) winner.updatedAt = Date.now()
+  }
+  // v39 固化摩格旧城区 PC 胜者配置；手游数据保持独立。
+  if (sourceVersion < 39) {
+    const winner = profiles.find((profile) => profile.id === 'winner-takes-all')
+    if (winner) {
+      const map = modeMapFromOfficial('mogoldtown', winnerTakesAllOfficial.maps.mogoldtown as unknown as OfficialModeMapData)
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...winner.platformMaps?.pc, mogoldtown: map } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v40 将摩格旧城区修订同步到双端攻防和胜者，分别创建独立配置。
+  if (sourceVersion < 40) {
+    const winner = profiles.find((profile) => profile.id === 'winner-takes-all')
+    for (const gameDataPlatform of ['pc', 'mobile'] as const) {
+      const attackMap = syncModeMapFromAttackDefense('mogoldtown', stagesForPlatform(gameDataPlatform).mogoldtown ?? [], propsForPlatform(gameDataPlatform), deployForPlatform(gameDataPlatform))
+      attackDefense.platformMaps = { ...attackDefense.platformMaps, [gameDataPlatform]: { ...attackDefense.platformMaps?.[gameDataPlatform], mogoldtown: attackMap } }
+      if (winner) {
+        const official = gameDataPlatform === 'pc' ? winnerTakesAllOfficial.maps.mogoldtown : mobileWinnerTakesAllOfficial.maps.mogoldtown
+        const winnerMap = modeMapFromOfficial('mogoldtown', official as unknown as OfficialModeMapData)
+        winner.platformMaps = { ...winner.platformMaps, [gameDataPlatform]: { ...winner.platformMaps?.[gameDataPlatform], mogoldtown: winnerMap } }
+      }
+    }
+    attackDefense.maps = attackDefense.platformMaps!.pc!
+    attackDefense.updatedAt = Date.now()
+    if (winner) {
+      winner.maps = winner.platformMaps!.pc!
+      winner.updatedAt = Date.now()
+    }
   }
   return { version: MODE_STORAGE_VERSION, activeModeId, profiles }
 }

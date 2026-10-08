@@ -18,6 +18,7 @@ type SkillSpec = Omit<OperatorSkillDefinition, 'slot' | 'iconUrl'>
 const S = (name: string, kind: OperatorSkillKind, placementMode?: SkillPlacementMode, extra: Partial<SkillSpec> = {}): SkillSpec => ({ name, kind, ...(placementMode ? { placementMode } : {}), ...extra })
 
 const SKILLS: Record<string, [SkillSpec, SkillSpec, SkillSpec, SkillSpec]> = {
+  '10027': [S('求生专家&紧急勤务','passive'), S('军犬协同','ultimate','self'), S('气雾针剂枪','gadget','trajectory',{effectArea:true}), S('刺激性喷雾','gadget','trajectory',{effectArea:true})],
   '10016': [S('情报探测','ultimate','area'), S('飞行闪光弹','gadget','guided-path'), S('数据飞刀','gadget','trajectory'), S('被动技能','passive')],
   '10007': [S('范围打击','ultimate','trajectory',{effectArea:true}), S('定向位移','gadget','self'), S('反载爆炸物','gadget','target-unit'), S('被动技能','passive')],
   '10017': [S('巡飞弹','ultimate','guided-path',{canBindTarget:true,tracking:true}), S('速凝掩体','gadget','target-point'), S('燃烧弹','gadget','trajectory',{effectArea:true}), S('被动技能','passive')],

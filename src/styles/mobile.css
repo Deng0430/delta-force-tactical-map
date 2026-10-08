@@ -816,6 +816,18 @@ body:has(.platform-android.mobile-layout) .text-style-panel .tsp-head {
   overflow-y: auto;
 }
 
+/* 普通地图选择列表最多显示约五项，其余在列表内滚动；vh 为旧 WebView 提供回退。 */
+.mobile-layout .toolbar .menu-map .map-select-menu {
+  max-height: 210px;
+  max-height: min(210px, 65vh);
+  max-height: min(210px, 65dvh);
+  overscroll-behavior-y: contain;
+}
+
+.mobile-layout .toolbar .menu-map .map-select-item {
+  flex-shrink: 0;
+}
+
 .mobile-layout .toolbar .map-select-item {
   min-height: 38px;
   padding: 8px 11px;

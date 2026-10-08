@@ -1,6 +1,6 @@
 /**
  * 干员档案库：来源于官网接口 dfm/operator.list（用户提供，已登录抓取）。
- * 包含全部 16 名干员的代号、本名、职业、头像。
+ * 包含全部 17 名干员的代号、本名、职业、头像。
  * 兵棋推演中每个干员槽位可选择具体干员（如 红狼 → 蜂医），职业随干员自动变化。
  */
 import type { OperatorClass } from '../types'
@@ -22,8 +22,9 @@ export interface OperatorProfile {
 
 const AVATAR_BASE = '/icons/operators/avatars'
 
-/** 全部 16 名干员（官网 operator.list 顺序） */
+/** 全部 17 名干员（官网资料顺序） */
 export const OPERATOR_PROFILES: OperatorProfile[] = [
+  { id: '10027', name: '旅人', fullName: '罗温·沃尔什', cls: 'medical', avatarUrl: `${AVATAR_BASE}/op_10027.png`, desc: '军犬协同、持续支援' },
   { id: '10017', name: '乌鲁鲁', fullName: '大卫·费莱尔', cls: 'engineer', avatarUrl: `${AVATAR_BASE}/op_10017.png`, desc: '装备支援、设施破坏' },
   { id: '10025', name: '回声', fullName: '卢克·埃弗里', cls: 'recon', avatarUrl: `${AVATAR_BASE}/op_10025.png`, desc: '情报收集、目标标记' },
   { id: '10007', name: '威龙', fullName: '王宇昊', cls: 'assault', avatarUrl: `${AVATAR_BASE}/op_10007.png`, desc: '正面火力、突破防线' },

@@ -28,10 +28,13 @@ export default function ToolbarSelect<TMenu extends string>({
   const [menuPosition, setMenuPosition] = useState<CSSProperties>({})
 
   useLayoutEffect(() => {
-    if (!open || (!floating && platform.kind !== 'android')) return
+    if (!open) return
     const updatePosition = () => {
       const rect = buttonRef.current?.getBoundingClientRect()
       if (!rect) return
+      const touchMenu = platform.kind === 'android' || window.matchMedia('(pointer: coarse)').matches
+      const limitMapHeight = menu === 'map' && touchMenu
+      if (!floating && platform.kind !== 'android' && !limitMapHeight) return
       const triggerWidth = Math.max(1, Math.round(rect.width))
       const contentWidth = Math.max(...options.map((option) => Array.from(option.label).length), 1) * 14 + 28
       const menuWidth = Math.min(Math.max(triggerWidth, contentWidth), window.innerWidth - 12)
@@ -44,6 +47,13 @@ export default function ToolbarSelect<TMenu extends string>({
         width: menuWidth,
         minWidth: menuWidth,
         maxWidth: menuWidth,
+        ...(limitMapHeight ? {
+          // 与实际展开位置一起约束，避免依赖布局类名或 WebView 对 dvh 的支持。
+          maxHeight: Math.max(0, Math.min(210, window.innerHeight - rect.bottom - 12)),
+          overflowY: 'auto' as const,
+          touchAction: 'pan-y',
+          overscrollBehaviorY: 'contain' as const,
+        } : {}),
       })
     }
     updatePosition()
@@ -55,7 +65,7 @@ export default function ToolbarSelect<TMenu extends string>({
       window.removeEventListener('scroll', updatePosition, true)
       window.visualViewport?.removeEventListener('resize', updatePosition)
     }
-  }, [align, floating, open, options])
+  }, [align, floating, menu, open, options])
 
   return (
     <div className={`map-select topbar-select menu-${menu} ${open ? 'open' : ''}`}>
@@ -65,7 +75,7 @@ export default function ToolbarSelect<TMenu extends string>({
         <i className="fa-solid fa-chevron-down" aria-hidden="true" />
       </button>
       {open ? <div id={menuId} className={`map-select-menu align-${align}`} role="listbox" style={menuPosition}>
-        {options.map((option) => <button key={option.value} role="option" aria-selected={value === option.label} className={`map-select-item ${value === option.label ? 'active' : ''}`} disabled={option.disabled} onClick={() => {
+        {options.map((option) => <button key={option.value} role="option" aria-selected={value === option.label} className={`map-select-item ${value === option.label ? 'active' : ''}`} style={menuPosition.maxHeight !== undefined ? { flexShrink: 0 } : undefined} disabled={option.disabled} onClick={() => {
           if (option.disabled) return
           onSelect?.(option.value)
           onOpenMenu(null)
