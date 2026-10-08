@@ -1,1 +1,0 @@
-var e=`/assets/logo-7ghmKkip.png`;export{e as t};

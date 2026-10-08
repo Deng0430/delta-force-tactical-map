@@ -8,6 +8,8 @@
 /release-optimized/
 /release-v010-*/
 /release-staging*/
+/release-build-*/
+/electron-dist-*/
 /out/
 *.exe
 *.msi
