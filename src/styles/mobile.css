@@ -246,6 +246,8 @@
 .mobile-layout .route-editor-actions button { padding: 3px 2px; }
 
 .mobile-layout .route-editor-trigger,
+.mobile-layout .route-style-trigger,
+.mobile-layout .route-branch-trigger,
 .mobile-layout .route-delete-trigger {
   position: static;
   width: 36px;
@@ -269,9 +271,14 @@
 }
 
 .mobile-layout .route-selection-hint {
-  max-width: 118px;
+  max-width: 100%;
   font-size: 10px;
   line-height: 15px;
+}
+
+.mobile-layout .route-selection-actions button.active {
+  color: #0e1112;
+  background: var(--gold);
 }
 
 .mobile-layout .left-panel-resizer {

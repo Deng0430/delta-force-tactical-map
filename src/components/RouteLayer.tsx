@@ -92,16 +92,16 @@ function routeSideColor(side: TacticalRoute['side'], view: Side): string {
   return side === view ? '#01ff84' : '#e0453a'
 }
 
-function waypointIcon(index: number, total: number, color: string, teamColor: string, anchorMode: TacticalRoute['anchorMode']): L.DivIcon {
+function waypointIcon(index: number, total: number, color: string, teamColor: string, anchorMode: TacticalRoute['anchorMode'], branchPicking = false): L.DivIcon {
   const origin = index === 0
   const end = index === total - 1
   const label = origin ? (anchorMode === 'free' ? '起' : '⌁') : end ? '终' : String(index)
-  const key = `${index}|${total}|${color}|${teamColor}|${anchorMode}`
+  const key = `${index}|${total}|${color}|${teamColor}|${anchorMode}|${branchPicking}`
   const cached = waypointIconCache.get(key)
   if (cached) return cached
   const icon = L.divIcon({
     className: `route-waypoint-wrap${origin ? ' origin' : ''}${end ? ' end' : ''}`,
-    html: `<span class="route-waypoint" style="--route-node-color:${teamColor};--route-action-color:${color}">${label}</span>`,
+    html: `<span class="route-waypoint${branchPicking ? ' branch-target' : ''}" ${branchPicking ? 'title="点击此节点创建分支"' : ''} style="--route-node-color:${teamColor};--route-action-color:${color}">${label}</span>`,
     iconSize: origin || end ? [18, 18] : [16, 16],
     iconAnchor: origin || end ? [9, 9] : [8, 8],
   })
@@ -525,7 +525,7 @@ function SelectedRouteEditor({ route, interactive, showRouteLabels, view, operat
         <Marker
           key={`${route.uid}-${index}`}
           position={point}
-          icon={waypointIcon(index, route.waypoints.length, visual.color, teamColor, route.anchorMode)}
+          icon={waypointIcon(index, route.waypoints.length, visual.color, teamColor, route.anchorMode, branchPicking)}
           draggable={interactive && !branchPicking && (index > 0 || route.anchorMode === 'free')}
           bubblingMouseEvents={false}
           zIndexOffset={1100}

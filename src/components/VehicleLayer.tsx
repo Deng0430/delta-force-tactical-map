@@ -4,6 +4,8 @@ import * as L from 'leaflet'
 import type { OperatorTeam, Side, VehicleItem } from '../types'
 import { teamOf } from '../config/operators'
 import { platform } from '../platform'
+import UnitTeamMenu from './UnitTeamMenu'
+import { useUnitTeamPicker } from './useUnitTeamPicker'
 
 interface VehicleLayerProps {
   vehicles: VehicleItem[]
@@ -23,7 +25,7 @@ interface VehicleLayerProps {
   onLocateRefreshSource: (vehicle: VehicleItem) => void
   /** 快捷切换载具阵营（攻↔守） */
   onToggleSide: (uid: string) => void
-  /** 循环切换载具所属 A-E 队 */
+  /** 选择载具所属小队，同步绑定路线和分支 */
   onChangeTeam: (uid: string, team?: OperatorTeam) => void
   /** 从该载具位置创建行动路线 */
   onStartRoute: (uid: string) => void
@@ -78,6 +80,9 @@ function buildVehicleIcon(v: VehicleItem, view: Side, expanded: boolean, showCon
       ? '<span class="veh-refresh-badge" aria-hidden="true">刷</span>'
       : `<button type="button" class="veh-refresh-origin" title="刷新载具 · 点击定位原刷新点" aria-label="定位原刷新点" onclick="event.stopPropagation();event.preventDefault();window.__vehRefreshSource('${v.uid}')">刷</button>`
     : ''
+  const teamControl = platform.kind !== 'android'
+    ? `<button type="button" class="unit-team-trigger" title="选择所属小队（同步路线及分支）" aria-label="选择载具所属小队" aria-haspopup="menu" aria-expanded="false" aria-controls="unit-team-menu-vehicle-${v.uid}"><span>${team?.name ?? '无队伍'}</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>`
+    : ''
   return L.divIcon({
     className: 'veh-marker-wrap',
     html: `
@@ -87,7 +92,8 @@ function buildVehicleIcon(v: VehicleItem, view: Side, expanded: boolean, showCon
         <img class="veh-icon" src="${v.iconUrl}" alt="${v.name}" draggable="false" />
         <span class="veh-action-fan" aria-hidden="true"></span>
         ${sideBtn}
-        <button class="veh-team-letter" title="${team ? `${team.name}（点击切换队伍）` : '无队伍（点击设置队伍）'}" aria-label="切换载具所属队伍" onclick="event.stopPropagation();event.preventDefault();window.__vehTeam('${v.uid}')">${team?.id ?? '–'}</button>
+        <button type="button" class="veh-team-letter" title="${team ? `${team.name}（点击选择队伍）` : '无队伍（点击设置队伍）'}" aria-label="切换载具所属队伍">${team?.id ?? '–'}</button>
+        ${teamControl}
         <button class="veh-route" title="绘制${v.name}行动路线" aria-label="绘制载具行动路线" onclick="event.stopPropagation();event.preventDefault();window.__vehRoute('${v.uid}')"><i class="fa-solid fa-route" aria-hidden="true"></i></button>
         <button class="veh-fireline${v.fireLineEnabled ? ' active' : ''}" data-fireline-length="${v.fireLineLength ?? 56}" title="${v.fireLineEnabled ? '关闭' : '开启'}枪线；长按调整长度" aria-label="切换枪线，长按调整长度" onwheel="event.stopPropagation();event.preventDefault();window.dispatchEvent(new CustomEvent('unit-fireline-length',{detail:{kind:'vehicle',uid:'${v.uid}',delta:event.deltaY>0?-4:4}}))" onpointerdown="window.__unitFireLineDragStart?.(event,'vehicle','${v.uid}')" ${fireLineClick}><i class="fa-solid fa-crosshairs" aria-hidden="true"></i></button>
         ${refreshOrigin}
@@ -133,12 +139,17 @@ function VehicleMarker({
 }) {
   const ref = useRef<L.Marker | null>(null)
   const [expanded, setExpanded] = useState(false)
+  const [teamMenuOpen, setTeamMenuOpen] = useState(false)
   const touchTapAtRef = useRef(0)
   const map = useMap()
+  const selectionActive = platform.kind === 'android' || expanded
 
   useEffect(() => {
-    if (platform.kind !== 'android') return
-    const collapse = () => setExpanded(false)
+    if (!selectionActive) return
+    const collapse = () => {
+      setExpanded(false)
+      setTeamMenuOpen(false)
+    }
     const selectOther = (event: Event) => {
       if ((event as CustomEvent<string>).detail !== vehicle.uid) collapse()
     }
@@ -148,7 +159,10 @@ function VehicleMarker({
       map.off('click', collapse)
       window.removeEventListener('mobile-unit-selected', selectOther)
     }
-  }, [map, vehicle.uid])
+  }, [map, vehicle.uid, selectionActive])
+  useEffect(() => {
+    if (!interactive) setTeamMenuOpen(false)
+  }, [interactive])
   // 最新角度副本：滚轮连续滚动时无需 React 往返，直接读/写
   const rotRef = useRef(vehicle.rotation ?? 0)
   rotRef.current = vehicle.rotation ?? 0
@@ -377,23 +391,15 @@ function VehicleMarker({
     }
   }, [vehicle.uid, onToggleSide])
 
-  // 左下角队伍角标：点击按 A→B→C→D→E 循环，变化立即持久化。
+  // 保留队标入口；显式选择小队，不再逐次循环。
+  useUnitTeamPicker(ref, icon, interactive, () => {
+    setExpanded(true)
+    setTeamMenuOpen((open) => !open)
+  })
+
   useEffect(() => {
-    const w = window as unknown as {
-      __vehTeam?: (uid: string) => void
-      __vehTeamHandlers?: Record<string, () => void>
-    }
-    if (!w.__vehTeam) w.__vehTeam = (uid: string) => w.__vehTeamHandlers?.[uid]?.()
-    if (!w.__vehTeamHandlers) w.__vehTeamHandlers = {}
-    w.__vehTeamHandlers[vehicle.uid] = () => {
-      const order: Array<OperatorTeam | undefined> = [undefined, 'A', 'B', 'C', 'D', 'E']
-      const index = order.indexOf(vehicle.team)
-      onChangeTeam(vehicle.uid, order[(index + 1) % order.length])
-    }
-    return () => {
-      if (w.__vehTeamHandlers) delete w.__vehTeamHandlers[vehicle.uid]
-    }
-  }, [vehicle.uid, vehicle.team, onChangeTeam])
+    ref.current?.getElement()?.querySelector('.unit-team-trigger')?.setAttribute('aria-expanded', String(teamMenuOpen))
+  }, [teamMenuOpen, icon])
 
   useEffect(() => {
     const w = window as unknown as {
@@ -433,6 +439,7 @@ function VehicleMarker({
         click: (event) => {
           // 绘制工具激活时忽略点击（不展开载具属性卡）
           if (!interactive || !allowSelect) return
+          L.DomEvent.stopPropagation(event)
           if (platform.kind === 'android') {
             if (Date.now() - touchTapAtRef.current < 500) return
             L.DomEvent.stopPropagation(event)
@@ -440,7 +447,10 @@ function VehicleMarker({
           }
           setExpanded((v) => !v)
         },
-        dragstart: () => ref.current?.getElement()?.classList.add('mobile-unit-dragging'),
+        dragstart: () => {
+          setTeamMenuOpen(false)
+          ref.current?.getElement()?.classList.add('mobile-unit-dragging')
+        },
         drag: (e) => {
           const ll = (e.target as L.Marker).getLatLng()
           posRef.current[vehicle.uid] = [ll.lat, ll.lng]
@@ -463,9 +473,17 @@ function VehicleMarker({
         },
       }}
     >
-      {platform.kind !== 'android' && <Tooltip direction="top" offset={[0, -30]}>
+      {platform.kind !== 'android' && !teamMenuOpen && <Tooltip direction="top" offset={[0, -30]}>
         {vehicle.name}{vehicle.sourceType === 'vehicle-refresh' ? ' · 刷新载具' : ''} · 滚轮旋转 · 右键删除 · 枪线按钮上滚轮调长度
       </Tooltip>}
+      {teamMenuOpen && interactive && <UnitTeamMenu
+        owner={`vehicle-${vehicle.uid}`}
+        name={vehicle.name}
+        team={vehicle.team}
+        getAnchor={() => ref.current?.getElement()?.querySelector<HTMLButtonElement>(platform.kind === 'android' ? '.veh-team-letter' : '.unit-team-trigger') ?? null}
+        onSelect={(team) => onChangeTeam(vehicle.uid, team)}
+        onClose={() => setTeamMenuOpen(false)}
+      />}
     </Marker>
   )
 }

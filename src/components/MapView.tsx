@@ -14,6 +14,7 @@ import type {
   ModeVehicleRefreshPoint,
   ModeVehicleRefreshRule,
   OperatorConnection,
+  OperatorTeam,
   OperatorUnit,
   PointStatus,
   Side,
@@ -50,6 +51,7 @@ import { platform } from '../platform'
 import VehicleRefreshLayer, { type RuntimeVehicleRefreshPoint, type RuntimeVehicleRefreshRule } from './VehicleRefreshLayer'
 import type { StageDeploy } from '../config/deployVehicles'
 import { rangeProgressStyle } from '../utils/rangeStyle'
+import KeyboardMapPan from './KeyboardMapPan'
 
 interface OfficialModeMapData {
   stages: StageConfig[]
@@ -433,6 +435,7 @@ interface MapViewProps {
   onMoveTeamMarker: (uid: string, lat: number, lng: number) => void
   onRotateTeamMarker: (uid: string, rotation: number) => void
   onToggleTeamFireLine: (uid: string) => void
+  onChangeTeamMarkerTeam: (uid: string, team: OperatorTeam) => void
   onDeleteTeamMarker: (uid: string) => void
   /** 批量移动队标（套索整体移动） */
   onMoveTeamMarkers: (updates: Record<string, [number, number]>) => void
@@ -547,24 +550,30 @@ function MapResizeSync() {
   return null
 }
 
-function RouteEditorTrigger({ route, onOpen, onDelete }: { route: TacticalRoute; onOpen: () => void; onDelete: () => void }) {
+function RouteEditorTrigger({ route, activeSection, branchPicking, onOpen, onStyle, onBranch, onDelete }: {
+  route: TacticalRoute
+  activeSection: 'order' | 'style' | null
+  branchPicking: boolean
+  onOpen: () => void
+  onStyle: () => void
+  onBranch: () => void
+  onDelete: () => void
+}) {
   const map = useMap()
   const markerRef = useRef<L.Marker | null>(null)
-  const onOpenRef = useRef(onOpen)
-  const onDeleteRef = useRef(onDelete)
-  onOpenRef.current = onOpen
-  onDeleteRef.current = onDelete
+  const actionsRef = useRef({ onOpen, onStyle, onBranch, onDelete })
+  actionsRef.current = { onOpen, onStyle, onBranch, onDelete }
   const routeNorthEast = useMemo(() => {
     const bounds = L.latLngBounds(route.waypoints.map(([lat, lng]) => L.latLng(lat, lng)))
     return bounds.getNorthEast()
   }, [route.waypoints])
   const [position, setPosition] = useState(routeNorthEast)
   const buttonSize = platform.kind === 'android' ? 36 : 30
-  const controlWidth = buttonSize * 2 + 6
-  const controlHeight = buttonSize + 24
+  const controlWidth = buttonSize * 4 + 18
+  const controlHeight = buttonSize + 26
   const icon = useMemo(() => L.divIcon({
     className: 'route-editor-trigger-wrap',
-    html: '<div class="route-selection-controls"><span class="route-selection-hint"></span><div class="route-selection-actions"><button type="button" class="route-editor-trigger" title="编辑行动指令" aria-label="编辑行动指令"><i class="fa-solid fa-route" aria-hidden="true"></i></button><button type="button" class="route-delete-trigger" title="删除路线" aria-label="删除路线"><i class="fa-regular fa-trash-can" aria-hidden="true"></i></button></div></div>',
+    html: '<div class="route-selection-controls"><span class="route-selection-hint"></span><div class="route-selection-actions" role="group" aria-label="路线快捷操作"><button type="button" class="route-editor-trigger" title="行动指令" aria-label="编辑行动指令"><i class="fa-solid fa-route" aria-hidden="true"></i></button><button type="button" class="route-style-trigger" title="线条样式" aria-label="编辑线条样式"><i class="fa-solid fa-palette" aria-hidden="true"></i></button><button type="button" class="route-branch-trigger" title="创建分支：点击后选择路线节点" aria-label="创建分支"><i class="fa-solid fa-code-branch" aria-hidden="true"></i></button><button type="button" class="route-delete-trigger" title="删除路线（可撤销）" aria-label="删除路线"><i class="fa-regular fa-trash-can" aria-hidden="true"></i></button></div></div>',
     iconSize: [controlWidth, controlHeight],
     iconAnchor: [0, controlHeight],
   }), [buttonSize, controlWidth, controlHeight])
@@ -572,7 +581,12 @@ function RouteEditorTrigger({ route, onOpen, onDelete }: { route: TacticalRoute;
   useEffect(() => {
     const updatePosition = () => {
       const size = map.getSize()
-      const desired = map.latLngToContainerPoint(routeNorthEast).add([8, -8])
+      // 在屏幕空间计算边界，旋转地图后仍保持在路线右上方。
+      const points = route.waypoints.map((point) => map.latLngToContainerPoint(point))
+      const desired = L.point(
+        Math.max(...points.map((point) => point.x)) + 8,
+        Math.min(...points.map((point) => point.y)) - 8,
+      )
       const clamped = L.point(
         Math.max(4, Math.min(size.x - controlWidth - 4, desired.x)),
         Math.max(controlHeight + 4, Math.min(size.y - 4, desired.y)),
@@ -580,37 +594,72 @@ function RouteEditorTrigger({ route, onOpen, onDelete }: { route: TacticalRoute;
       setPosition(map.containerPointToLatLng(clamped))
     }
     updatePosition()
-    map.on('move zoom resize', updatePosition)
-    return () => { map.off('move zoom resize', updatePosition) }
-  }, [map, routeNorthEast, controlWidth, controlHeight])
+    map.on('move zoom resize rotate', updatePosition)
+    return () => { map.off('move zoom resize rotate', updatePosition) }
+  }, [map, route.waypoints, controlWidth, controlHeight])
 
   useEffect(() => {
     const element = markerRef.current?.getElement()
-    const openButton = element?.querySelector<HTMLElement>('.route-editor-trigger')
-    const deleteButton = element?.querySelector<HTMLElement>('.route-delete-trigger')
-    const hint = element?.querySelector<HTMLElement>('.route-selection-hint')
-    if (!element || !openButton || !deleteButton || !hint) return
-    hint.textContent = route.name || '已选路线'
+    if (!element) return
     const stopPointer = (event: Event) => L.DomEvent.stop(event)
-    const openOnPointerUp = (event: Event) => {
-      L.DomEvent.stop(event)
-      // 等本次触摸产生的合成 click 完整结束后再卸载 Marker、打开面板，
-      // 避免 click 落到下方路线并再次执行“选中路线 = 收起面板”。
-      window.setTimeout(() => onOpenRef.current(), 0)
-    }
-    const deleteOnPointerUp = (event: Event) => {
-      L.DomEvent.stop(event)
-      window.setTimeout(() => onDeleteRef.current(), 0)
-    }
-    L.DomEvent.on(element, 'pointerdown', stopPointer)
-    L.DomEvent.on(openButton, 'pointerup', openOnPointerUp)
-    L.DomEvent.on(deleteButton, 'pointerup', deleteOnPointerUp)
+    let pendingAction: number | undefined
+    const bindings = [
+      ['.route-editor-trigger', 'onOpen'],
+      ['.route-style-trigger', 'onStyle'],
+      ['.route-branch-trigger', 'onBranch'],
+      ['.route-delete-trigger', 'onDelete'],
+    ] as const
+    const listeners = bindings.flatMap(([selector, action]) => {
+      const button = element.querySelector<HTMLButtonElement>(selector)
+      if (!button) return []
+      const activate = (event: Event) => {
+        L.DomEvent.stop(event)
+        if (event instanceof PointerEvent && (!event.isPrimary || event.button !== 0)) return
+        // 先隔离本次触摸的合成 click，再打开面板/删除，避免事件穿透。
+        if (pendingAction != null) window.clearTimeout(pendingAction)
+        pendingAction = window.setTimeout(() => {
+          pendingAction = undefined
+          actionsRef.current[action]()
+        }, 0)
+      }
+      const click = (event: Event) => {
+        L.DomEvent.stop(event)
+        if ((event as MouseEvent).detail === 0) activate(event)
+      }
+      L.DomEvent.on(button, 'pointerup', activate)
+      L.DomEvent.on(button, 'click', click)
+      return [{ button, activate, click }]
+    })
+    L.DomEvent.on(element, 'pointerdown mousedown dblclick contextmenu', stopPointer)
     return () => {
-      L.DomEvent.off(element, 'pointerdown', stopPointer)
-      L.DomEvent.off(openButton, 'pointerup', openOnPointerUp)
-      L.DomEvent.off(deleteButton, 'pointerup', deleteOnPointerUp)
+      if (pendingAction != null) window.clearTimeout(pendingAction)
+      L.DomEvent.off(element, 'pointerdown mousedown dblclick contextmenu', stopPointer)
+      listeners.forEach(({ button, activate, click }) => {
+        L.DomEvent.off(button, 'pointerup', activate)
+        L.DomEvent.off(button, 'click', click)
+      })
     }
-  }, [icon, route.name])
+  }, [icon])
+
+  useEffect(() => {
+    const element = markerRef.current?.getElement()
+    const hint = element?.querySelector<HTMLElement>('.route-selection-hint')
+    if (hint) {
+      hint.textContent = branchPicking ? '点击高亮节点创建分支' : route.name || '已选路线'
+      hint.title = hint.textContent
+      hint.classList.toggle('branch-picking', branchPicking)
+    }
+    const states = [
+      ['.route-editor-trigger', activeSection === 'order'],
+      ['.route-style-trigger', activeSection === 'style'],
+      ['.route-branch-trigger', branchPicking],
+    ] as const
+    states.forEach(([selector, active]) => {
+      const button = element?.querySelector<HTMLButtonElement>(selector)
+      button?.classList.toggle('active', active)
+      button?.setAttribute('aria-pressed', String(active))
+    })
+  }, [icon, route.name, activeSection, branchPicking])
 
   return (
     <Marker
@@ -711,6 +760,7 @@ export default function MapView({
   onMoveTeamMarker,
   onRotateTeamMarker,
   onToggleTeamFireLine,
+  onChangeTeamMarkerTeam,
   onDeleteTeamMarker,
   onMoveTeamMarkers,
   onDeleteTeamMarkers,
@@ -747,13 +797,13 @@ export default function MapView({
   const mapWrapRef = useRef<HTMLDivElement | null>(null)
   const [routeDraftSource, setRouteDraftSource] = useState<RouteDraftSource>(null)
   const [selectedRouteUid, setSelectedRouteUid] = useState<string | null>(null)
-  const [routeEditorOpen, setRouteEditorOpen] = useState(false)
+  const [routeEditorSection, setRouteEditorSection] = useState<'order' | 'style' | null>(null)
   const [branchPickRouteUid, setBranchPickRouteUid] = useState<string | null>(null)
 
   useEffect(() => {
     setRouteDraftSource(null)
     setSelectedRouteUid(null)
-    setRouteEditorOpen(false)
+    setRouteEditorSection(null)
     setBranchPickRouteUid(null)
   }, [view])
   useEffect(() => {
@@ -988,7 +1038,7 @@ export default function MapView({
   const handleSelectRoute = useCallback((uid: string | null) => {
     setSelectedRouteUid(uid)
     // 路线与普通图形一致：选中只显示紧凑入口，完整属性面板由用户主动打开。
-    setRouteEditorOpen(false)
+    setRouteEditorSection(null)
     setBranchPickRouteUid((current) => current === uid ? current : null)
     if (uid) onCloseDetail()
   }, [onCloseDetail])
@@ -1088,6 +1138,7 @@ export default function MapView({
         style={{ width: '100%', height: '100%' }}
       >
         <InteractiveLayerPanGuard />
+        <KeyboardMapPan enabled={editing == null} />
         <TextEditMapLock active={editing != null} />
         <MapRotationControl initiallyCollapsed={cinematicCompassCollapsed} />
         <SkillActionPlacement active={skillActionDraft != null && (skillActionDraft.skill?.placementMode ?? skillActionDraft.tacticalMode?.placementMode) !== 'target-unit' && (skillActionDraft.skill?.placementMode ?? skillActionDraft.tacticalMode?.placementMode) !== 'ally-unit'} onPlace={onPlaceSkillAction} onCancel={onCancelSkillAction} />
@@ -1269,14 +1320,27 @@ export default function MapView({
             }}
           />
         )}
-        {selectedRoute && !routeDrawing && !routeEditorOpen && (
+        {selectedRoute && !routeDrawing && interactive && (
           <RouteEditorTrigger
             route={selectedRoute}
-            onOpen={() => setRouteEditorOpen(true)}
+            activeSection={routeEditorSection}
+            branchPicking={branchPickRouteUid === selectedRoute.uid}
+            onOpen={() => {
+              setBranchPickRouteUid(null)
+              setRouteEditorSection((section) => section === 'order' ? null : 'order')
+            }}
+            onStyle={() => {
+              setBranchPickRouteUid(null)
+              setRouteEditorSection((section) => section === 'style' ? null : 'style')
+            }}
+            onBranch={() => {
+              setRouteEditorSection(null)
+              setBranchPickRouteUid((uid) => uid === selectedRoute.uid ? null : selectedRoute.uid)
+            }}
             onDelete={() => {
               onDeleteRoute(selectedRoute.uid)
               setSelectedRouteUid(null)
-              setRouteEditorOpen(false)
+              setRouteEditorSection(null)
               setBranchPickRouteUid(null)
             }}
           />
@@ -1292,6 +1356,7 @@ export default function MapView({
             onMove={onMoveTeamMarker}
             onRotate={onRotateTeamMarker}
             onToggleFireLine={onToggleTeamFireLine}
+            onChangeTeam={onChangeTeamMarkerTeam}
             onDelete={onDeleteTeamMarker}
             onStartRoute={(uid) => {
               onTool('pan')
@@ -1347,10 +1412,11 @@ export default function MapView({
         return <div className="skill-action-hint"><img src={definition.iconUrl} alt="" /><span>部署：{definition.name}</span><small>{placementMode === 'ally-unit' ? '选择己方干员' : placementMode === 'target-unit' ? '选择敌方干员' : '点击地图确定位置'}</small><button type="button" onClick={onCancelSkillAction} title="取消部署" aria-label="取消部署"><i className="fa-solid fa-xmark" /></button></div>
       })()}
 
-      {selectedRoute && !routeDrawing && routeEditorOpen && (
+      {selectedRoute && !routeDrawing && routeEditorSection && (
         <RouteEditorPanel
-          key={selectedRoute.uid}
+          key={`${selectedRoute.uid}-${routeEditorSection}`}
           route={selectedRoute}
+          section={routeEditorSection}
           view={view}
           availableOperators={operators.filter((operator) => operator.side === selectedRoute.side && operator.team === selectedRoute.team)}
           branchPicking={branchPickRouteUid === selectedRoute.uid}
@@ -1373,7 +1439,7 @@ export default function MapView({
             }
             onCreateRoute(copy)
             setSelectedRouteUid(copy.uid)
-            setRouteEditorOpen(false)
+            setRouteEditorSection(null)
           }}
           onReverse={() => onUpdateRoute(selectedRoute.uid, {
             waypoints: [...selectedRoute.waypoints].reverse(),
@@ -1386,15 +1452,18 @@ export default function MapView({
             branchFromWaypointIndex: undefined,
             target: undefined,
           })}
-          onBranch={() => setBranchPickRouteUid((uid) => uid === selectedRoute.uid ? null : selectedRoute.uid)}
+          onBranch={() => {
+            setRouteEditorSection(null)
+            setBranchPickRouteUid((uid) => uid === selectedRoute.uid ? null : selectedRoute.uid)
+          }}
           onDelete={() => {
             onDeleteRoute(selectedRoute.uid)
             setSelectedRouteUid(null)
-            setRouteEditorOpen(false)
+            setRouteEditorSection(null)
             setBranchPickRouteUid(null)
           }}
           onClose={() => {
-            setRouteEditorOpen(false)
+            setRouteEditorSection(null)
             setBranchPickRouteUid(null)
           }}
         />

@@ -29,6 +29,16 @@
 - 内置全部 11 张地图的胜者为王基础数据。
 - 正式版和编辑器支持复制、粘贴、撤回、恢复、多选和快捷删除。
 
+## 0.1.6-beta.1 更新内容
+
+本版本为预发布测试版，稳定版仍为 `0.1.5`。
+
+- 正式地图与模式配置器新增 WASD 连续平移，按住 Shift 可快速移动；补全 Shift＋滚轮旋转地图的快捷键说明。
+- 路线新增同级快捷入口：行动指令、线条样式、创建分支和删除。创建分支时高亮可选节点，常用操作更容易找到。
+- PC 端载具、建筑和队伍兵棋新增清晰的队名选择按钮，可直接切换小队，不再依靠逐次循环。
+- 兵棋换队或路线起点改绑其他队伍时，绑定路线及全部下级分支同步更新队伍与线条颜色，纳入同一次撤销；保留路线形状、执行成员和自定义名称。
+- 换队菜单自动避让屏幕边缘，路线快捷入口随地图平移、缩放和旋转跟随；保留 Android 的触控尺寸、操作环及面板拖动行为。
+
 ## 0.1.5 更新内容
 
 - 更新摩格旧城区地图数据：固化三个阶段的据点、占领区、防线、攻守活动区、复活点、地图道具及部署载具；S2 攻守双方各可部署 1 辆 FSV 轮式突击炮。
@@ -103,7 +113,7 @@ npm run build:win
 Windows 发布安装包使用英文文件名：
 
 ```text
-release/deltaforce-tactical-map-0.1.4-setup.exe
+release/deltaforce-tactical-map-0.1.6-beta.1-setup.exe
 ```
 
 ### Android
@@ -113,7 +123,7 @@ Android 版本固定横屏运行，支持沉浸式全屏、挖孔屏和圆角屏
 Android 应用界面保持中文，发布 APK 使用英文文件名：
 
 ```text
-release/deltaforce-tactical-map-0.1.4-android-debug.apk
+release/deltaforce-tactical-map-0.1.6-beta.1-android-release.apk
 ```
 
 Android 构建需要 Java 21、Android Studio 和 Android SDK 36：
@@ -140,6 +150,9 @@ Windows 和 Android 应用都可以自由查看 PC 游戏数据或手游数据�
 
 | 快捷键 | 功能 |
 | --- | --- |
+| `W` / `A` / `S` / `D` | 向上 / 左 / 下 / 右平移地图，按住可连续移动 |
+| `Shift+W` / `A` / `S` / `D` | 按住 Shift 配合 WASD，快速平移地图 |
+| `Shift+滚轮` | 按住 Shift 配合鼠标滚轮旋转地图（正式地图） |
 | `Ctrl+C` / `Ctrl+V` | 复制 / 粘贴 |
 | `Ctrl+Z` / `Ctrl+Y` | 撤回 / 恢复 |
 | `Ctrl+单击` | 增减选择 |

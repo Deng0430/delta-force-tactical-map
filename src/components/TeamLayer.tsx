@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Marker, Tooltip, useMap } from 'react-leaflet'
 import * as L from 'leaflet'
-import type { Side, TeamMarker } from '../types'
+import type { OperatorTeam, Side, TeamMarker } from '../types'
 import { teamOf } from '../config/operators'
 import { platform } from '../platform'
+import UnitTeamMenu from './UnitTeamMenu'
+import { useUnitTeamPicker } from './useUnitTeamPicker'
 
 interface TeamLayerProps {
   view: Side
@@ -19,6 +21,7 @@ interface TeamLayerProps {
   onMove: (uid: string, lat: number, lng: number) => void
   onRotate: (uid: string, rotation: number) => void
   onToggleFireLine: (uid: string) => void
+  onChangeTeam: (uid: string, team: OperatorTeam) => void
   onDelete: (uid: string) => void
   onStartRoute: (uid: string) => void
 }
@@ -45,12 +48,15 @@ function darken(hex: string, f = 0.6): string {
  * - 外圈：阵营色粗环 + 发光（我方=绿，敌方=红，与干员/载具一致）
  * 大小 30px，与载具卡片相当。
  */
-function buildTeamIcon(tm: TeamMarker, view: Side, teamName?: string, expanded = false): L.DivIcon {
+function buildTeamIcon(tm: TeamMarker, view: Side, teamName?: string, expanded = false, interactive = true): L.DivIcon {
   const team = teamOf(tm.team)
   const fireLineClick = platform.kind === 'android' ? '' : `onclick="event.stopPropagation();event.preventDefault();window.__tmFireLine('${tm.uid}')"`
   const own = tm.side === view
   const sc = own ? SIDE_COLOR.own : SIDE_COLOR.enemy
   const name = teamName?.trim() || tm.name || `${tm.team}队`
+  const teamControl = platform.kind !== 'android' && interactive
+    ? `<button type="button" class="unit-team-trigger" title="选择所属小队（同步路线及分支）" aria-label="选择队伍兵棋所属小队" aria-haspopup="menu" aria-expanded="false" aria-controls="unit-team-menu-team-${tm.uid}"><span>${team.name}</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>`
+    : ''
   return L.divIcon({
     className: 'tm-wrap',
     html: `
@@ -60,6 +66,7 @@ function buildTeamIcon(tm: TeamMarker, view: Side, teamName?: string, expanded =
         <span class="tm-letter">${team.id}</span>
         <span class="tm-name">${name}</span>
         <span class="tm-action-fan" aria-hidden="true"></span>
+        ${teamControl}
         <button class="tm-route" title="绘制${team.name}进攻路线" aria-label="绘制进攻路线" onclick="event.stopPropagation();event.preventDefault();window.__tmRoute('${tm.uid}')"><i class="fa-solid fa-route" aria-hidden="true"></i></button>
         <button class="tm-fireline${tm.fireLineEnabled ? ' active' : ''}" data-fireline-length="${tm.fireLineLength ?? 56}" title="${tm.fireLineEnabled ? '关闭' : '开启'}枪线；长按调整长度" aria-label="切换枪线，长按调整长度" onwheel="event.stopPropagation();event.preventDefault();window.dispatchEvent(new CustomEvent('unit-fireline-length',{detail:{kind:'team',uid:'${tm.uid}',delta:event.deltaY>0?-4:4}}))" onpointerdown="window.__unitFireLineDragStart?.(event,'team','${tm.uid}')" ${fireLineClick}><i class="fa-solid fa-crosshairs"></i></button>
         ${platform.kind === 'android' ? `<button type="button" class="tm-rotate-control unit-rotate-drag" aria-label="按住并拖动旋转队标枪线" onmousedown="event.stopPropagation();event.preventDefault()" ontouchstart="event.stopPropagation();event.preventDefault()" onpointerdown="window.__tmRotateStart(event,'${tm.uid}')"><i class="fa-solid fa-rotate" aria-hidden="true"></i></button>` : ''}
@@ -81,6 +88,7 @@ function TeamMarkerItem({
   onMove,
   onRotate,
   onToggleFireLine,
+  onChangeTeam,
   onDelete,
   onStartRoute,
 }: {
@@ -93,11 +101,13 @@ function TeamMarkerItem({
   onMove: (uid: string, lat: number, lng: number) => void
   onRotate: (uid: string, rotation: number) => void
   onToggleFireLine: (uid: string) => void
+  onChangeTeam: (uid: string, team: OperatorTeam) => void
   onDelete: (uid: string) => void
   onStartRoute: (uid: string) => void
 }) {
   const ref = useRef<L.Marker | null>(null)
   const [expanded, setExpanded] = useState(false)
+  const [teamMenuOpen, setTeamMenuOpen] = useState(false)
   const map = useMap()
   const rotationRef = useRef(tm.rotation ?? 0)
   rotationRef.current = tm.rotation ?? 0
@@ -151,9 +161,13 @@ function TeamMarkerItem({
     return () => { if (w.__tmFireLineHandlers) delete w.__tmFireLineHandlers[tm.uid] }
   }, [tm.uid, onToggleFireLine])
 
+  const selectionActive = platform.kind === 'android' || expanded
   useEffect(() => {
-    if (platform.kind !== 'android') return
-    const collapse = () => setExpanded(false)
+    if (!selectionActive) return
+    const collapse = () => {
+      setExpanded(false)
+      setTeamMenuOpen(false)
+    }
     const selectOther = (event: Event) => {
       if ((event as CustomEvent<string>).detail !== tm.uid) collapse()
     }
@@ -163,7 +177,11 @@ function TeamMarkerItem({
       map.off('click', collapse)
       window.removeEventListener('mobile-unit-selected', selectOther)
     }
-  }, [map, tm.uid])
+  }, [map, tm.uid, selectionActive])
+
+  useEffect(() => {
+    if (!interactive) setTeamMenuOpen(false)
+  }, [interactive])
 
   // 位置注册表：套索框选/整体移动读取
   useEffect(() => {
@@ -178,10 +196,19 @@ function TeamMarkerItem({
   }, [tm.uid, tm.lat, tm.lng, posRef])
 
   const icon = useMemo(
-    () => buildTeamIcon(tm, view, teamName, expanded),
+    () => buildTeamIcon(tm, view, teamName, expanded, interactive),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tm.uid, tm.team, tm.name, tm.side, tm.fireLineEnabled, view, teamName, expanded],
+    [tm.uid, tm.team, tm.name, tm.side, tm.fireLineEnabled, view, teamName, expanded, interactive],
   )
+
+  useUnitTeamPicker(ref, icon, interactive, () => {
+    setExpanded(true)
+    setTeamMenuOpen((open) => !open)
+  })
+
+  useEffect(() => {
+    ref.current?.getElement()?.querySelector('.unit-team-trigger')?.setAttribute('aria-expanded', String(teamMenuOpen))
+  }, [teamMenuOpen, icon])
 
   useEffect(() => {
     const element = ref.current?.getElement()
@@ -248,13 +275,18 @@ function TeamMarkerItem({
       interactive={interactive}
       eventHandlers={{
         click: (e) => {
+          if (!interactive) return
           L.DomEvent.stopPropagation(e)
           if (platform.kind === 'android') {
             window.dispatchEvent(new CustomEvent('mobile-unit-selected', { detail: tm.uid }))
-            setExpanded((value) => !value)
           }
+          setExpanded((value) => !value)
+          setTeamMenuOpen(false)
         },
-        dragstart: () => ref.current?.getElement()?.classList.add('mobile-unit-dragging'),
+        dragstart: () => {
+          setTeamMenuOpen(false)
+          ref.current?.getElement()?.classList.add('mobile-unit-dragging')
+        },
         drag: (e) => {
           const ll = (e.target as L.Marker).getLatLng()
           posRef.current[tm.uid] = [ll.lat, ll.lng]
@@ -273,9 +305,18 @@ function TeamMarkerItem({
         },
       }}
     >
-      {platform.kind !== 'android' && <Tooltip direction="top" offset={[0, -28]}>
-        {teamName?.trim() || tm.name || `${tm.team}队`} · 滚轮旋转 · 右键删除 · 枪线按钮上滚轮调长度
+      {platform.kind !== 'android' && !teamMenuOpen && <Tooltip direction="top" offset={[0, -28]}>
+        {teamName?.trim() || tm.name || `${tm.team}队`} · 左侧按钮换队 · 滚轮旋转 · 右键删除 · 枪线按钮上滚轮调长度
       </Tooltip>}
+      {teamMenuOpen && interactive && <UnitTeamMenu
+        owner={`team-${tm.uid}`}
+        name={teamName?.trim() || tm.name || `${tm.team}队`}
+        team={tm.team}
+        allowNoTeam={false}
+        getAnchor={() => ref.current?.getElement()?.querySelector<HTMLButtonElement>('.unit-team-trigger') ?? null}
+        onSelect={(team) => { if (team) onChangeTeam(tm.uid, team) }}
+        onClose={() => setTeamMenuOpen(false)}
+      />}
     </Marker>
   )
 }
@@ -296,6 +337,7 @@ export default function TeamLayer({
   onMove,
   onRotate,
   onToggleFireLine,
+  onChangeTeam,
   onDelete,
   onStartRoute,
 }: TeamLayerProps) {
@@ -313,6 +355,7 @@ export default function TeamLayer({
           onMove={onMove}
           onRotate={onRotate}
           onToggleFireLine={onToggleFireLine}
+          onChangeTeam={onChangeTeam}
           onDelete={onDelete}
           onStartRoute={onStartRoute}
         />

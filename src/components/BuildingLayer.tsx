@@ -5,12 +5,14 @@ import type { BuildingUnit, OperatorTeam, Side } from '../types'
 import { teamOf } from '../config/operators'
 import { buildingUnitOf } from '../config/buildingUnits'
 import { platform } from '../platform'
+import UnitTeamMenu from './UnitTeamMenu'
+import { useUnitTeamPicker } from './useUnitTeamPicker'
 
 const OWN_COLOR = '#01ff84'
 const ENEMY_COLOR = '#e0453a'
 const ROTATE_STEP = 15
 
-function buildingIcon(building: BuildingUnit, view: Side, expanded: boolean): L.DivIcon {
+function buildingIcon(building: BuildingUnit, view: Side, expanded: boolean, showControls: boolean): L.DivIcon {
   const meta = buildingUnitOf(building.kind)
   const own = building.side === view
   const sideColor = own ? OWN_COLOR : ENEMY_COLOR
@@ -20,9 +22,12 @@ function buildingIcon(building: BuildingUnit, view: Side, expanded: boolean): L.
   const mobileControls = platform.kind === 'android'
     ? `<button type="button" class="building-rotate-control unit-rotate-drag" aria-label="按住并拖动旋转建筑" onmousedown="event.stopPropagation();event.preventDefault()" ontouchstart="event.stopPropagation();event.preventDefault()" onpointerdown="window.__buildingRotateStart(event,'${building.uid}')"><i class="fa-solid fa-rotate"></i></button><button type="button" class="building-delete-control danger" aria-label="删除建筑" onclick="event.stopPropagation();event.preventDefault();window.__buildingDelete('${building.uid}')"><i class="fa-regular fa-trash-can"></i></button>`
     : ''
+  const teamControl = platform.kind !== 'android' && showControls
+    ? `<button type="button" class="unit-team-trigger" title="选择所属小队（同步路线及分支）" aria-label="选择建筑所属小队" aria-haspopup="menu" aria-expanded="false" aria-controls="unit-team-menu-building-${building.uid}"><span>${team?.name ?? '无队伍'}</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>`
+    : ''
   return L.divIcon({
     className: 'building-unit-wrap',
-    html: `<span class="building-unit ${own ? 'own' : 'enemy'} ${expanded ? 'expanded' : ''}" style="--building-side:${sideColor};--building-fill:${team?.color ?? sideColor}"><span class="building-side-ring"></span><span class="building-core"><img class="building-icon" src="${meta.iconUrl}" alt="" draggable="false" /></span><span class="building-action-fan" aria-hidden="true"></span>${sideButton}<button class="building-team-letter" title="${team ? `${team.name}（点击切换队伍）` : '无队伍（点击设置队伍）'}" aria-label="切换建筑所属队伍" onclick="event.stopPropagation();event.preventDefault();window.__buildingTeam('${building.uid}')">${team?.id ?? '–'}</button>${mobileControls}<span class="building-name">${meta.name}</span></span>`,
+    html: `<span class="building-unit ${own ? 'own' : 'enemy'} ${expanded ? 'expanded' : ''}" style="--building-side:${sideColor};--building-fill:${team?.color ?? sideColor}"><span class="building-side-ring"></span><span class="building-core"><img class="building-icon" src="${meta.iconUrl}" alt="" draggable="false" /></span><span class="building-action-fan" aria-hidden="true"></span>${sideButton}<button type="button" class="building-team-letter" title="${team ? `${team.name}（点击选择队伍）` : '无队伍（点击设置队伍）'}" aria-label="切换建筑所属队伍">${team?.id ?? '–'}</button>${teamControl}${mobileControls}<span class="building-name">${meta.name}</span></span>`,
     iconSize: [38, 38],
     iconAnchor: [19, 19],
   })
@@ -42,11 +47,16 @@ function BuildingMarker({ building, view, interactive, onMove, onRotate, onToggl
 }) {
   const ref = useRef<L.Marker | null>(null)
   const [expanded, setExpanded] = useState(false)
+  const [teamMenuOpen, setTeamMenuOpen] = useState(false)
   const map = useMap()
+  const selectionActive = platform.kind === 'android' || expanded
 
   useEffect(() => {
-    if (platform.kind !== 'android') return
-    const collapse = () => setExpanded(false)
+    if (!selectionActive) return
+    const collapse = () => {
+      setExpanded(false)
+      setTeamMenuOpen(false)
+    }
     const selectOther = (event: Event) => {
       if ((event as CustomEvent<string>).detail !== building.uid) collapse()
     }
@@ -56,16 +66,19 @@ function BuildingMarker({ building, view, interactive, onMove, onRotate, onToggl
       map.off('click', collapse)
       window.removeEventListener('mobile-unit-selected', selectOther)
     }
-  }, [map, building.uid])
+  }, [map, building.uid, selectionActive])
+  useEffect(() => {
+    if (!interactive) setTeamMenuOpen(false)
+  }, [interactive])
   const rotationRef = useRef(building.rotation ?? 0)
   rotationRef.current = building.rotation ?? 0
   const mapBearingRef = useRef(map.getBearing())
   // 长度和角度变化不应重建 divIcon，否则滚轮一次后 hover 丢失，枪线按钮会立即消失。
   // 仅在影响棋子静态外观或控制按钮状态的字段变化时重建，与载具/单兵保持一致。
   const icon = useMemo(
-    () => buildingIcon(building, view, expanded),
+    () => buildingIcon(building, view, expanded, interactive),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [building.uid, building.kind, building.side, building.team, building.fireLineEnabled, view, expanded],
+    [building.uid, building.kind, building.side, building.team, building.fireLineEnabled, view, expanded, interactive],
   )
 
   useEffect(() => {
@@ -305,20 +318,14 @@ function BuildingMarker({ building, view, interactive, onMove, onRotate, onToggl
     return () => { if (target.__buildingSideHandlers) delete target.__buildingSideHandlers[building.uid] }
   }, [building.uid, onToggleSide])
 
+  useUnitTeamPicker(ref, icon, interactive, () => {
+    setExpanded(true)
+    setTeamMenuOpen((open) => !open)
+  })
+
   useEffect(() => {
-    const target = window as unknown as {
-      __buildingTeam?: (uid: string) => void
-      __buildingTeamHandlers?: Record<string, () => void>
-    }
-    if (!target.__buildingTeam) target.__buildingTeam = (uid: string) => target.__buildingTeamHandlers?.[uid]?.()
-    if (!target.__buildingTeamHandlers) target.__buildingTeamHandlers = {}
-    target.__buildingTeamHandlers[building.uid] = () => {
-      const order: Array<OperatorTeam | undefined> = [undefined, 'A', 'B', 'C', 'D', 'E']
-      const index = order.indexOf(building.team)
-      onChangeTeam(building.uid, order[(index + 1) % order.length])
-    }
-    return () => { if (target.__buildingTeamHandlers) delete target.__buildingTeamHandlers[building.uid] }
-  }, [building.uid, building.team, onChangeTeam])
+    ref.current?.getElement()?.querySelector('.unit-team-trigger')?.setAttribute('aria-expanded', String(teamMenuOpen))
+  }, [teamMenuOpen, icon])
 
   return (
     <Marker
@@ -330,13 +337,16 @@ function BuildingMarker({ building, view, interactive, onMove, onRotate, onToggl
       zIndexOffset={640}
       eventHandlers={{
         click: (event) => {
+          L.DomEvent.stopPropagation(event)
           if (platform.kind === 'android') {
-            L.DomEvent.stopPropagation(event)
             window.dispatchEvent(new CustomEvent('mobile-unit-selected', { detail: building.uid }))
-            setExpanded((value) => !value)
           }
+          setExpanded((value) => !value)
         },
-        dragstart: () => ref.current?.getElement()?.classList.add('mobile-unit-dragging'),
+        dragstart: () => {
+          setTeamMenuOpen(false)
+          ref.current?.getElement()?.classList.add('mobile-unit-dragging')
+        },
         drag: (event) => {
           const point = event.target.getLatLng() as L.LatLng
           window.dispatchEvent(new CustomEvent('mobile-route-anchor-drag', {
@@ -358,9 +368,17 @@ function BuildingMarker({ building, view, interactive, onMove, onRotate, onToggl
         },
       }}
     >
-      {platform.kind !== 'android' && <Tooltip direction="top" offset={[0, -30]}>
+      {platform.kind !== 'android' && !teamMenuOpen && <Tooltip direction="top" offset={[0, -30]}>
         {building.name} · {building.team ? `${building.team}队` : '无队伍'} · {building.side === view ? '本方' : '敌方'} · 滚轮旋转 · 右键删除 · 枪线按钮上滚轮调长度
       </Tooltip>}
+      {teamMenuOpen && interactive && <UnitTeamMenu
+        owner={`building-${building.uid}`}
+        name={building.name}
+        team={building.team}
+        getAnchor={() => ref.current?.getElement()?.querySelector<HTMLButtonElement>(platform.kind === 'android' ? '.building-team-letter' : '.unit-team-trigger') ?? null}
+        onSelect={(team) => onChangeTeam(building.uid, team)}
+        onClose={() => setTeamMenuOpen(false)}
+      />}
     </Marker>
   )
 }

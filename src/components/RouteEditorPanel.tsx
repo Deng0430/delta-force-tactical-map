@@ -7,6 +7,7 @@ import { rangeProgressStyle } from '../utils/rangeStyle'
 
 interface RouteEditorPanelProps {
   route: TacticalRoute
+  section?: 'order' | 'style'
   view: Side
   availableOperators: OperatorUnit[]
   branchPicking: boolean
@@ -18,7 +19,7 @@ interface RouteEditorPanelProps {
   onClose: () => void
 }
 
-export default function RouteEditorPanel({ route, view, availableOperators, branchPicking, onPatch, onCopy, onReverse, onBranch, onDelete, onClose }: RouteEditorPanelProps) {
+export default function RouteEditorPanel({ route, section = 'order', view, availableOperators, branchPicking, onPatch, onCopy, onReverse, onBranch, onDelete, onClose }: RouteEditorPanelProps) {
   const [name, setName] = useState(route.name)
   const [opacity, setOpacity] = useState(Math.round(route.opacity * 100))
   const [strokeWidth, setStrokeWidth] = useState(route.strokeWidth ?? 3.5)
@@ -122,12 +123,13 @@ export default function RouteEditorPanel({ route, view, availableOperators, bran
   const teamColor = teamOf(route.team).color
 
   return (
-    <div ref={panelRef} className="route-editor-panel" onMouseDown={(e) => e.stopPropagation()} onContextMenu={(e) => e.stopPropagation()}>
+    <div ref={panelRef} className={`route-editor-panel${section === 'style' ? ' style-only' : ''}`} onPointerDown={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()} onContextMenu={(e) => e.stopPropagation()}>
       <div className="route-editor-head" onPointerDown={beginPanelDrag} onPointerMove={movePanel} onPointerUp={endPanelDrag} onPointerCancel={endPanelDrag}>
-        <span><i className="fa-solid fa-route" aria-hidden="true" /> 行动指令</span>
+        <span><i className={`fa-solid ${section === 'style' ? 'fa-palette' : 'fa-route'}`} aria-hidden="true" /> {section === 'style' ? '线条样式' : '行动指令'}</span>
         <button type="button" onClick={onClose} aria-label="关闭路线属性">×</button>
       </div>
 
+      {section === 'order' && <>
       <div className="route-editor-overview" style={{ '--route-team-color': teamColor } as CSSProperties}>
         <div className="route-editor-identity">
           <span className={`route-editor-side ${route.side === view ? 'own' : 'enemy'}`}>{route.side === view ? '己方' : '敌方'}</span>
@@ -144,6 +146,7 @@ export default function RouteEditorPanel({ route, view, availableOperators, bran
 
       <label className="route-editor-name">
         <input
+          aria-label="行动指令名称"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={commitName}
@@ -168,13 +171,14 @@ export default function RouteEditorPanel({ route, view, availableOperators, bran
           </select>
         </label>
       </div>
+      </>}
 
-      <details className="route-editor-fold">
+      <details className="route-editor-fold route-editor-appearance" open={section === 'style' ? true : undefined}>
         <summary>线条外观 <span>{ROUTE_LINE_OPTIONS.find((item) => item.id === route.lineStyle)?.label} · {strokeWidth.toFixed(1)}px · {opacity}%</span></summary>
         <div className="route-editor-color-control">
           <span>线条颜色</span>
           <label title="选择线条颜色">
-            <input type="color" value={route.color} onChange={(e) => onPatch({ color: e.target.value })} />
+            <input type="color" aria-label="线条颜色" value={route.color} onChange={(e) => onPatch({ color: e.target.value })} />
             <code>{route.color.toUpperCase()}</code>
           </label>
           <button
@@ -198,13 +202,13 @@ export default function RouteEditorPanel({ route, view, availableOperators, bran
           </button>
         </div>
         <div className="route-editor-style-row">
-          <div className="route-editor-field">
+          <label className="route-editor-field">
             <span>路线</span>
             <select value={route.geometryType ?? 'straight'} onChange={(e) => onPatch({ geometryType: e.target.value as 'straight' | 'curve' })}>
               <option value="straight">直线</option>
               <option value="curve">曲线</option>
             </select>
-          </div>
+          </label>
           <label className="route-editor-field opacity">
             <span>透明度 <b>{opacity}%</b></span>
             <input
@@ -247,6 +251,7 @@ export default function RouteEditorPanel({ route, view, availableOperators, bran
         </div>
       </details>
 
+      {section === 'order' && <>
       <details className="route-editor-fold route-editor-members">
         <summary>
           执行干员 <b>{operatorSelectionLocked ? `${anchoredOperatorName}（绑定锁定）` : `${route.operatorIds.length}/${availableOperators.length}`}</b>
@@ -307,6 +312,7 @@ export default function RouteEditorPanel({ route, view, availableOperators, bran
       <div className={`route-editor-hint ${branchPicking ? 'active' : ''}`}>
         {branchPicking ? '请点击路线上的任意编号节点作为分支起点' : '双击路线段插点 · 拖动编号节点调整 · 中心手柄移动整线'}
       </div>
+      </>}
     </div>
   )
 }

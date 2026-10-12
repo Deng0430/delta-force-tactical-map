@@ -62,6 +62,7 @@ import { platform } from './platform'
 import { useDeviceType } from './hooks/useDeviceType'
 import { propsForPlatform, stagesForPlatform, type GameDataPlatform } from './config/gameDataPlatform'
 import { evaluateVehicleRefreshRule } from './utils/vehicleRefreshRuntime'
+import { syncRouteTeamCascade } from './utils/routeTeamCascade'
 import { useBeginnerDemoBridge } from './demo/useBeginnerDemoBridge'
 
 const DEFAULT_MAP_IDS = MAPS.map((map) => map.id)
@@ -1943,15 +1944,15 @@ export default function App() {
     [mapId, view, cloneState, pushEntry, updateMap],
   )
 
-  /** 载具队伍角标点击后循环切换所属队伍。 */
+  /** 载具换队时，递归更新绑定路线及其分支的小队和队色，纳入同一次撤销历史。 */
   const handleVehicleTeamChange = useCallback(
     (uid: string, team?: OperatorTeam) => {
       const cur = mapsRef.current[activeTacticalContextKeyRef.current] ?? createEmptyMapState()
       const before = cloneState(cur)
       const nextVehicles = vehiclesBucketOf(cur)[view].map((vehicle) => vehicle.uid === uid ? { ...vehicle, team } : vehicle)
-      const nextRoutes = routesBucketOf(cur)[view].map((route) =>
-        route.anchorMode === 'vehicle' && route.anchorVehicleUid === uid && team ? { ...route, team } : route,
-      )
+      const currentRoutes = routesBucketOf(cur)[view]
+      const rootUids = currentRoutes.filter((route) => route.anchorMode === 'vehicle' && route.anchorVehicleUid === uid).map((route) => route.uid)
+      const nextRoutes = team ? syncRouteTeamCascade(currentRoutes, rootUids, team) : currentRoutes
       updateMap(mapId, (state) => ({
         ...state,
         vehicles: { ...vehiclesBucketOf(state), [view]: nextVehicles },
@@ -2081,8 +2082,19 @@ export default function App() {
     const cur = mapsRef.current[activeTacticalContextKeyRef.current] ?? createEmptyMapState()
     const before = cloneState(cur)
     const nextBuildings = buildingsBucketOf(cur)[view].map((item) => item.uid === uid ? { ...item, team } : item)
-    updateMap(mapId, (state) => ({ ...state, buildings: { ...buildingsBucketOf(state), [view]: nextBuildings } }))
-    pushEntry(before, { ...before, buildings: { ...(before.buildings ?? { attack: [], defense: [] }), [view]: nextBuildings } })
+    const currentRoutes = routesBucketOf(cur)[view]
+    const rootUids = currentRoutes.filter((route) => route.anchorMode === 'building' && route.anchorBuildingUid === uid).map((route) => route.uid)
+    const nextRoutes = team ? syncRouteTeamCascade(currentRoutes, rootUids, team) : currentRoutes
+    updateMap(mapId, (state) => ({
+      ...state,
+      buildings: { ...buildingsBucketOf(state), [view]: nextBuildings },
+      routes: { ...routesBucketOf(state), [view]: nextRoutes },
+    }))
+    pushEntry(before, {
+      ...before,
+      buildings: { ...(before.buildings ?? { attack: [], defense: [] }), [view]: nextBuildings },
+      routes: { ...before.routes, [view]: nextRoutes },
+    })
   }, [cloneState, mapId, pushEntry, updateMap, view])
 
   const handleDeleteBuilding = useCallback((uid: string) => {
@@ -3807,6 +3819,9 @@ export default function App() {
         return matchedIndex >= 0 ? { ...route, branchFromWaypointIndex: matchedIndex } : route
       })
 
+      // 路线起点改绑到其他小队时，所有下级分支也继承新队伍和队色。
+      if (patch.team && patch.team !== previous.team) nextRoutes = syncRouteTeamCascade(nextRoutes, [uid], updated.team)
+
       let nextTeams = teamsBucketOf(cur)[view]
       if (updated.anchorMode === 'team' && updated.waypoints[0]) {
         const origin = updated.waypoints[0]
@@ -3969,6 +3984,31 @@ export default function App() {
     },
     [mapId, view, updateMap],
   )
+
+  /** 队伍兵棋换队：保留实例和自定义名称，路线及其分支与兵棋一并入栈。 */
+  const handleTeamMarkerTeamChange = useCallback((uid: string, team: OperatorTeam) => {
+    const cur = mapsRef.current[activeTacticalContextKeyRef.current] ?? createEmptyMapState()
+    const currentTeams = teamsBucketOf(cur)[view]
+    const marker = currentTeams.find((item) => item.uid === uid)
+    if (!marker || marker.team === team) return
+    const before = cloneState(cur)
+    const name = !marker.name.trim() || marker.name === `${marker.team}队` ? `${team}队` : marker.name
+    const nextTeams = currentTeams.map((item) => item.uid === uid ? { ...item, team, name } : item)
+    const currentRoutes = routesBucketOf(cur)[view]
+    const rootUids = currentRoutes.filter((route) => route.anchorMode === 'team' && route.teamMarkerUid === uid).map((route) => route.uid)
+    let nextRoutes = syncRouteTeamCascade(currentRoutes, rootUids, team)
+    if (name !== marker.name) nextRoutes = nextRoutes.map((route) =>
+      route.target?.kind === 'team' && route.target.uid === uid && route.target.label === marker.name
+        ? { ...route, target: { ...route.target, label: name } }
+        : route,
+    )
+    updateMap(mapId, (state) => ({
+      ...state,
+      teams: { ...teamsBucketOf(state), [view]: nextTeams },
+      routes: { ...routesBucketOf(state), [view]: nextRoutes },
+    }))
+    pushEntry(before, { ...before, teams: { ...before.teams, [view]: nextTeams }, routes: { ...before.routes, [view]: nextRoutes } })
+  }, [cloneState, mapId, pushEntry, updateMap, view])
 
   const handleRotateTeamMarker = useCallback((uid: string, rotation: number) => {
     updateMap(mapId, (state) => {
@@ -4358,6 +4398,7 @@ export default function App() {
           onMoveTeamMarker={handleTeamMarkerMove}
           onRotateTeamMarker={handleRotateTeamMarker}
           onToggleTeamFireLine={handleToggleTeamFireLine}
+          onChangeTeamMarkerTeam={handleTeamMarkerTeamChange}
           onDeleteTeamMarker={handleDeleteTeamMarker}
           onMoveTeamMarkers={handleMoveTeamMarkers}
           onDeleteTeamMarkers={handleDeleteTeamMarkers}

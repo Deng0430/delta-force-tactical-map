@@ -42,6 +42,7 @@ import { platform } from '../platform'
 import { useDeviceType } from '../hooks/useDeviceType'
 import { parseVehicleRefreshTable, vehicleRefreshRuleSignature } from '../utils/vehicleRefreshRules'
 import ToolbarSelect from './ToolbarSelect'
+import KeyboardMapPan from './KeyboardMapPan'
 
 const MODE_HISTORY_LIMIT = 100
 const MODE_PANEL_WIDTHS_STORAGE_KEY = 'deltaforce-mode-editor-panel-widths'
@@ -1257,6 +1258,7 @@ export default function ModeConfigWorkbench() {
             updateWhenZooming={false}
           />
           <WorkbenchMapSync config={config} onReady={handleMapReady} />
+          <KeyboardMapPan />
           <ModeConfigLayer
             config={mapConfig}
             stageId={session.stageId}

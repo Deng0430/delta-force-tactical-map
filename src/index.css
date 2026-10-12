@@ -3267,6 +3267,100 @@ input[type='range']:focus-visible {
 .veh-marker button.veh-team-letter:hover,
 .building-unit button.building-team-letter:hover { transform: scale(1.14); }
 
+/* 显式换队入口位于左侧，避开右侧操作扇区、左下队标及下方名称。 */
+.veh-marker .unit-team-trigger,
+.building-unit .unit-team-trigger,
+.tm-marker .unit-team-trigger {
+  box-sizing: border-box;
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: max-content;
+  min-width: 54px;
+  height: 26px;
+  padding: 0 7px;
+  color: var(--tx-1);
+  background: rgba(10, 15, 17, .97);
+  border: 1px solid var(--gold);
+  border-left: 3px solid var(--veh-team, var(--building-fill, var(--tm-team)));
+  border-radius: 3px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .45);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.unit-team-trigger > i { color: var(--gold); font-size: 8px; }
+.unit-team-trigger::after { content: ''; position: absolute; left: 100%; top: -5px; bottom: -5px; width: 13px; }
+.veh-marker:hover .unit-team-trigger,
+.veh-marker:focus-within .unit-team-trigger,
+.veh-marker.expanded .unit-team-trigger,
+.building-unit:hover .unit-team-trigger,
+.building-unit:focus-within .unit-team-trigger,
+.building-unit.expanded .unit-team-trigger,
+.tm-marker:hover .unit-team-trigger,
+.tm-marker:focus-within .unit-team-trigger,
+.tm-marker.expanded .unit-team-trigger { display: inline-flex; }
+.veh-marker .unit-team-trigger:hover,
+.building-unit .unit-team-trigger:hover,
+.tm-marker .unit-team-trigger:hover,
+.unit-team-trigger[aria-expanded='true'] { background: #252a25; color: var(--gold); }
+.unit-team-trigger:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.veh-marker:not(.controls-enabled) .unit-team-trigger,
+.mobile-unit-dragging .unit-team-trigger { display: none !important; }
+
+/* Portal 浮层：不依赖 app 的祖先类，桌面和 Android 共用直接选队逻辑。 */
+.unit-team-menu {
+  --menu-safe-left: env(safe-area-inset-left, 0px);
+  --menu-safe-right: env(safe-area-inset-right, 0px);
+  --menu-safe-top: env(safe-area-inset-top, 0px);
+  --menu-safe-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 10030;
+  left: 0;
+  top: 0;
+  width: 238px;
+  max-width: calc(100dvw - 8px - var(--menu-safe-left) - var(--menu-safe-right));
+  max-height: calc(100dvh - 8px - var(--menu-safe-top) - var(--menu-safe-bottom));
+  padding: 9px;
+  overflow-y: auto;
+  visibility: hidden;
+  color: var(--tx-1);
+  background: rgba(10, 15, 17, .98);
+  border: 1px solid var(--gold);
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .55);
+  color-scheme: dark;
+  overscroll-behavior: contain;
+}
+.unit-team-menu-head { display: flex; align-items: center; gap: 8px; padding-bottom: 7px; margin-bottom: 7px; border-bottom: 1px solid var(--line-0); }
+.unit-team-menu-head > span { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.unit-team-menu-head b { color: var(--gold); font-size: 12px; }
+.unit-team-menu-head small { overflow: hidden; color: var(--tx-3); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.unit-team-menu-head > button { flex: 0 0 auto; width: 26px; height: 26px; padding: 0; border: 1px solid var(--line-0); background: var(--bg-2); color: var(--tx-2); cursor: pointer; }
+.unit-team-menu-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+.unit-team-menu-options > button { display: flex; align-items: center; gap: 7px; min-width: 0; min-height: 32px; padding: 5px 7px; color: var(--tx-2); border: 1px solid var(--line-0); background: var(--bg-2); font-size: 12px; cursor: pointer; }
+.unit-team-menu-options > button[aria-checked='true'] { border-color: var(--option-team-color); color: var(--tx-0); background: #1d2527; }
+.unit-team-menu-dot { flex: 0 0 auto; width: 9px; height: 9px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 50%; background: var(--option-team-color); }
+.unit-team-menu-options .fa-check { margin-left: auto; color: var(--option-team-color); font-size: 10px; }
+.unit-team-menu button { touch-action: manipulation; }
+.unit-team-menu button:hover { border-color: var(--gold); color: var(--gold); background: #252a25; }
+.unit-team-menu button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.unit-team-menu-hint { margin: 9px 0 0; color: var(--tx-3); font-size: 10px; line-height: 1.6; }
+.unit-team-menu-hint > i { margin-right: 5px; color: var(--gold); }
+.unit-team-menu.touch-layout .unit-team-menu-options > button { min-height: 40px; font-size: 13px; }
+.unit-team-menu.touch-layout .unit-team-menu-head > button { width: 34px; height: 34px; }
+
 .building-unit .building-side {
   display: none;
   position: absolute;
@@ -6094,6 +6188,7 @@ input[type='range']:focus-visible {
 }
 
 .route-selection-controls {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -6102,7 +6197,7 @@ input[type='range']:focus-visible {
 
 .route-selection-hint {
   box-sizing: border-box;
-  max-width: 132px;
+  max-width: 100%;
   padding: 2px 6px;
   overflow: hidden;
   color: var(--tx-1);
@@ -6118,7 +6213,10 @@ input[type='range']:focus-visible {
 
 .route-selection-actions { display: flex; gap: 6px; }
 
-.route-editor-trigger {
+.route-editor-trigger,
+.route-style-trigger,
+.route-branch-trigger {
+  box-sizing: border-box;
   width: 30px;
   height: 30px;
   display: inline-flex;
@@ -6135,6 +6233,7 @@ input[type='range']:focus-visible {
 }
 
 .route-delete-trigger {
+  box-sizing: border-box;
   width: 30px;
   height: 30px;
   display: inline-flex;
@@ -6151,18 +6250,37 @@ input[type='range']:focus-visible {
 
 .route-delete-trigger:hover { color: #fff; background: #b53c38; }
 
-.route-editor-trigger:hover {
+.route-editor-trigger:hover,
+.route-style-trigger:hover,
+.route-branch-trigger:hover,
+.route-selection-actions button.active {
   color: #0e1112;
   background: var(--gold);
-  box-shadow: 0 0 10px rgba(244, 207, 103, .65);
 }
+.route-selection-actions button { touch-action: manipulation; }
+.route-selection-actions button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.route-selection-hint.branch-picking { color: var(--gold); }
+.route-waypoint-wrap .route-waypoint.branch-target {
+  color: #0e1112;
+  background: var(--gold);
+  border-color: #fff;
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  cursor: crosshair;
+}
+.route-waypoint-wrap .route-waypoint.branch-target:hover { outline-offset: 4px; background: #fff; }
 
 .route-editor-panel {
+  box-sizing: border-box;
   position: absolute;
   z-index: 1450;
   top: 72px;
   right: calc(var(--right-panel-w, 0px) + 16px);
   width: 286px;
+  max-width: calc(100% - 16px);
+  max-height: calc(100% - 80px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 8px;
   color: var(--tx-1);
   background: rgba(10, 15, 17, .97);
@@ -6301,6 +6419,11 @@ input[type='range']:focus-visible {
 .route-editor-fold > summary span { margin-left:auto; color:var(--tx-4); font-size:9px; }
 .route-editor-fold > summary b { margin-left:auto; color:var(--gold); }
 .route-editor-fold .route-editor-style-row { margin:0 0 5px; }
+.route-editor-panel.style-only .route-editor-appearance { margin: 0; border: 0; }
+.route-editor-panel.style-only .route-editor-appearance > summary { display: none; }
+.route-editor-panel.style-only .route-editor-style-row { margin-bottom: 0; }
+.route-editor-panel button:focus-visible,
+.route-editor-panel summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .route-editor-meta { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 2px 0 7px; }
 .route-editor-meta span { padding: 4px; color: var(--tx-3); background: var(--bg-2); border: 1px solid var(--line-1); text-align: center; font-size: 9px; }
 .route-editor-target { position: relative; display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px dashed var(--line-0); color: var(--tx-4); font-size: 10px; }

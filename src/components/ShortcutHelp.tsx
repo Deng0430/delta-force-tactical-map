@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 
 const SHORTCUTS = [
+  ['W / A / S / D', '向上 / 左 / 下 / 右平移地图（按住连续移动）'],
+  ['Shift + W / A / S / D', '快速平移地图'],
+  ['Shift + 滚轮', '旋转地图（正式地图）'],
   ['Backspace', '删除当前选中内容'],
   ['Ctrl + C', '复制当前选中对象'],
   ['Ctrl + V', '粘贴已复制对象'],
