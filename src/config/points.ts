@@ -1,4 +1,5 @@
 import type { StageConfig } from '../types'
+import skyportOfficial from './skyportOfficial.json'
 import {
   ASCENT_STAGES,
   FLASHPOINT_STAGES,
@@ -30,6 +31,7 @@ export const STAGES_BY_MAP: Record<string, StageConfig[]> = {
   trench: TRENCH_STAGES as unknown as StageConfig[],
   umuscanal: UMUSCANAL_STAGES as unknown as StageConfig[],
   aftershock: AFTERSHOCK_STAGES as unknown as StageConfig[],
+  skyport: structuredClone(skyportOfficial.pc.stages) as unknown as StageConfig[],
 }
 
 /** 取某地图的阶段数量 */

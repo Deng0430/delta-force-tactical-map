@@ -179,6 +179,11 @@
   padding-bottom: calc(12px + var(--safe-bottom));
 }
 
+.mobile-layout .left-panel .panel-scroll-track {
+  right: 2px;
+  width: 4px;
+}
+
 .mobile-layout .point-panel {
   right: var(--safe-right);
   width: min(46vw, 200px);

@@ -1,4 +1,5 @@
 import type { MapConfig } from '../types'
+import skyportOfficial from './skyportOfficial.json'
 
 /**
  * 腾讯 CDN 瓦片基地址。
@@ -8,7 +9,7 @@ import type { MapConfig } from '../types'
 const TILE_BASE = 'https://game.gtimg.cn/images/dfm/cp/a20240729directory/img'
 
 /**
- * 攻防模式两张地图配置。
+ * 全面战场地图配置，正式版与模式配置器共用这一份地图目录。
  * 数据来自官网地图工具（df.qq.com/cp/a20240729directory）脚本中的
  * mapScaleInfo：boundsW/boundsH、minZoom/initZoom、initX/initY，
  * 边界换算公式（攻防模式，pixelToLatLngRatio = -1）：
@@ -209,6 +210,7 @@ export const MAPS: MapConfig[] = [
     northEast: [-230, 300],
     initCenter: [-136, 127],
   },
+  skyportOfficial.mapConfig as unknown as MapConfig,
 ]
 
 export const MAP_BY_ID: Record<string, MapConfig> = Object.fromEntries(

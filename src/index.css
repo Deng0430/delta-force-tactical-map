@@ -984,20 +984,61 @@ body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-width: none;
+  scrollbar-gutter: auto;
   padding-bottom: 12px;
 }
 
 .left-panel .panel-body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.left-panel .panel-body:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: -1px;
+}
+
+.panel-scroll-anchor {
+  position: sticky;
+  top: 0;
+  height: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.panel-scroll-track {
+  position: absolute;
+  top: 3px;
+  right: 6px; /* 避开最右侧拉宽侧栏的手柄 */
   width: 6px;
-}
-
-.left-panel .panel-body::-webkit-scrollbar-thumb {
-  background: var(--line-0);
-  border-radius: 1px;
-}
-
-.left-panel .panel-body::-webkit-scrollbar-track {
+  pointer-events: auto;
+  touch-action: none;
+  visibility: hidden;
   background: transparent;
+}
+
+.panel-scroll-track[data-visible='true'] { visibility: visible; }
+.panel-scroll-thumb {
+  width: 100%;
+  min-height: 0;
+  border-radius: 1px;
+  background: var(--line-0);
+  cursor: default;
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+.panel-scroll-track[data-active='true'] .panel-scroll-thumb,
+.panel-scroll-track[data-dragging='true'] .panel-scroll-thumb { opacity: 1; }
+.panel-scroll-track[data-dragging='true'] .panel-scroll-thumb { background: var(--gold); }
+
+@media (hover: hover) {
+  .panel-scroll-track:hover .panel-scroll-thumb { opacity: 1; background: var(--gold); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-scroll-thumb { transition: none; }
 }
 
 .left-panel .panel-head {

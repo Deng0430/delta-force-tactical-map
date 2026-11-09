@@ -16,6 +16,13 @@
 *.blockmap
 *.zip
 *.7z
+*.apk
+*.aab
+
+# Private signing material and local Python environments
+*.jks
+*.keystore
+/.venv/
 
 # Recording/demo-only material
 /demo/

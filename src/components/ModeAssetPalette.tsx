@@ -16,6 +16,7 @@ const PROPS = [
   { name: '载具补给站', icon: 'q_zjbjz' },
   { name: '固定防空炮', icon: 'q_gdaap' },
   { name: '密集阵', icon: 'q_mjz' },
+  { name: '火神炮', icon: 'q_hsp' },
   { name: '固定机枪', icon: 'q_gdjq' },
   { name: '岸防炮', icon: 'q_afp' },
   { name: '滑索', icon: 'q_hs' },

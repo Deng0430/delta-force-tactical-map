@@ -1,0 +1,2913 @@
+{
+  "source": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/js/lib/map_tjg.js",
+  "generatedAt": "2026-11-06",
+  "mapId": "skyport",
+  "sourceSha256": "b403c7eb6ba3125f80aa01533081b0f698edf29c5d7f08f78e613ecd8dbfaa05",
+  "sourceInfo": {
+    "width": 100000,
+    "height": 100000,
+    "boundsW": -300,
+    "boundsH": 300,
+    "boundsW_s": -250,
+    "boundsH_s": 500,
+    "centerX": 97420,
+    "centerY": 63420,
+    "minZoom": 2.5,
+    "initZoom": 2.5,
+    "minZoom_s": 2.5,
+    "initZoom_s": 2.5,
+    "initX": -136,
+    "initY": 127,
+    "initX_s": -135,
+    "initY_s": 136,
+    "initX_mobile_s": -135,
+    "initY_mobile_s": 136,
+    "name_pc": "map_tjg",
+    "names_pc": "map_tjg",
+    "name_mobile": "map_tjg",
+    "names_mobile": "map_tjg",
+    "sector": 3,
+    "rotate": false,
+    "sectorInit": [
+      {
+        "minZoom": 2.5,
+        "initZoom": 2.5,
+        "initX": -127,
+        "initY": 111
+      },
+      {
+        "minZoom": 2.5,
+        "initZoom": 2.5,
+        "initX": -128,
+        "initY": 121
+      },
+      {
+        "minZoom": 2.5,
+        "initZoom": 2.5,
+        "initX": -129,
+        "initY": 134
+      }
+    ]
+  },
+  "officialPcMobileParity": true,
+  "importNotes": [
+    "S2 官方明细重复包含 据点C1；据点以官方 init 阶段定义为准，避免跨阶段重复。",
+    "官方轻型坦克沿用主战坦克图标键；按项目既有规范转换为 qxtk。",
+    "S2 defense 轻型坦克 的源 Sector 为 S1；以官方部署列表所在阶段及复活点关联为准。"
+  ],
+  "mapConfig": {
+    "id": "skyport",
+    "name": "天际港",
+    "enName": "Skyport",
+    "layerName": "map_tjg",
+    "tileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_tjg/{z}_{x}_{y}.jpg",
+    "minZoom": 2.5,
+    "initZoom": 2.5,
+    "maxZoom": 8,
+    "maxNativeZoom": 4,
+    "boundsW": -300,
+    "boundsH": 300,
+    "southWest": [
+      0,
+      -80
+    ],
+    "northEast": [
+      -230,
+      300
+    ],
+    "initCenter": [
+      -136,
+      127
+    ]
+  },
+  "pc": {
+    "stages": [
+      {
+        "id": "S1",
+        "label": "阶段1",
+        "points": [
+          {
+            "name": "据点A1",
+            "icon": "q_jd_a1",
+            "note": "A1点",
+            "lat": -126.758,
+            "lng": 160.868,
+            "capturable": [
+              [
+                -130.755,
+                157.637
+              ],
+              [
+                -125.267,
+                156.939
+              ],
+              [
+                -124.564,
+                162.361
+              ],
+              [
+                -130,
+                163.042
+              ],
+              [
+                -130.755,
+                157.637
+              ]
+            ]
+          },
+          {
+            "name": "据点A2",
+            "icon": "q_jd_a2",
+            "note": "A2点",
+            "lat": -118.237,
+            "lng": 148.11,
+            "capturable": [
+              [
+                -122.625,
+                144.48
+              ],
+              [
+                -117.315,
+                144.44
+              ],
+              [
+                -116.92,
+                152.657
+              ],
+              [
+                -122.225,
+                153.007
+              ],
+              [
+                -122.625,
+                144.48
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S1 防线",
+          "latlngs": [
+            [
+              -103.047,
+              133.314
+            ],
+            [
+              -102.955,
+              165.528
+            ],
+            [
+              -131.088,
+              168.841
+            ],
+            [
+              -131.878,
+              162.608
+            ],
+            [
+              -202.507,
+              163.972
+            ],
+            [
+              -168.257,
+              133.157
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -103.047,
+              133.314
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI1号阵地",
+            "lat": -177.952,
+            "lng": 209.915
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI2号阵地",
+            "lat": -183.429,
+            "lng": 182.264
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克1号阵地",
+            "lat": -130.467,
+            "lng": 117.397
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克2号阵地",
+            "lat": -110.476,
+            "lng": 114.955
+          }
+        ],
+        "attackSpawns": [
+          [
+            -177.952,
+            209.915
+          ],
+          [
+            -183.429,
+            182.264
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -130.467,
+            117.397
+          ],
+          [
+            -110.476,
+            114.955
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI1号阵地",
+          "GTI2号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克1号阵地",
+          "哈夫克2号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -106.942,
+            185.6
+          ],
+          [
+            -142.892,
+            187.507
+          ],
+          [
+            -143.763,
+            196.16
+          ],
+          [
+            -149.382,
+            202.17
+          ],
+          [
+            -161.122,
+            200.6
+          ],
+          [
+            -165.949,
+            225.98
+          ],
+          [
+            -201.817,
+            227.362
+          ],
+          [
+            -202.507,
+            163.972
+          ],
+          [
+            -131.878,
+            162.608
+          ],
+          [
+            -131.088,
+            168.841
+          ],
+          [
+            -102.955,
+            165.528
+          ],
+          [
+            -102.943,
+            170.511
+          ],
+          [
+            -104.861,
+            170.667
+          ],
+          [
+            -104.892,
+            174.842
+          ],
+          [
+            -105.4,
+            174.852
+          ],
+          [
+            -105.382,
+            182.75
+          ],
+          [
+            -106.942,
+            185.6
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -168.257,
+            133.157
+          ],
+          [
+            -172.171,
+            96.149
+          ],
+          [
+            -108.431,
+            95.571
+          ],
+          [
+            -108.312,
+            104.694
+          ],
+          [
+            -95.547,
+            104.523
+          ],
+          [
+            -79.78,
+            116.844
+          ],
+          [
+            -93.101,
+            133.338
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -168.257,
+            133.157
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "轮式突击炮",
+            "icon": "q_lstjp",
+            "badge": "炮",
+            "category": "ifv",
+            "trigger": "",
+            "pos": [
+              -136.229,
+              176.445
+            ],
+            "posList": [
+              [
+                -136.229,
+                176.445
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S2",
+        "label": "阶段2",
+        "points": [
+          {
+            "name": "据点B1",
+            "icon": "q_jd_b1",
+            "note": "B1点",
+            "lat": -130.839,
+            "lng": 122.475,
+            "capturable": [
+              [
+                -135.662,
+                119.445
+              ],
+              [
+                -130.446,
+                118.465
+              ],
+              [
+                -129.103,
+                126.009
+              ],
+              [
+                -134.318,
+                127.044
+              ],
+              [
+                -135.662,
+                119.445
+              ]
+            ]
+          },
+          {
+            "name": "据点B2",
+            "icon": "q_jd_b2",
+            "note": "B2点",
+            "lat": -120.414,
+            "lng": 109.597,
+            "capturable": [
+              [
+                -125.953,
+                107.701
+              ],
+              [
+                -123.673,
+                107.484
+              ],
+              [
+                -123.771,
+                106.269
+              ],
+              [
+                -120.181,
+                105.992
+              ],
+              [
+                -120.174,
+                106.2
+              ],
+              [
+                -119.433,
+                106.182
+              ],
+              [
+                -119.445,
+                111.338
+              ],
+              [
+                -119.464,
+                112.053
+              ],
+              [
+                -119.47,
+                112.304
+              ],
+              [
+                -119.45,
+                113.26
+              ],
+              [
+                -120.396,
+                113.272
+              ],
+              [
+                -123.985,
+                113.315
+              ],
+              [
+                -123.989,
+                112.984
+              ],
+              [
+                -124.657,
+                112.997
+              ],
+              [
+                -125.597,
+                112.162
+              ],
+              [
+                -125.953,
+                107.701
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S2 防线",
+          "latlngs": [
+            [
+              -108.363,
+              102.217
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -168.212,
+              133.146
+            ],
+            [
+              -172.171,
+              96.149
+            ],
+            [
+              -114.242,
+              95.708
+            ],
+            [
+              -114.221,
+              102.361
+            ],
+            [
+              -108.363,
+              102.217
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI3号阵地",
+            "lat": -130.207,
+            "lng": 152.16
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI4号阵地",
+            "lat": -115.387,
+            "lng": 152.441
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克3号阵地",
+            "lat": -99.332,
+            "lng": 115.231
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克4号阵地",
+            "lat": -99.202,
+            "lng": 92.944
+          }
+        ],
+        "attackSpawns": [
+          [
+            -130.207,
+            152.16
+          ],
+          [
+            -115.387,
+            152.441
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -99.332,
+            115.231
+          ],
+          [
+            -99.202,
+            92.944
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI3号阵地",
+          "GTI4号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克3号阵地",
+          "哈夫克4号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -102.859,
+            187.257
+          ],
+          [
+            -162.049,
+            187.585
+          ],
+          [
+            -168.212,
+            133.146
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.375,
+            148.897
+          ],
+          [
+            -102.577,
+            148.956
+          ],
+          [
+            -102.859,
+            187.257
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.363,
+            102.217
+          ],
+          [
+            -114.221,
+            102.361
+          ],
+          [
+            -114.255,
+            91.736
+          ],
+          [
+            -106.637,
+            91.856
+          ],
+          [
+            -93.194,
+            75.004
+          ],
+          [
+            -61.893,
+            100.805
+          ],
+          [
+            -85.712,
+            132.985
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "两栖全地形车",
+            "icon": "q_lqqdxc",
+            "badge": "全",
+            "category": "recon",
+            "trigger": "低于80%票数时刷新",
+            "pos": [
+              -112.026,
+              165.119
+            ],
+            "posList": [
+              [
+                -112.026,
+                165.119
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S3",
+        "label": "阶段3",
+        "points": [
+          {
+            "name": "据点C1",
+            "icon": "q_jd_c1",
+            "note": "C1点",
+            "lat": -94.591,
+            "lng": 123.167,
+            "capturable": [
+              [
+                -97.019,
+                129.209
+              ],
+              [
+                -96.994,
+                124.068
+              ],
+              [
+                -97,
+                118.318
+              ],
+              [
+                -94.845,
+                120.094
+              ],
+              [
+                -89.508,
+                124.533
+              ],
+              [
+                -89.788,
+                125.53
+              ],
+              [
+                -92.904,
+                129.264
+              ],
+              [
+                -97.019,
+                129.209
+              ]
+            ]
+          },
+          {
+            "name": "据点C2",
+            "icon": "q_jd_c2",
+            "note": "C2点",
+            "lat": -81.912,
+            "lng": 101.116,
+            "capturable": [
+              [
+                -89.644,
+                104.672
+              ],
+              [
+                -89.334,
+                104.326
+              ],
+              [
+                -89.104,
+                104.054
+              ],
+              [
+                -82.511,
+                96.108
+              ],
+              [
+                -75.732,
+                101.753
+              ],
+              [
+                -82.89,
+                110.299
+              ],
+              [
+                -89.644,
+                104.672
+              ]
+            ]
+          },
+          {
+            "name": "据点C3",
+            "icon": "q_jd_c3",
+            "note": "C3点",
+            "lat": -82.775,
+            "lng": 102.833,
+            "capturable": [
+              [
+                -88.417,
+                103.613
+              ],
+              [
+                -84.037,
+                98.29
+              ],
+              [
+                -77.52,
+                103.719
+              ],
+              [
+                -81.865,
+                109.083
+              ],
+              [
+                -88.417,
+                103.613
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S3 防线",
+          "latlngs": [
+            [
+              -84.385,
+              87.015
+            ],
+            [
+              -81.594,
+              83.628
+            ],
+            [
+              -62.186,
+              99.517
+            ],
+            [
+              -69.175,
+              107.658
+            ],
+            [
+              -66.323,
+              109.89
+            ],
+            [
+              -74.022,
+              119.705
+            ],
+            [
+              -75.608,
+              121.727
+            ],
+            [
+              -78.531,
+              126.056
+            ],
+            [
+              -80.827,
+              130.806
+            ],
+            [
+              -84.186,
+              129.56
+            ],
+            [
+              -85.712,
+              132.985
+            ],
+            [
+              -102.542,
+              132.991
+            ],
+            [
+              -102.509,
+              107.861
+            ],
+            [
+              -101.157,
+              107.834
+            ],
+            [
+              -101.145,
+              100.904
+            ],
+            [
+              -99.27,
+              98.336
+            ],
+            [
+              -106.711,
+              91.63
+            ],
+            [
+              -95.416,
+              77.789
+            ],
+            [
+              -84.385,
+              87.015
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI5号阵地",
+            "lat": -111.645,
+            "lng": 116.412
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI6号阵地",
+            "lat": -111.575,
+            "lng": 134.808
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI7号阵地",
+            "lat": -111.018,
+            "lng": 98.573
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克5号阵地",
+            "lat": -63.206,
+            "lng": 110.902
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克6号阵地",
+            "lat": -64.86,
+            "lng": 92.725
+          }
+        ],
+        "attackSpawns": [
+          [
+            -111.645,
+            116.412
+          ],
+          [
+            -111.575,
+            134.808
+          ],
+          [
+            -111.018,
+            98.573
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -63.206,
+            110.902
+          ],
+          [
+            -64.86,
+            92.725
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI5号阵地",
+          "GTI6号阵地",
+          "GTI7号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克5号阵地",
+          "哈夫克6号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -149.874,
+            140.023
+          ],
+          [
+            -155.365,
+            96.131
+          ],
+          [
+            -114.289,
+            95.857
+          ],
+          [
+            -114.319,
+            91.632
+          ],
+          [
+            -106.711,
+            91.63
+          ],
+          [
+            -99.27,
+            98.336
+          ],
+          [
+            -101.145,
+            100.904
+          ],
+          [
+            -101.157,
+            107.834
+          ],
+          [
+            -102.509,
+            107.861
+          ],
+          [
+            -102.542,
+            132.991
+          ],
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -87.559,
+            137.501
+          ],
+          [
+            -89.969,
+            137.479
+          ],
+          [
+            -89.988,
+            139.542
+          ],
+          [
+            -92.709,
+            142.213
+          ],
+          [
+            -92.454,
+            153.978
+          ],
+          [
+            -102.957,
+            154.086
+          ],
+          [
+            -103.013,
+            162.389
+          ],
+          [
+            -114.1,
+            162.555
+          ],
+          [
+            -114.377,
+            139.639
+          ],
+          [
+            -149.874,
+            140.023
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -53.96,
+            85.543
+          ],
+          [
+            -62.466,
+            95.905
+          ],
+          [
+            -56.25,
+            101.081
+          ],
+          [
+            -51.001,
+            121.897
+          ],
+          [
+            -53.942,
+            123.088
+          ],
+          [
+            -61.221,
+            115.77
+          ],
+          [
+            -68.998,
+            123.726
+          ],
+          [
+            -74.022,
+            119.705
+          ],
+          [
+            -66.323,
+            109.89
+          ],
+          [
+            -69.175,
+            107.658
+          ],
+          [
+            -62.186,
+            99.517
+          ],
+          [
+            -81.594,
+            83.628
+          ],
+          [
+            -84.385,
+            87.015
+          ],
+          [
+            -92.017,
+            80.632
+          ],
+          [
+            -79.009,
+            64.921
+          ],
+          [
+            -53.96,
+            85.543
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "两栖全地形车",
+            "icon": "q_lqqdxc",
+            "badge": "全",
+            "category": "recon",
+            "trigger": "低于40%票数时刷新",
+            "pos": [
+              -112.973,
+              144.046
+            ],
+            "posList": [
+              [
+                -112.973,
+                144.046
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      }
+    ],
+    "deploy": {
+      "S1": {
+        "attack": [
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI1号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s1_attack_ytnfab"
+          }
+        ],
+        "defense": [
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 90,
+            "num": 1,
+            "note": "哈夫克1号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_pc_skyport_s1_defense_ssgumn"
+          }
+        ]
+      },
+      "S2": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq"
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq"
+          }
+        ],
+        "defense": [
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "哈夫克3号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1"
+          },
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 90,
+            "num": 1,
+            "note": "哈夫克3号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1"
+          }
+        ]
+      },
+      "S3": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3"
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3"
+          }
+        ],
+        "defense": []
+      }
+    },
+    "props": [
+      {
+        "name": "岸防炮",
+        "icon": "q_afp",
+        "lat": -129.019,
+        "lng": 144.055,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.802,
+        "lng": 149.966,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.144,
+        "lng": 149.935,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -87.677,
+        "lng": 109.058,
+        "stage": ""
+      },
+      {
+        "name": "火神炮",
+        "icon": "q_hsp",
+        "lat": -82.384,
+        "lng": 103.131,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -118.912,
+        "lng": 149.133,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -126.221,
+        "lng": 121.51,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -132.198,
+        "lng": 121.73,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -134.722,
+        "lng": 128.773,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.033,
+        "lng": 107.557,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.278,
+        "lng": 114.227,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -97.613,
+        "lng": 132.416,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -92.924,
+        "lng": 121.874,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -96.909,
+        "lng": 109.453,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -85.782,
+        "lng": 118.463,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -80.371,
+        "lng": 100.586,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -115.359,
+        "lng": 159.205,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -84.668,
+        "lng": 105.669,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -82.094,
+        "lng": 95.043,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -76.926,
+        "lng": 107.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.085,
+        "lng": 120.306,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.368,
+        "lng": 169.459,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.774,
+        "lng": 149.683,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.797,
+        "lng": 170.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -119.622,
+        "lng": 147.377,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.672,
+        "lng": 140.019,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.973,
+        "lng": 129.946,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -117.349,
+        "lng": 117.982,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -111.706,
+        "lng": 168.934,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 139.457,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -123.584,
+        "lng": 130.317,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 105.216,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -89.754,
+        "lng": 130.189,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -76.388,
+        "lng": 87.724,
+        "stage": ""
+      }
+    ]
+  },
+  "mobile": {
+    "stages": [
+      {
+        "id": "S1",
+        "label": "阶段1",
+        "points": [
+          {
+            "name": "据点A1",
+            "icon": "q_jd_a1",
+            "note": "A1点",
+            "lat": -126.758,
+            "lng": 160.868,
+            "capturable": [
+              [
+                -130.755,
+                157.637
+              ],
+              [
+                -125.267,
+                156.939
+              ],
+              [
+                -124.564,
+                162.361
+              ],
+              [
+                -130,
+                163.042
+              ],
+              [
+                -130.755,
+                157.637
+              ]
+            ]
+          },
+          {
+            "name": "据点A2",
+            "icon": "q_jd_a2",
+            "note": "A2点",
+            "lat": -118.237,
+            "lng": 148.11,
+            "capturable": [
+              [
+                -122.625,
+                144.48
+              ],
+              [
+                -117.315,
+                144.44
+              ],
+              [
+                -116.92,
+                152.657
+              ],
+              [
+                -122.225,
+                153.007
+              ],
+              [
+                -122.625,
+                144.48
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S1 防线",
+          "latlngs": [
+            [
+              -103.047,
+              133.314
+            ],
+            [
+              -102.955,
+              165.528
+            ],
+            [
+              -131.088,
+              168.841
+            ],
+            [
+              -131.878,
+              162.608
+            ],
+            [
+              -202.507,
+              163.972
+            ],
+            [
+              -168.257,
+              133.157
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -103.047,
+              133.314
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_mobile_skyport_s1_attack_ytnfab",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI1号阵地",
+            "lat": -177.952,
+            "lng": 209.915
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s1_attack_6jug1a",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI2号阵地",
+            "lat": -183.429,
+            "lng": 182.264
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s1_defense_ssgumn",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克1号阵地",
+            "lat": -130.467,
+            "lng": 117.397
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s1_defense_13rneug",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克2号阵地",
+            "lat": -110.476,
+            "lng": 114.955
+          }
+        ],
+        "attackSpawns": [
+          [
+            -177.952,
+            209.915
+          ],
+          [
+            -183.429,
+            182.264
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -130.467,
+            117.397
+          ],
+          [
+            -110.476,
+            114.955
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI1号阵地",
+          "GTI2号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克1号阵地",
+          "哈夫克2号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -106.942,
+            185.6
+          ],
+          [
+            -142.892,
+            187.507
+          ],
+          [
+            -143.763,
+            196.16
+          ],
+          [
+            -149.382,
+            202.17
+          ],
+          [
+            -161.122,
+            200.6
+          ],
+          [
+            -165.949,
+            225.98
+          ],
+          [
+            -201.817,
+            227.362
+          ],
+          [
+            -202.507,
+            163.972
+          ],
+          [
+            -131.878,
+            162.608
+          ],
+          [
+            -131.088,
+            168.841
+          ],
+          [
+            -102.955,
+            165.528
+          ],
+          [
+            -102.943,
+            170.511
+          ],
+          [
+            -104.861,
+            170.667
+          ],
+          [
+            -104.892,
+            174.842
+          ],
+          [
+            -105.4,
+            174.852
+          ],
+          [
+            -105.382,
+            182.75
+          ],
+          [
+            -106.942,
+            185.6
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -168.257,
+            133.157
+          ],
+          [
+            -172.171,
+            96.149
+          ],
+          [
+            -108.431,
+            95.571
+          ],
+          [
+            -108.312,
+            104.694
+          ],
+          [
+            -95.547,
+            104.523
+          ],
+          [
+            -79.78,
+            116.844
+          ],
+          [
+            -93.101,
+            133.338
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -168.257,
+            133.157
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "轮式突击炮",
+            "icon": "q_lstjp",
+            "badge": "炮",
+            "category": "ifv",
+            "trigger": "",
+            "pos": [
+              -136.229,
+              176.445
+            ],
+            "posList": [
+              [
+                -136.229,
+                176.445
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S2",
+        "label": "阶段2",
+        "points": [
+          {
+            "name": "据点B1",
+            "icon": "q_jd_b1",
+            "note": "B1点",
+            "lat": -130.839,
+            "lng": 122.475,
+            "capturable": [
+              [
+                -135.662,
+                119.445
+              ],
+              [
+                -130.446,
+                118.465
+              ],
+              [
+                -129.103,
+                126.009
+              ],
+              [
+                -134.318,
+                127.044
+              ],
+              [
+                -135.662,
+                119.445
+              ]
+            ]
+          },
+          {
+            "name": "据点B2",
+            "icon": "q_jd_b2",
+            "note": "B2点",
+            "lat": -120.414,
+            "lng": 109.597,
+            "capturable": [
+              [
+                -125.953,
+                107.701
+              ],
+              [
+                -123.673,
+                107.484
+              ],
+              [
+                -123.771,
+                106.269
+              ],
+              [
+                -120.181,
+                105.992
+              ],
+              [
+                -120.174,
+                106.2
+              ],
+              [
+                -119.433,
+                106.182
+              ],
+              [
+                -119.445,
+                111.338
+              ],
+              [
+                -119.464,
+                112.053
+              ],
+              [
+                -119.47,
+                112.304
+              ],
+              [
+                -119.45,
+                113.26
+              ],
+              [
+                -120.396,
+                113.272
+              ],
+              [
+                -123.985,
+                113.315
+              ],
+              [
+                -123.989,
+                112.984
+              ],
+              [
+                -124.657,
+                112.997
+              ],
+              [
+                -125.597,
+                112.162
+              ],
+              [
+                -125.953,
+                107.701
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S2 防线",
+          "latlngs": [
+            [
+              -108.363,
+              102.217
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -168.212,
+              133.146
+            ],
+            [
+              -172.171,
+              96.149
+            ],
+            [
+              -114.242,
+              95.708
+            ],
+            [
+              -114.221,
+              102.361
+            ],
+            [
+              -108.363,
+              102.217
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_mobile_skyport_s2_attack_104zqqq",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI3号阵地",
+            "lat": -130.207,
+            "lng": 152.16
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s2_attack_i8ti2y",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI4号阵地",
+            "lat": -115.387,
+            "lng": 152.441
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s2_defense_1hf3ly1",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克3号阵地",
+            "lat": -99.332,
+            "lng": 115.231
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s2_defense_179bujk",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克4号阵地",
+            "lat": -99.202,
+            "lng": 92.944
+          }
+        ],
+        "attackSpawns": [
+          [
+            -130.207,
+            152.16
+          ],
+          [
+            -115.387,
+            152.441
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -99.332,
+            115.231
+          ],
+          [
+            -99.202,
+            92.944
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI3号阵地",
+          "GTI4号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克3号阵地",
+          "哈夫克4号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -102.859,
+            187.257
+          ],
+          [
+            -162.049,
+            187.585
+          ],
+          [
+            -168.212,
+            133.146
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.375,
+            148.897
+          ],
+          [
+            -102.577,
+            148.956
+          ],
+          [
+            -102.859,
+            187.257
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.363,
+            102.217
+          ],
+          [
+            -114.221,
+            102.361
+          ],
+          [
+            -114.255,
+            91.736
+          ],
+          [
+            -106.637,
+            91.856
+          ],
+          [
+            -93.194,
+            75.004
+          ],
+          [
+            -61.893,
+            100.805
+          ],
+          [
+            -85.712,
+            132.985
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "两栖全地形车",
+            "icon": "q_lqqdxc",
+            "badge": "全",
+            "category": "recon",
+            "trigger": "低于80%票数时刷新",
+            "pos": [
+              -112.026,
+              165.119
+            ],
+            "posList": [
+              [
+                -112.026,
+                165.119
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S3",
+        "label": "阶段3",
+        "points": [
+          {
+            "name": "据点C1",
+            "icon": "q_jd_c1",
+            "note": "C1点",
+            "lat": -94.591,
+            "lng": 123.167,
+            "capturable": [
+              [
+                -97.019,
+                129.209
+              ],
+              [
+                -96.994,
+                124.068
+              ],
+              [
+                -97,
+                118.318
+              ],
+              [
+                -94.845,
+                120.094
+              ],
+              [
+                -89.508,
+                124.533
+              ],
+              [
+                -89.788,
+                125.53
+              ],
+              [
+                -92.904,
+                129.264
+              ],
+              [
+                -97.019,
+                129.209
+              ]
+            ]
+          },
+          {
+            "name": "据点C2",
+            "icon": "q_jd_c2",
+            "note": "C2点",
+            "lat": -81.912,
+            "lng": 101.116,
+            "capturable": [
+              [
+                -89.644,
+                104.672
+              ],
+              [
+                -89.334,
+                104.326
+              ],
+              [
+                -89.104,
+                104.054
+              ],
+              [
+                -82.511,
+                96.108
+              ],
+              [
+                -75.732,
+                101.753
+              ],
+              [
+                -82.89,
+                110.299
+              ],
+              [
+                -89.644,
+                104.672
+              ]
+            ]
+          },
+          {
+            "name": "据点C3",
+            "icon": "q_jd_c3",
+            "note": "C3点",
+            "lat": -82.775,
+            "lng": 102.833,
+            "capturable": [
+              [
+                -88.417,
+                103.613
+              ],
+              [
+                -84.037,
+                98.29
+              ],
+              [
+                -77.52,
+                103.719
+              ],
+              [
+                -81.865,
+                109.083
+              ],
+              [
+                -88.417,
+                103.613
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S3 防线",
+          "latlngs": [
+            [
+              -84.385,
+              87.015
+            ],
+            [
+              -81.594,
+              83.628
+            ],
+            [
+              -62.186,
+              99.517
+            ],
+            [
+              -69.175,
+              107.658
+            ],
+            [
+              -66.323,
+              109.89
+            ],
+            [
+              -74.022,
+              119.705
+            ],
+            [
+              -75.608,
+              121.727
+            ],
+            [
+              -78.531,
+              126.056
+            ],
+            [
+              -80.827,
+              130.806
+            ],
+            [
+              -84.186,
+              129.56
+            ],
+            [
+              -85.712,
+              132.985
+            ],
+            [
+              -102.542,
+              132.991
+            ],
+            [
+              -102.509,
+              107.861
+            ],
+            [
+              -101.157,
+              107.834
+            ],
+            [
+              -101.145,
+              100.904
+            ],
+            [
+              -99.27,
+              98.336
+            ],
+            [
+              -106.711,
+              91.63
+            ],
+            [
+              -95.416,
+              77.789
+            ],
+            [
+              -84.385,
+              87.015
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_mobile_skyport_s3_attack_97pmt3",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI5号阵地",
+            "lat": -111.645,
+            "lng": 116.412
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s3_attack_ty75ls",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI6号阵地",
+            "lat": -111.575,
+            "lng": 134.808
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s3_attack_19ax5ru",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI7号阵地",
+            "lat": -111.018,
+            "lng": 98.573
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s3_defense_198tcf4",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克5号阵地",
+            "lat": -63.206,
+            "lng": 110.902
+          },
+          {
+            "uid": "spawn_ad_mobile_skyport_s3_defense_8u8mqf",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克6号阵地",
+            "lat": -64.86,
+            "lng": 92.725
+          }
+        ],
+        "attackSpawns": [
+          [
+            -111.645,
+            116.412
+          ],
+          [
+            -111.575,
+            134.808
+          ],
+          [
+            -111.018,
+            98.573
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -63.206,
+            110.902
+          ],
+          [
+            -64.86,
+            92.725
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI5号阵地",
+          "GTI6号阵地",
+          "GTI7号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克5号阵地",
+          "哈夫克6号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -149.874,
+            140.023
+          ],
+          [
+            -155.365,
+            96.131
+          ],
+          [
+            -114.289,
+            95.857
+          ],
+          [
+            -114.319,
+            91.632
+          ],
+          [
+            -106.711,
+            91.63
+          ],
+          [
+            -99.27,
+            98.336
+          ],
+          [
+            -101.145,
+            100.904
+          ],
+          [
+            -101.157,
+            107.834
+          ],
+          [
+            -102.509,
+            107.861
+          ],
+          [
+            -102.542,
+            132.991
+          ],
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -87.559,
+            137.501
+          ],
+          [
+            -89.969,
+            137.479
+          ],
+          [
+            -89.988,
+            139.542
+          ],
+          [
+            -92.709,
+            142.213
+          ],
+          [
+            -92.454,
+            153.978
+          ],
+          [
+            -102.957,
+            154.086
+          ],
+          [
+            -103.013,
+            162.389
+          ],
+          [
+            -114.1,
+            162.555
+          ],
+          [
+            -114.377,
+            139.639
+          ],
+          [
+            -149.874,
+            140.023
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -53.96,
+            85.543
+          ],
+          [
+            -62.466,
+            95.905
+          ],
+          [
+            -56.25,
+            101.081
+          ],
+          [
+            -51.001,
+            121.897
+          ],
+          [
+            -53.942,
+            123.088
+          ],
+          [
+            -61.221,
+            115.77
+          ],
+          [
+            -68.998,
+            123.726
+          ],
+          [
+            -74.022,
+            119.705
+          ],
+          [
+            -66.323,
+            109.89
+          ],
+          [
+            -69.175,
+            107.658
+          ],
+          [
+            -62.186,
+            99.517
+          ],
+          [
+            -81.594,
+            83.628
+          ],
+          [
+            -84.385,
+            87.015
+          ],
+          [
+            -92.017,
+            80.632
+          ],
+          [
+            -79.009,
+            64.921
+          ],
+          [
+            -53.96,
+            85.543
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "两栖全地形车",
+            "icon": "q_lqqdxc",
+            "badge": "全",
+            "category": "recon",
+            "trigger": "低于40%票数时刷新",
+            "pos": [
+              -112.973,
+              144.046
+            ],
+            "posList": [
+              [
+                -112.973,
+                144.046
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      }
+    ],
+    "deploy": {
+      "S1": {
+        "attack": [
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI1号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s1_attack_ytnfab"
+          }
+        ],
+        "defense": [
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 90,
+            "num": 1,
+            "note": "哈夫克1号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s1_defense_ssgumn"
+          }
+        ]
+      },
+      "S2": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s2_attack_104zqqq"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s2_attack_104zqqq"
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s2_attack_104zqqq"
+          }
+        ],
+        "defense": [
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "哈夫克3号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s2_defense_1hf3ly1"
+          },
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 90,
+            "num": 1,
+            "note": "哈夫克3号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s2_defense_1hf3ly1"
+          }
+        ]
+      },
+      "S3": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s3_attack_97pmt3"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s3_attack_97pmt3"
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_mobile_skyport_s3_attack_97pmt3"
+          }
+        ],
+        "defense": []
+      }
+    },
+    "props": [
+      {
+        "name": "岸防炮",
+        "icon": "q_afp",
+        "lat": -129.019,
+        "lng": 144.055,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.802,
+        "lng": 149.966,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.144,
+        "lng": 149.935,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -87.677,
+        "lng": 109.058,
+        "stage": ""
+      },
+      {
+        "name": "火神炮",
+        "icon": "q_hsp",
+        "lat": -82.384,
+        "lng": 103.131,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -118.912,
+        "lng": 149.133,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -126.221,
+        "lng": 121.51,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -132.198,
+        "lng": 121.73,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -134.722,
+        "lng": 128.773,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.033,
+        "lng": 107.557,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.278,
+        "lng": 114.227,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -97.613,
+        "lng": 132.416,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -92.924,
+        "lng": 121.874,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -96.909,
+        "lng": 109.453,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -85.782,
+        "lng": 118.463,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -80.371,
+        "lng": 100.586,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -115.359,
+        "lng": 159.205,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -84.668,
+        "lng": 105.669,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -82.094,
+        "lng": 95.043,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -76.926,
+        "lng": 107.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.085,
+        "lng": 120.306,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.368,
+        "lng": 169.459,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.774,
+        "lng": 149.683,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.797,
+        "lng": 170.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -119.622,
+        "lng": 147.377,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.672,
+        "lng": 140.019,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.973,
+        "lng": 129.946,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -117.349,
+        "lng": 117.982,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -111.706,
+        "lng": 168.934,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 139.457,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -123.584,
+        "lng": 130.317,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 105.216,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -89.754,
+        "lng": 130.189,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -76.388,
+        "lng": 87.724,
+        "stage": ""
+      }
+    ]
+  }
+}

@@ -3,6 +3,7 @@ import type { BuildingUnit, BuildingUnitKind, FieldSupportDefinition, FieldSuppo
 import type { CustomVehicleTemplate } from '../config/customVehicles'
 import { Checkbox, IconChevronLeft, IconChevronRight } from './icons'
 import WargamePanel from './WargamePanel'
+import PanelScrollBody from './PanelScrollBody'
 import { rangeProgressStyle } from '../utils/rangeStyle'
 
 const LAYER_ITEMS: { key: keyof LayerVisibility; label: string; parent?: keyof LayerVisibility }[] = [
@@ -20,7 +21,7 @@ const POINT_LAYER_ITEMS: { key: keyof LayerVisibility; label: string }[] = [
 ]
 
 /** 道具类型清单（问题2：按类型独立开关，与 MAP_PROPS 名称一致） */
-const PROP_TYPES = ['载具补给站', '固定防空炮', '密集阵', '固定机枪', '岸防炮', '滑索', '电梯', '固定弹药箱']
+const PROP_TYPES = ['载具补给站', '固定防空炮', '密集阵', '火神炮', '固定机枪', '岸防炮', '滑索', '电梯', '固定弹药箱']
 
 /** 左侧面板折叠区块 key（展开状态持久化，收缩侧栏不重置） */
 export type PanelSectionKey = 'layers' | 'props' | 'points' | 'vehicles' | 'wargame' | 'vehGroups'
@@ -288,7 +289,7 @@ export default function LeftPanel({
       </div>
 
       {/* 面板主体（问题5：独立滚动容器，所有模块都可访问） */}
-      <div className="panel-body">
+      <PanelScrollBody enabled={open}>
         {/* 地图分层（下拉栏：折叠区块 + 道具总开关子列表） */}
         <details
           className="panel-sec collapsible"
@@ -478,7 +479,7 @@ export default function LeftPanel({
           onAddFieldSupport={onAddFieldSupport}
         />
       </details>
-      </div>
+      </PanelScrollBody>
     </aside>
     </>
   )

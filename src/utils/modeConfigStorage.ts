@@ -32,7 +32,7 @@ import { makeWinnerSpawnUid } from '../config/attackDefenseSpawns'
 export const MODE_CONFIG_STORAGE_KEY = 'deltaforce-mode-configs-v1'
 export const MODE_CONFIG_SYNC_CHANNEL = 'deltaforce-mode-config-sync-v1'
 export const MODE_CONFIG_SYNC_MESSAGE = 'deltaforce-mode-config-sync'
-const MODE_STORAGE_VERSION = 40 as const
+const MODE_STORAGE_VERSION = 41 as const
 
 const SIDES: Side[] = ['attack', 'defense']
 const VERIFICATIONS: ModeConfigVerification[] = ['draft', 'confirmed']
@@ -68,6 +68,13 @@ export function createModeProfile(name = '新模式', id?: string): GameModeProf
   }
 }
 
+function winnerDraftFromAttackDefense(source: ModeMapOverride): ModeMapOverride {
+  return {
+    ...structuredClone(source),
+    notes: '胜者为王临时底稿：深复制对应游戏数据端的攻防数据，尚未进行胜者专属适配；后续编辑与攻防相互独立。',
+  }
+}
+
 function defaultStore(): ModeConfigStore {
   const attackDefense = createModeProfile('攻防模式', 'attack-defense')
   attackDefense.description = '内置攻防模式数据，可分别编辑 PC 端与移动端。'
@@ -84,14 +91,14 @@ function defaultStore(): ModeConfigStore {
         map.id,
         official
           ? modeMapFromOfficial(map.id, official)
-          : structuredClone(pcMaps[map.id]),
+          : winnerDraftFromAttackDefense(pcMaps[map.id]),
       ]
     }),
   )
   const winnerMobileMaps = Object.fromEntries(
     MAPS.map((map) => {
       const official = (mobileWinnerTakesAllOfficial.maps as unknown as Partial<Record<string, OfficialModeMapData>>)[map.id]
-      return [map.id, official ? modeMapFromOfficial(map.id, official) : structuredClone(mobileMaps[map.id])]
+      return [map.id, official ? modeMapFromOfficial(map.id, official) : winnerDraftFromAttackDefense(mobileMaps[map.id])]
     }),
   )
   winner.maps = winnerPcMaps
@@ -1432,6 +1439,36 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
       winner.maps = winner.platformMaps!.pc!
       winner.updatedAt = Date.now()
     }
+  }
+  // v41 新增官方天际港双端攻防，胜者分别从同端攻防深复制初始化。
+  // 仅补入缺失的新地图，保留既有地图与已导入/编辑的天际港配置。
+  if (sourceVersion < 41) {
+    const winner = profiles.find((profile) => profile.id === 'winner-takes-all')
+    let addedAttack = false
+    let addedWinner = false
+    for (const gameDataPlatform of ['pc', 'mobile'] as const) {
+      const attackMaps: Record<string, ModeMapOverride> = { ...attackDefense.platformMaps?.[gameDataPlatform] }
+      if (!attackMaps.skyport) {
+        attackMaps.skyport = syncModeMapFromAttackDefense(
+          'skyport', stagesForPlatform(gameDataPlatform).skyport ?? [],
+          propsForPlatform(gameDataPlatform), deployForPlatform(gameDataPlatform),
+        )
+        addedAttack = true
+      }
+      attackDefense.platformMaps = { ...attackDefense.platformMaps, [gameDataPlatform]: attackMaps }
+      if (winner) {
+        const winnerMaps: Record<string, ModeMapOverride> = { ...winner.platformMaps?.[gameDataPlatform] }
+        if (!winnerMaps.skyport) {
+          winnerMaps.skyport = winnerDraftFromAttackDefense(attackMaps.skyport)
+          addedWinner = true
+        }
+        winner.platformMaps = { ...winner.platformMaps, [gameDataPlatform]: winnerMaps }
+      }
+    }
+    attackDefense.maps = attackDefense.platformMaps!.pc!
+    if (addedAttack) attackDefense.updatedAt = Date.now()
+    if (winner?.platformMaps) winner.maps = winner.platformMaps.pc ?? winner.maps
+    if (winner && addedWinner) winner.updatedAt = Date.now()
   }
   return { version: MODE_STORAGE_VERSION, activeModeId, profiles }
 }
