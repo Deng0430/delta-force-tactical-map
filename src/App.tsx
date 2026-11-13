@@ -25,11 +25,13 @@ import type {
   WargameState,
 } from './types'
 import { MAPS, MAP_BY_ID } from './config/maps'
+import { mapConfigForStage } from './config/stageBasemaps'
 import { APP_STORAGE_VERSION, applyTacticalBucket, buildingsBucketOf, createEmptyMapState, createTacticalRound, fieldSupportsBucketOf, loadState, normalizeDrawingGeoJson, normalizeTacticalBucket, saveState, snapshotTacticalBucket, syncActiveTacticalBucket, tacticalBucketKey, tacticalContextKey, vehiclesBucketOf, operatorsBucketOf, connectionsBucketOf, teamsBucketOf, routesBucketOf, wargameOf } from './utils/storage'
 import { emptyGeoJson, genUid } from './utils/geo'
 import { buildTacticalHtml, downloadText } from './utils/exportTactical'
 import type { CustomVehicleTemplate } from './config/customVehicles'
 import type { DeployVehicleEntry } from './config/deployVehicles'
+import { vehicleDeployPosition } from './utils/vehicleDeployPositions'
 import { buildDefaultOperators } from './config/operators'
 import { buildingUnitOf } from './config/buildingUnits'
 import { defaultProfileForTeam, profileOf } from './config/operatorProfiles'
@@ -62,12 +64,14 @@ import { platform } from './platform'
 import { useDeviceType } from './hooks/useDeviceType'
 import { propsForPlatform, stagesForPlatform, type GameDataPlatform } from './config/gameDataPlatform'
 import { evaluateVehicleRefreshRule } from './utils/vehicleRefreshRuntime'
+import { objectiveStateKey, objectiveStatesForStageChange, scopeLegacyObjectiveValues, writeStageObjectiveValue } from './utils/objectiveStates'
 import { syncRouteTeamCascade } from './utils/routeTeamCascade'
 import { useBeginnerDemoBridge } from './demo/useBeginnerDemoBridge'
 
 const DEFAULT_MAP_IDS = MAPS.map((map) => map.id)
 const DEFAULT_PROP_VIS: PropVisibility = {
   载具补给站: true,
+  空中载具补给站: true,
   固定防空炮: true,
   密集阵: true,
   固定机枪: true,
@@ -92,35 +96,21 @@ function createEmptyTacticalContextState(): MapState {
  */
 function normalizeObjectivesForStageChange(
   state: MapState,
-  stageList: Array<{ points: CapturePoint[] }>,
+  stageList: Array<{ id: string; points: CapturePoint[] }>,
   fromIndex: number,
   toIndex: number,
 ): MapState {
   const currentWargame = wargameOf(state)
-  const objectiveStates = { ...currentWargame.battleContext.objectiveStates }
-  const activeObjectiveNames = new Set((stageList[toIndex]?.points ?? []).map((point) => point.name))
-  if (toIndex > fromIndex) {
-    for (let stageIndex = Math.max(0, fromIndex); stageIndex < toIndex; stageIndex += 1) {
-      for (const point of stageList[stageIndex]?.points ?? []) {
-        objectiveStates[point.name] = { owner: 'attack', capturingSide: null, progress: 100 }
-      }
-    }
-  }
-  for (const point of stageList[toIndex]?.points ?? []) {
-    objectiveStates[point.name] = { owner: 'neutral', capturingSide: null, progress: 0 }
-  }
-  for (let stageIndex = toIndex + 1; stageIndex < stageList.length; stageIndex += 1) {
-    for (const point of stageList[stageIndex]?.points ?? []) {
-      // 相邻阶段可能沿用同名据点；当前阶段状态必须优先，不能被后续阶段覆盖。
-      if (activeObjectiveNames.has(point.name)) continue
-      objectiveStates[point.name] = { owner: 'defense', capturingSide: null, progress: 100 }
-    }
-  }
+  const objectiveStates = objectiveStatesForStageChange(currentWargame.battleContext.objectiveStates, stageList, fromIndex, toIndex)
   return {
     ...state,
     wargame: {
       ...currentWargame,
-      battleContext: { ...currentWargame.battleContext, objectiveStates },
+      battleContext: {
+        ...currentWargame.battleContext,
+        objectiveStates,
+        objectiveCountdowns: scopeLegacyObjectiveValues(currentWargame.battleContext.objectiveCountdowns, stageList[fromIndex]?.id ?? 'S1', stageList),
+      },
     },
   }
 }
@@ -428,7 +418,8 @@ export default function App() {
       ? Math.max(0.65, Math.min(1.1, persisted.ui.mapMarkerScale))
       : 0.9,
     layers: {
-      props: cinematicLayoutPreset === 'backdrop' || isCinematicMobileFrame ? false : persisted?.ui?.layers?.props ?? true,
+      // 正常启动始终显示地图道具；演示实例保留各自的图层预设。
+      props: cinematicLayoutPreset === 'backdrop' || isCinematicMobileFrame ? false : isCinematicDemoFrame ? persisted?.ui?.layers?.props ?? true : true,
       points: isCinematicObjectiveStates || cinematicLayoutPreset === 'platformCompare' ? true : cinematicLayoutPreset === 'backdrop' || isCinematicMobileFrame ? false : persisted?.ui?.layers?.points ?? true,
       pointsLabels: isCinematicObjectiveStates || cinematicLayoutPreset === 'platformCompare' ? true : cinematicLayoutPreset === 'backdrop' || isCinematicMobileFrame ? false : persisted?.ui?.layers?.pointsLabels ?? true,
       pointAnnotations: cinematicLayoutPreset === 'backdrop' || isCinematicMobileFrame ? false : persisted?.ui?.layers?.pointAnnotations ?? true,
@@ -441,7 +432,8 @@ export default function App() {
     } as LayerVisibility,
     propVis: {
       ...DEFAULT_PROP_VIS,
-      ...(persisted?.ui?.propVis ?? {}),
+      // 不能只开启总开关：上次关闭的各类型也须在正常启动时重新显示。
+      ...(isCinematicDemoFrame ? persisted?.ui?.propVis ?? {} : {}),
     } as PropVisibility,
     draw: {
       color: persisted?.ui?.draw?.color ?? '#ffd54a',
@@ -479,7 +471,6 @@ export default function App() {
   const defenseDemoStartedRef = useRef(false)
   const stylePanelDemoStartedRef = useRef(false)
   const completePlanStartedRef = useRef(false)
-  const config = MAP_BY_ID[mapId] ?? MAP_BY_ID.ascent
   const platformStages = useMemo(() => stagesForPlatform(gameDataPlatform), [gameDataPlatform])
   const platformProps = useMemo(() => propsForPlatform(gameDataPlatform), [gameDataPlatform])
   const stages = platformStages[mapId] ?? []
@@ -512,6 +503,9 @@ export default function App() {
       ? modeStageSelection[modeStageKey]
       : activeModeMap.stages[0]?.id ?? 'S1'
     : null
+  const config = useMemo(() => mapConfigForStage(MAP_BY_ID[mapId] ?? MAP_BY_ID.ascent,
+    activeModeStageId ?? stages[capturedStageIndex]?.id, gameDataPlatform),
+  [mapId, activeModeStageId, stages, capturedStageIndex, gameDataPlatform])
   // 运行时只转换当前地图；完整地图集合仍由正式导出按显式范围转换。
   const activeRuntimeMode = useMemo(
     () => activeModeProfile ? buildRuntimeModeData(activeModeProfile, gameDataPlatform, mapId) : null,
@@ -728,7 +722,7 @@ export default function App() {
               ...currentWargame.battleContext,
               objectiveStates: {
                 ...currentWargame.battleContext.objectiveStates,
-                '据点A': nextState,
+                [objectiveStateKey(activeModeStageId ?? pointPanelStages[0]?.id ?? 'S1', '据点A')]: nextState,
               },
             },
           },
@@ -2139,7 +2133,7 @@ export default function App() {
     setDeployTarget(spawn)
   }, [])
 
-  // 部署载具：放置到出生点附近（同种多辆时沿纬度方向错开），整批为一条历史
+  // 部署载具：优先使用各生成位的坐标，整批为一条历史。
   // own = 该出生点是否为当前视角的本方（攻方视角点攻方复活点=本方绿，点守方复活点=敌方红）
   const handleDeployVehicle = useCallback(
     (entry: DeployVehicleEntry, target: DeployTarget) => {
@@ -2147,6 +2141,7 @@ export default function App() {
       commitVehicleChange((vs) => {
         const vehicles = [...vs]
         for (let i = 0; i < entry.num; i++) {
+          const [lat, lng] = vehicleDeployPosition(entry, target.pos, i)
           vehicles.push({
             uid: genUid('veh'),
             name: entry.name,
@@ -2154,8 +2149,8 @@ export default function App() {
             side: target.side,
             badge: entry.badge,
             iconUrl: entry.iconUrl,
-            lat: target.pos[0] + i * 2.4,
-            lng: target.pos[1],
+            lat,
+            lng,
             stageId: target.stageId,
             rotation: 0,
             own,
@@ -2903,7 +2898,7 @@ export default function App() {
     return () => { delete target.__unitFireLineDragStart }
   }, [device.mobileLayout])
 
-  const handleObjectiveStateChange = useCallback((pointName: string, objectiveState: TacticalObjectiveState) => {
+  const handleObjectiveStateChange = useCallback((stageId: string, pointName: string, objectiveState: TacticalObjectiveState) => {
     updateMap(mapId, (state) => {
       const currentWargame = wargameOf(state)
       return {
@@ -2912,7 +2907,7 @@ export default function App() {
           ...currentWargame,
           battleContext: {
             ...currentWargame.battleContext,
-            objectiveStates: { ...currentWargame.battleContext.objectiveStates, [pointName]: objectiveState },
+            objectiveStates: writeStageObjectiveValue(currentWargame.battleContext.objectiveStates, stageId, pointName, objectiveState),
           },
         },
       }
@@ -3310,10 +3305,20 @@ export default function App() {
   }, [activeModeStageId, capturedStageIndex, mapId, stages, view, cloneState, pushEntry, updateMap])
 
   // ---- 战术板：导出 + 方案管理（第二十一轮） ----
+  const handleExportMapImage = useCallback(async () => {
+    const map = mapRef.current
+    if (!map) throw new Error('地图尚未就绪，请稍后重试')
+    const { exportMapImage, mapImageFilename } = await import('./utils/exportMapImage')
+    const stageId = activeModeStageId ?? stages[capturedStageIndex]?.id ?? 'S1'
+    await exportMapImage(map.getContainer(), mapImageFilename(config.name, stageId, wargame.round))
+  }, [activeModeStageId, stages, capturedStageIndex, config.name, wargame.round])
+
   /** 导出战术板 HTML（当前视角全部战术层 + 静态层，范围可选当前阶段/全部阶段） */
   const handleExportTactical = useCallback(
     async (stageMode: 'current' | 'all' | 'overview', exportStageId: string, exportRound: number) => {
       const cur = mapsRef.current[activeTacticalContextKeyRef.current] ?? createEmptyMapState()
+      // 与地图画面使用同一份模式/数据端配置，包含资源更新和编辑器覆盖。
+      const exportStages = activeOfficialModeMap?.stages ?? stages
       const stageId = exportStageId || activeModeStageId || stages[capturedStageIndex]?.id || 'S1'
       const liveStageId = activeModeStageId || stages[capturedStageIndex]?.id || 'S1'
       const liveBucket = snapshotTacticalBucket(cur, liveStageId, wargameOf(cur).round)
@@ -3325,13 +3330,13 @@ export default function App() {
       const source = bucket ? applyTacticalBucket(synchronizedCur, bucket) : synchronizedCur
       const snapshots = stageMode !== 'current'
         ? Object.values(allBuckets).sort((a, b) => {
-            const stageOrder = stages.findIndex((stage) => stage.id === a.stageId) - stages.findIndex((stage) => stage.id === b.stageId)
+            const stageOrder = exportStages.findIndex((stage) => stage.id === a.stageId) - exportStages.findIndex((stage) => stage.id === b.stageId)
             return stageOrder || a.round - b.round
           }).map((item) => ({
             key: item.key,
             stageId: item.stageId,
             round: item.round,
-            capturedStageIndex: stages.findIndex((stage) => stage.id === item.stageId),
+            capturedStageIndex: exportStages.findIndex((stage) => stage.id === item.stageId),
             geoJson: item.drawings[view] ?? emptyGeoJson(),
             vehicles: item.vehicles[view] ?? [],
             buildings: item.buildings[view] ?? [],
@@ -3345,14 +3350,14 @@ export default function App() {
             notesMarkdown: wargameOf(cur).stageNotes?.[item.stageId] ?? item.notesMarkdown ?? '',
           }))
         : undefined
-      const propsList = platformProps[mapId] ?? []
+      const propsList = activeOfficialModeMap?.props ?? platformProps[mapId] ?? []
       const html = await buildTacticalHtml({
         config,
         mapName: config.name,
         view,
         stageMode,
-        capturedStageIndex,
-        stages,
+        capturedStageIndex: Math.max(0, exportStages.findIndex((stage) => stage.id === stageId)),
+        stages: exportStages,
         geoJson: source.drawings[view] ?? emptyGeoJson(),
         vehicles: vehiclesBucketOf(source)[view],
         buildings: buildingsBucketOf(source)[view],
@@ -3375,7 +3380,7 @@ export default function App() {
       if (!isBeginnerDemo) downloadText(filename, html)
       return { filename, html }
     },
-    [isBeginnerDemo, mapId, config, view, activeModeStageId, capturedStageIndex, stages, platformProps, ui.layers.props, ui.propVis],
+    [isBeginnerDemo, mapId, config, view, activeModeStageId, activeOfficialModeMap, capturedStageIndex, stages, platformProps, ui.layers.props, ui.propVis],
   )
 
   const handleOperatorSkillUse = useCallback(
@@ -4300,6 +4305,7 @@ export default function App() {
           onCreateRound={handleCreateRound}
           onDeleteRound={handleDeleteRound}
           objectiveNames={pointPanelStages[pointPanelStageIndex]?.points.map((point) => point.name) ?? []}
+          objectiveStageId={pointPanelStages[pointPanelStageIndex]?.id ?? 'S1'}
           vehicleRefreshRules={activeOfficialModeMap?.vehicleRefreshRules ?? []}
           fieldSupports={fieldSupports}
           onAddFieldSupport={handleAddFieldSupport}
@@ -4318,6 +4324,8 @@ export default function App() {
           <MapView
             key={activeTacticalContextKey}
           config={config}
+          gameDataPlatform={gameDataPlatform}
+          gameModeId={activeModeId}
           mobileLayout={device.mobileLayout}
           modeData={activeOfficialModeMap}
           modeStageId={activeModeStageId}
@@ -4541,7 +4549,8 @@ export default function App() {
           const rounds = Array.from(new Set(Object.values(state.tacticalBuckets?.buckets ?? {}).filter((bucket) => bucket.stageId === stage.id).map((bucket) => bucket.round))).sort((a, b) => a - b)
           return [stage.id, rounds.length ? rounds : [1]]
         }))}
-        onExport={isBeginnerDemo ? beginnerDemoBridge.exportHtml : (m, stageId, round) => void handleExportTactical(m, stageId, round)}
+        onExport={isBeginnerDemo ? beginnerDemoBridge.exportHtml : handleExportTactical}
+        onExportImage={handleExportMapImage}
         onExportNative={isBeginnerDemo ? beginnerDemoBridge.exportNative : handleExportNativeTactical}
         onImportNative={isBeginnerDemo ? beginnerDemoBridge.importNative : handleImportNativeTactical}
         onSavePlan={handleSavePlan}

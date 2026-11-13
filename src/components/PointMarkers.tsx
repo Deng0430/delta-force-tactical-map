@@ -2,6 +2,7 @@ import { Marker, Polygon, useMap } from 'react-leaflet'
 import * as L from 'leaflet'
 import type { CapturePoint, PointStatus, Side, StageConfig, TacticalObjectiveState } from '../types'
 import { POINT_ICON_BASE } from '../config/points'
+import { readStageObjectiveValue } from '../utils/objectiveStates'
 
 const ZONE_ZOOM = 4.4
 
@@ -122,13 +123,15 @@ export default function PointMarkers({
   const activeStage = stages[capturedStageIndex]
   const activeStatus: PointStatus = 'active'
 
-  const makeIcon = (point: CapturePoint, status: PointStatus, selected: boolean) => {
-    const objectiveState = objectiveStates[point.name] ?? defaultObjectiveState(status)
+  const makeIcon = (point: CapturePoint, stageId: string, status: PointStatus, selected: boolean) => {
+    const objectiveState = status === 'locked'
+      ? defaultObjectiveState(status)
+      : readStageObjectiveValue(objectiveStates, stageId, point.name, activeStage?.id) ?? defaultObjectiveState(status)
     const color = objectiveStateColor(objectiveState, view)
     const progressColor = objectiveProgressColor(objectiveState, view)
     const progress = objectiveFrameProgress(objectiveState)
     const progressPoints = objectiveProgressPoints(progress)
-    const showProgress = objectiveState.owner !== 'neutral' || objectiveState.capturingSide !== null
+    const showProgress = status === 'active' && (objectiveState.owner !== 'neutral' || objectiveState.capturingSide !== null)
     const img = `${POINT_ICON_BASE}/${point.icon}.png`
     const cls = ['cap-marker', status, selected ? 'selected' : ''].join(' ')
     return L.divIcon({
@@ -170,7 +173,7 @@ export default function PointMarkers({
       {/* 据点可占领区域（官网据点对象 border，实线边框）：仅当前阶段 */}
       {captureVisible && activeStage.points.map((point) => {
           if (!point.capturable || point.capturable.length < 3) return null
-          const objectiveState = objectiveStates[point.name] ?? defaultObjectiveState(activeStatus)
+          const objectiveState = readStageObjectiveValue(objectiveStates, activeStage.id, point.name, activeStage.id) ?? defaultObjectiveState(activeStatus)
           const color = objectiveStateColor(objectiveState, view)
           return (
             <Polygon
@@ -191,13 +194,19 @@ export default function PointMarkers({
           )
       })}
 
-      {/* 据点标记（A点图标 + "据点A"字样）：仅当前阶段；labelsVisible=false 时整体隐藏 */}
+      {/* 所有阶段均可点选；非当前阶段沿用 captured/locked 的半透明样式，区域仍仅显示当前阶段。 */}
       {labelsVisible &&
-        activeStage.points.map((point) => (
+        stages.flatMap((stage, stageIndex) => {
+          const status = stageStatus(stageIndex, capturedStageIndex)
+          const current = status === 'active'
+          return stage.points.map((point) => (
             <Marker
-              key={`pt-${activeStage.id}-${point.name}`}
+              key={`pt-${stage.id}-${point.name}`}
               position={[point.lat, point.lng]}
-              icon={makeIcon(point, activeStatus, selectedStageId === activeStage.id && selectedName === point.name)}
+              icon={makeIcon(point, stage.id, status, current && selectedStageId === stage.id && selectedName === point.name)}
+              // 同名同坐标据点跨阶段重复时，当前阶段优先接收点击。
+              zIndexOffset={current ? 1000 : 0}
+              title={`${stage.id} · ${point.name}${current ? '' : '（点击切换阶段）'}`}
               // 绘制工具激活时禁用交互：据点图标不拦截 mousedown，绘制可穿过
               interactive={interactive}
               eventHandlers={{
@@ -205,11 +214,12 @@ export default function PointMarkers({
                   // 绘制工具激活时忽略点击（不弹属性详情、不聚焦）
                   if (!interactive) return
                   map.flyTo([point.lat, point.lng], ZONE_ZOOM, { duration: 0.6 })
-                  onSelect(point, activeStage.id)
+                  onSelect(point, stage.id)
                 },
               }}
             />
-          ))}
+          ))
+        })}
     </>
   )
 }

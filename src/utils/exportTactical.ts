@@ -11,6 +11,7 @@ import type {
   OperatorConnection,
   OperatorUnit,
   PropVisibility,
+  MapProp,
   Side,
   StageConfig,
   TacticalRoute,
@@ -23,7 +24,12 @@ import { platform } from '../platform'
 import { POINT_ICON_BASE } from '../config/points'
 import { TEAMS } from '../config/operators'
 import { buildingUnitOf } from '../config/buildingUnits'
+import { FIELD_SUPPORTS, fieldSupportRangeRings } from '../config/fieldSupports'
+import { DEFAULT_MAP_PROP_THEME, MAP_PROP_THEMES } from '../config/mapPropTheme'
 import { renderTacticalMarkdown } from './tacticalMarkdown'
+import { localMapTileUrls } from './mapTiles'
+import { buildMapPropZiplineDisplay, ZIPLINE_VERTICAL_BADGE_HTML, ziplineEndpointHtml } from './mapZiplines'
+import { AIR_SUPPLY_BADGE_HTML, airSupplyHeightLabel } from './airSupply'
 import leafletJs from 'leaflet/dist/leaflet.js?raw'
 import leafletCss from 'leaflet/dist/leaflet.css?raw'
 
@@ -72,7 +78,7 @@ export interface ExportParams {
   showProps: boolean
   propVis: PropVisibility
   /** 已按 propVis 过滤的道具列表（App 从 MAP_PROPS 提取） */
-  propsList: { name: string; icon: string; lat: number; lng: number; stage: string }[]
+  propsList: MapProp[]
   /** 当前阶段×回合的推演备注 Markdown。 */
   notesMarkdown?: string
   noteImages?: Record<string, string>
@@ -97,6 +103,11 @@ export interface ExportParams {
 /** 收集全部图片 URL（载具/职业/据点/复活点/道具），返回 base64 映射 */
 async function collectImages(p: ExportParams): Promise<Record<string, string>> {
   const urls = new Set<string>()
+  const exportStageIds = p.stageMode === 'all' && p.stages.length ? p.stages.map((stage) => stage.id)
+    : [p.stages[p.capturedStageIndex]?.id ?? '']
+  const tileTemplates = new Set(exportStageIds.map((id) => p.config.stageTileUrls?.[id] ?? p.config.tileUrl))
+  const localTiles = new Set([...tileTemplates].flatMap((tileUrl) => localMapTileUrls({ ...p.config, tileUrl })))
+  for (const url of localTiles) urls.add(url)
   const allVehicles = [p.vehicles, ...(p.snapshots ?? []).map((snapshot) => snapshot.vehicles)].flat()
   const allOperators = [p.operators, ...(p.snapshots ?? []).map((snapshot) => snapshot.operators)].flat()
   const allBuildings = [p.buildings, ...(p.snapshots ?? []).map((snapshot) => snapshot.buildings)].flat()
@@ -126,10 +137,13 @@ async function collectImages(p: ExportParams): Promise<Record<string, string>> {
     for (const pr of p.propsList) urls.add(`${POINT_ICON_BASE}/${pr.icon}.png`)
   }
   const map: Record<string, string> = {}
-  const tasks: Promise<void>[] = []
-  for (const u of urls) {
-    tasks.push(
-      fetch(u)
+  // Local basemaps include hundreds of tiles; bound concurrency on desktop and Android.
+  const pending = Array.from(urls)
+  let cursor = 0
+  const worker = async () => {
+    while (cursor < pending.length) {
+      const u = pending[cursor++]
+      await fetch(u)
         .then((r) => (r.ok ? r.blob() : Promise.reject(new Error('bad status'))))
         .then((b) => {
           const fr = new FileReader()
@@ -140,14 +154,17 @@ async function collectImages(p: ExportParams): Promise<Record<string, string>> {
           })
         })
         .then((data) => {
+          if (!data && localTiles.has(u)) throw new Error('empty local tile')
           if (data) map[u] = data
         })
-        .catch(() => {
-          /* 内联失败：HTML 端回退原 URL */
-        }),
-    )
+        .catch((error: unknown) => {
+          // A local URL cannot work after sharing an HTML file. Never silently export a blank map.
+          if (localTiles.has(u)) throw new Error(`底图瓦片读取失败，请重试导出：${u}`, { cause: error })
+          /* Other images retain the existing original-URL fallback. */
+        })
+    }
   }
-  await Promise.all(tasks)
+  await Promise.all(Array.from({ length: Math.min(8, pending.length) }, worker))
   return map
 }
 
@@ -160,18 +177,6 @@ function opIconUrl(op: OperatorUnit): string {
     recon: 'cls_recon.png',
   }
   return `/icons/operators/${clsMap[op.cls] ?? 'cls_assault.png'}`
-}
-
-/** 道具主题色（与 MapPropsLayer 一致） */
-const PROP_COLOR: Record<string, string> = {
-  载具补给站: '#2f6fed',
-  固定防空炮: '#e0453a',
-  密集阵: '#32b8c6',
-  固定机枪: '#f08c2a',
-  岸防炮: '#d63f3f',
-  滑索: '#2ec4b6',
-  电梯: '#8b98ab',
-  固定弹药箱: '#f4cf67',
 }
 
 /**
@@ -203,11 +208,18 @@ export async function buildTacticalHtml(p: ExportParams): Promise<string> {
     teamRoles: p.teamRoles ?? {},
     routes: p.routes,
     fieldSupports: p.fieldSupports ?? [],
+    fieldSupportDefinitions: Object.fromEntries(FIELD_SUPPORTS.map((definition) => [definition.id, {
+      name: definition.name,
+      details: definition.details,
+      detailNote: definition.detailNote,
+      rangeRings: fieldSupportRangeRings(definition.id, p.config.metersPerMapUnit),
+    }])),
     skillActions: p.skillActions ?? [],
     showProps: p.showProps,
     propVis: p.propVis,
     propsList: p.propsList,
-    propColor: PROP_COLOR,
+    propThemes: MAP_PROP_THEMES,
+    defaultPropTheme: DEFAULT_MAP_PROP_THEME,
     imgs,
     snapshots: (p.snapshots ?? []).map((snapshot) => ({ ...snapshot, fieldSupports: snapshot.fieldSupports ?? [], skillActions: snapshot.skillActions ?? [], notesHtml: renderTacticalMarkdown(snapshot.notesMarkdown, p.noteImages ?? {}) })),
     notesHtml: renderTacticalMarkdown(p.notesMarkdown ?? '', p.noteImages ?? {}),
@@ -226,6 +238,7 @@ export async function buildTacticalHtml(p: ExportParams): Promise<string> {
 <style>
   html, body { margin: 0; height: 100%; background: #0e1112; font-family: "Microsoft YaHei", system-ui, sans-serif; }
   #map { width: 100vw; height: 100vh; background: #0e1112; }
+  .support-export-tooltip { width: 240px; max-width: calc(100vw - 32px); box-sizing: border-box; padding: 8px 12px; white-space: normal; line-height: 1.55; }
   .board-head { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;
     background: rgba(14,17,18,.92); border: 1px solid #2b3135; border-radius: 4px; color: #eaebeb;
     font-size: 12px; padding: 6px 14px; display: flex; gap: 14px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.5);
@@ -333,9 +346,12 @@ export async function buildTacticalHtml(p: ExportParams): Promise<string> {
   .cap-tag, .spawn-tag { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 700;
     color: #fff; background: rgba(14,17,18,.85); border: 1px solid var(--c, #f4cf67); border-radius: 2px; padding: 0 3px;
     white-space: nowrap; pointer-events: none; }
-  .prop-marker { width: 26px; height: 26px; }
-  .prop-marker .prop-bg { position: absolute; inset: 1px; border-radius: 50%; background: var(--pc); opacity: .9; }
-  .prop-marker img { width: 70%; height: 70%; object-fit: contain; z-index: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,.7)); }
+  .prop-marker { width: 100%; height: 100%; background: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,.9)); }
+  .prop-zipline-endpoint { position:absolute;left:50%;top:50%;width:8px;height:8px;box-sizing:border-box;transform:translate(-50%,-50%);border:2px solid var(--pc);border-radius:50%;background:#0b151b;box-shadow:0 0 0 1px #0b151b;pointer-events:none; }
+  .prop-zipline-endpoint.end { background:var(--pc); }
+  .prop-marker .prop-glyph { display: block; width: 100%; height: 100%; background-color: var(--pc); -webkit-mask-image: var(--prop-icon); mask-image: var(--prop-icon); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; mask-mode: alpha; pointer-events: none; }
+  .prop-zipline-vertical, .prop-air-supply { position: absolute; right: -3px; bottom: -3px; display: flex; align-items: center; justify-content: center; width: 13px; height: 13px; border: 1px solid var(--pc); border-radius: 3px; background: #0b151b; color: var(--pc); font: 900 13px/1 Arial,sans-serif; pointer-events: none; }
+  .prop-air-supply svg { display: block; width: 11px; height: 11px; }
   /* ---------- 绘制文字 ---------- */
   .text-marker-wrap { background: transparent; border: none; overflow: visible; }
   .text-marker { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); box-sizing: border-box;
@@ -486,7 +502,12 @@ document.getElementById('noteScopeToggle')?.addEventListener('click', () => { sh
 const cfg = D.config;
 const map = L.map('map', { crs: L.CRS.Simple, minZoom: cfg.minZoom, maxZoom: cfg.maxZoom, zoomControl: true, attributionControl: false });
 const bounds = L.latLngBounds(cfg.southWest, cfg.northEast);
-L.tileLayer(cfg.tileUrl, { bounds, minZoom: cfg.minZoom, maxZoom: cfg.maxZoom, maxNativeZoom: cfg.maxNativeZoom, tileSize: 256, noWrap: true }).addTo(map);
+const basemapStageId = D.stages?.[D.capturedStageIndex]?.id;
+const basemapTileUrl = (cfg.stageTileUrls || {})[basemapStageId] || cfg.tileUrl;
+const basemap = L.tileLayer(basemapTileUrl, { bounds, minZoom: cfg.minZoom, minNativeZoom: Math.ceil(cfg.minZoom), maxZoom: cfg.maxZoom, maxNativeZoom: cfg.maxNativeZoom, tileSize: 256, noWrap: true });
+const originalTileUrl = basemap.getTileUrl.bind(basemap);
+basemap.getTileUrl = (coords) => { const url = originalTileUrl(coords); return D.imgs[url] || url; };
+basemap.addTo(map);
 map.fitBounds(bounds);
 map.setMaxBounds(bounds);
 const img = (u) => D.imgs[u] || u;
@@ -722,8 +743,21 @@ if ((D.operators && D.operators.length) || (D.teams && D.teams.length) || (D.ski
   const supportLayer = L.layerGroup().addTo(map);
   (D.fieldSupports || []).forEach((support) => {
     const color = support.side === D.view ? '#01ff84' : '#e0453a';
+    const definition = D.fieldSupportDefinitions[support.definitionId];
+    const rangeRings = definition ? definition.rangeRings : [];
+    const details = definition ? (definition.details || []) : [];
+    const hasDetails = details.length > 0 || Boolean(definition && definition.detailNote);
+    rangeRings.slice().reverse().forEach((ring) => {
+      L.circle([support.lat, support.lng], { radius: ring.mapRadius, color: ring.color, weight: ring.weight, opacity: ring.opacity, fill: ring.fill, fillOpacity: ring.fillOpacity, dashArray: ring.dashArray, interactive: false }).addTo(supportLayer);
+    });
     const html = '<span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:rgba(8,13,15,.92);border:2px solid ' + color + ';box-shadow:0 0 0 2px rgba(8,13,15,.85)"><img src="' + img(support.iconUrl) + '" style="width:23px;height:23px;object-fit:contain" draggable="false" /></span>';
-    L.marker([support.lat, support.lng], { icon: L.divIcon({ className: 'support-export-marker', html, iconSize: [34, 34], iconAnchor: [17, 17] }), interactive: false, zIndexOffset: 920 }).addTo(supportLayer);
+    const marker = L.marker([support.lat, support.lng], { icon: L.divIcon({ className: 'support-export-marker', html, iconSize: [34, 34], iconAnchor: [17, 17] }), interactive: hasDetails, zIndexOffset: 920 }).addTo(supportLayer);
+    if (hasDetails) {
+      const lines = [...details];
+      if (definition.detailNote) lines.push(definition.detailNote);
+      if (details.length && !rangeRings.length) lines.push('该地图的米制范围尚未标定');
+      marker.bindTooltip('<strong>' + esc(definition.name || support.name) + '</strong><br>' + lines.map((line) => esc(line)).join('<br>'), { direction: 'top', offset: [0, -18], className: 'support-export-tooltip' });
+    }
   });
   /* 兵棋通用队标：只表达队伍字母与归属。 */
   const tmLayer = L.layerGroup().addTo(map);
@@ -838,11 +872,21 @@ visibleSpawnStages.forEach((visibleStage) => {
 
 /* ---------- 道具（按 propVis 开启项） ---------- */
 if (D.showProps && D.propsList && D.propsList.length) {
-  (D.propsList || []).forEach((pr) => {
-    if (!(D.propVis && D.propVis[pr.name] !== false)) return;
-    const color = (D.propColor || {})[pr.name] || '#8b98ab';
-    const html = '<div class="prop-marker" style="--pc:' + color + '"><span class="prop-bg"></span><img src="' + img('${POINT_ICON_BASE}/' + pr.icon + '.png') + '" draggable="false" /></div>';
-    L.marker([pr.lat, pr.lng], { icon: L.divIcon({ className: 'prop-marker-wrap', html, iconSize: [26, 26], iconAnchor: [13, 13] }), interactive: false }).addTo(staticLayer);
+  const visibleProps = D.propsList.filter((pr) => (!D.propVis || D.propVis[pr.name] !== false)
+    && (overviewStatic || !/^S\\d+$/.test(pr.stage) || pr.stage === (curStage && curStage.id)));
+  const ziplineDisplay = (${buildMapPropZiplineDisplay.toString()})(visibleProps);
+  const ziplineColor = (D.propThemes['滑索'] || D.defaultPropTheme).color;
+  ziplineDisplay.connections.forEach((line) => L.polyline(line.latlngs, { color: ziplineColor, weight: 1.8, opacity: .8, dashArray: '4 4', interactive: false }).addTo(staticLayer));
+  const ziplineEndpoints = new Set(ziplineDisplay.endpoints);
+  [...ziplineDisplay.markers, ...ziplineDisplay.endpoints, ...ziplineDisplay.midpoints.map((item) => item.prop)].forEach((pr) => {
+    const theme = (D.propThemes || {})[pr.name] || D.defaultPropTheme;
+    const iconUrl = img('${POINT_ICON_BASE}/' + pr.icon + '.png');
+    const badge = (pr.zipline && pr.zipline.orientation === 'vertical' ? ${JSON.stringify(ZIPLINE_VERTICAL_BADGE_HTML)} : '')
+      + (pr.name === '空中载具补给站' ? ${JSON.stringify(AIR_SUPPLY_BADGE_HTML)} : '');
+    const html = ziplineEndpoints.has(pr) ? (${ziplineEndpointHtml.toString()})(pr.zipline.endpoint, theme.color)
+      : '<div class="prop-marker" style="--pc:' + theme.color + ';--prop-icon:url(' + esc(JSON.stringify(iconUrl)) + ')"><span class="prop-glyph" aria-hidden="true"></span>' + badge + '</div>';
+    const marker = L.marker([pr.lat, pr.lng], { icon: L.divIcon({ className: 'prop-marker-wrap', html, iconSize: [theme.size, theme.size], iconAnchor: [theme.size / 2, theme.size / 2] }), interactive: pr.name === '空中载具补给站' }).addTo(staticLayer);
+    if (pr.name === '空中载具补给站') marker.bindTooltip(esc(pr.name) + '<br>' + esc((${airSupplyHeightLabel.toString()})(pr.airSupply)), { direction: 'top' });
   });
 }
 

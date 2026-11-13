@@ -2,6 +2,7 @@ import type { BuildingUnit, MapState, OperatorConnection, OperatorTeam, Operator
 import { TEAMS } from '../config/operators'
 import { orderTypeOf } from '../config/routes'
 import { DEPLOY_VEHICLE_CATALOG } from '../config/deployVehicles'
+import { CUSTOM_VEHICLES } from '../config/customVehicles'
 import { emptyGeoJson } from './geo'
 
 /** 正式应用数据的本地存储键。 */
@@ -69,10 +70,15 @@ export function emptyWargameState(): WargameState {
  */
 function normalizeVehicles(vehicles: unknown): Record<Side, VehicleItem[]> {
   const normalizeList = (items: VehicleItem[]) => items.map((item) => {
+    // 菜单与官网历史名称的连字符不同（LAV-AA / LAV AA），仍应更新旧图例。
+    const name = item.name.replace(/[\s-]/g, '')
     const currentVehicle = DEPLOY_VEHICLE_CATALOG.find((entry) => (
-      entry.name === item.name
-      || entry.name.includes(item.name)
-      || item.name.includes(entry.name)
+      entry.name.replace(/[\s-]/g, '') === name
+    )) ?? CUSTOM_VEHICLES.find((entry) => (
+      entry.name.replace(/[\s-]/g, '') === name
+    )) ?? DEPLOY_VEHICLE_CATALOG.find((entry) => (
+      entry.name.replace(/[\s-]/g, '').includes(name)
+      || name.includes(entry.name.replace(/[\s-]/g, ''))
     ))
     return {
       ...item,

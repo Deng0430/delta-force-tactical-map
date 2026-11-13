@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import type { Side } from '../types'
+import { deploymentCountLabel } from '../utils/deployVehicleCounts'
 import {
   DEPLOY_BY_MAP,
   DEPLOY_VEHICLE_CATALOG,
@@ -29,14 +30,14 @@ interface DeployBarProps {
   /** 自定义模式使用编辑器导出的正式版部署表；未提供时使用攻防模式内置数据。 */
   deployByStage?: Record<string, StageDeploy>
   onClose: () => void
-  /** 部署某载具到出生点附近 */
+  /** 部署载具；优先使用条目配置的生成位。 */
   onDeploy: (entry: DeployVehicleEntry, target: DeployTarget) => void
 }
 
 /**
  * 底部载具部署栏（仿官网 deploy-swiper）：
  * 点击出生点后出现，展示该出生点可部署载具的各类信息
- * （名称/图标/CD 冷却/可部署数量/投放方式），点击"部署"将载具放置到出生点附近。
+ * （名称/图标/CD 冷却/可部署数量/投放方式），点击"部署"将载具放置到配置位置。
  * 本方出生点部署的载具绿底，非本方（敌方）出生点也可部署（战术推演），载具红底。
  */
 export default function DeployBar({ mapId, view, target, deployByStage, onClose, onDeploy }: DeployBarProps) {
@@ -77,7 +78,7 @@ export default function DeployBar({ mapId, view, target, deployByStage, onClose,
             <em className="deploy-bar-stage">阶段 {target.stageId.replace('S', '')}</em>
           </span>
           <span className="deploy-bar-hint">
-            点击「部署」放置载具到出生点附近（{ownLabel}载具{isOwn ? '绿' : '红'}底），点击空白处关闭
+            点击「部署」放置载具（{ownLabel}载具{isOwn ? '绿' : '红'}底），点击空白处关闭
           </span>
           <button className="deploy-bar-close" onClick={onClose} title="关闭部署栏" aria-label="关闭部署栏">
             ✕
@@ -106,15 +107,23 @@ export default function DeployBar({ mapId, view, target, deployByStage, onClose,
                   />
                 </div>
                 <div className="deploy-card-info">
-                  <div className="deploy-card-cd">{v.cd}s</div>
-                  <div className="deploy-card-num">可部署:{v.num}</div>
+                  <div className="deploy-card-cd" title={v.cooldownKnown === false ? '当前资源尚未恢复有效冷却'
+                    : v.clientSpawner?.cooldownStatus === 'template-unresolved' ? `公共模板尚未解析；当前配置 ${v.cd}s 仅作参考`
+                    : v.clientSpawner?.cooldownStatus === 'pc-template-verified' ? `PC模板 CD ${v.clientSpawner.templateVehicleCd}s；当前配置 ${v.cd}s`
+                    : v.clientSpawner ? `当前配置 ${v.cd}s；静态模板仅作为来源参考，不覆盖现有配置` : undefined}>
+                    {v.cooldownKnown === false || v.clientSpawner?.cooldownStatus === 'template-unresolved' ? 'CD待核实' : `${v.cd}s`}
+                  </div>
+                  <div className="deploy-card-num" title="可部署数量，与累计部署次数分开">可部署:{v.num}</div>
+                  <div className="deploy-card-num" title={v.deployCountKnown === false ? 'PC资源未启用此次数限制，累计次数待确认'
+                    : v.clientSpawner ? '按PC资源的次数上限配置；计数作用域与阶段重置仍待确认'
+                    : '包含首次部署；例如2次表示首次部署后可再部署1次。'}>部署次数:{deploymentCountLabel(v)}</div>
                   <div className="deploy-card-note">{v.note}</div>
                 </div>
               </div>
               <button
                 className="deploy-card-btn"
                 onClick={() => onDeploy(v, target)}
-                title={`部署 ${v.name} 到出生点附近`}
+                title={`部署 ${v.name} 到${v.deployPositions?.length ? '载具生成位置' : '出生点附近'}`}
               >
                 部署
               </button>

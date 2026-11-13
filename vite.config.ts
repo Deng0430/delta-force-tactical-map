@@ -13,14 +13,14 @@ const demoEntries = {
   videoCover4x3V014: 'demo/v0.1.4/app/video-cover-4x3.html',
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   build: {
     rollupOptions: {
       input: {
         main: 'index.html',
         modeConfig: 'mode-config.html',
-        ...Object.fromEntries(Object.entries(demoEntries).filter(([, entry]) => existsSync(entry))),
+        ...(mode === 'release' ? {} : Object.fromEntries(Object.entries(demoEntries).filter(([, entry]) => existsSync(entry)))),
       },
     },
   },
@@ -28,4 +28,4 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
-})
+}))

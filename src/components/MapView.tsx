@@ -43,7 +43,8 @@ import OperatorSkillLayer from './OperatorSkillLayer'
 import OpBubble from './OpBubble'
 import OpRenameBar from './OpRenameBar'
 import PointMarkers, { defaultObjectiveState, objectiveProgressColor, objectiveStateColor } from './PointMarkers'
-import SpawnMarkers from './SpawnMarkers'
+import { readStageObjectiveValue } from '../utils/objectiveStates'
+import SpawnMarkers, { type SpawnMarkerSelection } from './SpawnMarkers'
 import ActivityZones from './ActivityZones'
 import MapPropsLayer from './MapPropsLayer'
 import type { LayerVisibility, PropVisibility } from '../types'
@@ -52,6 +53,14 @@ import VehicleRefreshLayer, { type RuntimeVehicleRefreshPoint, type RuntimeVehic
 import type { StageDeploy } from '../config/deployVehicles'
 import { rangeProgressStyle } from '../utils/rangeStyle'
 import KeyboardMapPan from './KeyboardMapPan'
+import MapMetricScale from './MapMetricScale'
+import MapMeasureTool from './MapMeasureTool'
+import { surfaceModelManifestForBasemap } from '../config/mapSurfaceModels'
+import type { GameDataPlatform } from '../config/gameDataPlatform'
+import { infantrySpawnAreasForBase, infantrySpawnAreasForObjective, visibleInfantrySpawnGroups, type InfantrySpawnInspection } from '../config/infantrySpawnAreas'
+import InfantrySpawnLayer from './InfantrySpawnLayer'
+import InfantrySpawnPanel from './InfantrySpawnPanel'
+import BaseSpawnPanel from './BaseSpawnPanel'
 
 interface OfficialModeMapData {
   stages: StageConfig[]
@@ -329,6 +338,8 @@ function MapRotationControl({ initiallyCollapsed = false }: { initiallyCollapsed
 
 interface MapViewProps {
   config: MapConfig
+  gameDataPlatform: GameDataPlatform
+  gameModeId: string
   mobileLayout: boolean
   modeData: OfficialModeMapData | null
   propsOverride?: MapProp[]
@@ -377,7 +388,7 @@ interface MapViewProps {
   onDeleteBuilding: (uid: string) => void
   onDrawSaved: (side: Side, geoJson: string) => void
   onSelectPoint: (point: CapturePoint, stageId: string) => void
-  onObjectiveStateChange: (pointName: string, state: TacticalObjectiveState) => void
+  onObjectiveStateChange: (stageId: string, pointName: string, state: TacticalObjectiveState) => void
   onCloseDetail: () => void
   /** 点击出生点（弹出底部载具部署栏） */
   onSpawnSelect: (spawn: { uid: string; stageId: string; side: Side; pos: [number, number]; baseName: string | null }) => void
@@ -685,6 +696,8 @@ function RouteEditorTrigger({ route, activeSection, branchPicking, onOpen, onSty
 
 export default function MapView({
   config,
+  gameDataPlatform,
+  gameModeId,
   mobileLayout,
   modeData,
   propsOverride,
@@ -812,6 +825,9 @@ export default function MapView({
       setBranchPickRouteUid(null)
     }
   }, [tool])
+  useEffect(() => {
+    if (tool === 'measure' && skillActionDraft) onCancelSkillAction()
+  }, [tool, skillActionDraft, onCancelSkillAction])
   // 载具位置注册表（第十四轮：套索框选/整体移动的实时位置来源，由 VehicleLayer 维护）
   const vehiclePosRef = useRef<Record<string, [number, number]>>({})
 
@@ -1067,10 +1083,47 @@ export default function MapView({
     return 'locked'
   }, [runtimeStageIndex, runtimeStages, selectedStage])
   const selectedObjectiveState = selectedPoint && selectedStatus
-    ? battleContext.objectiveStates[selectedPoint.point.name] ?? defaultObjectiveState(selectedStatus)
+    ? readStageObjectiveValue(battleContext.objectiveStates, selectedPoint.stageId, selectedPoint.point.name, runtimeStages[runtimeStageIndex]?.id) ?? defaultObjectiveState(selectedStatus)
     : null
   const selectedObjectiveColor = selectedObjectiveState ? objectiveStateColor(selectedObjectiveState, view) : '#f4cf67'
   const selectedObjectiveProgressColor = selectedObjectiveState ? objectiveProgressColor(selectedObjectiveState, view) : '#f4cf67'
+
+  const infantryObjective = useMemo(() => selectedPoint && selectedStage?.id === runtimeStages[runtimeStageIndex]?.id
+    ? infantrySpawnAreasForObjective(config.id, gameDataPlatform, gameModeId, selectedPoint.stageId, selectedPoint.point)
+    : null, [config.id, gameDataPlatform, gameModeId, selectedPoint, selectedStage, runtimeStages, runtimeStageIndex])
+  const infantryKey = infantryObjective
+    ? `${config.id}:${gameDataPlatform}:${gameModeId}:${selectedStage?.id}:${infantryObjective.id}` : ''
+  const [infantrySelection, setInfantrySelection] = useState<(InfantrySpawnInspection & { key: string }) | null>(null)
+  // Reset when selection/stage/context ends, including closing and reopening the same objective.
+  useEffect(() => { setInfantrySelection(null) }, [infantryKey])
+  const infantryInspection: InfantrySpawnInspection = infantrySelection?.key === infantryKey
+    ? infantrySelection : { expanded: false, side: view, inner: true, outer: true }
+  const infantryGroups = layers.points ? visibleInfantrySpawnGroups(infantryObjective, infantryInspection) : []
+
+  const currentStage = runtimeStages[runtimeStageIndex]
+  const baseContextKey = `${config.id}:${gameDataPlatform}:${gameModeId}:${currentStage?.id}`
+  const [baseInspection, setBaseInspection] = useState<{ key: string; uid: string; expanded: boolean } | null>(null)
+  const selectedBaseSpawn = layers.spawns && baseInspection?.key === baseContextKey
+    ? currentStage?.spawns.find((spawn) => spawn.uid === baseInspection.uid) ?? null : null
+  const selectedBaseData = selectedBaseSpawn
+    ? infantrySpawnAreasForBase(config.id, gameDataPlatform, gameModeId, currentStage.id, selectedBaseSpawn) : null
+  useEffect(() => { setBaseInspection(null) }, [baseContextKey, layers.spawns])
+  // Right-panel objective selection bypasses the map markers, so clear base details here too.
+  useEffect(() => { if (selectedPoint) setBaseInspection(null) }, [selectedPoint])
+  const handleInspectBase = (selection: SpawnMarkerSelection) => {
+    const spawn = currentStage?.spawns.find((item) => item.uid === selection.uid)
+    if (!spawn || !infantrySpawnAreasForBase(config.id, gameDataPlatform, gameModeId, currentStage.id, spawn)) {
+      setBaseInspection(null)
+      return
+    }
+    onCloseDetail()
+    setBaseInspection((previous) => previous?.key === baseContextKey && previous.uid === spawn.uid
+      ? null : { key: baseContextKey, uid: spawn.uid, expanded: false })
+  }
+  const handleDeployFromBase = (selection: SpawnMarkerSelection) => {
+    setBaseInspection(null)
+    onSpawnSelect(selection)
+  }
 
   // 右键切回查看工具：延后一轮执行，让 LayerManager 先把待确认的曲线草稿提交落盘。
   const handleMapContextMenu = useCallback(
@@ -1141,6 +1194,8 @@ export default function MapView({
         <KeyboardMapPan enabled={editing == null} />
         <TextEditMapLock active={editing != null} />
         <MapRotationControl initiallyCollapsed={cinematicCompassCollapsed} />
+        <MapMetricScale metersPerMapUnit={config.metersPerMapUnit} />
+        <MapMeasureTool active={tool === 'measure'} metersPerMapUnit={config.metersPerMapUnit} surfaceManifestUrl={surfaceModelManifestForBasemap(config.id, config.tileUrl)} onExit={() => onTool('pan')} />
         <SkillActionPlacement active={skillActionDraft != null && (skillActionDraft.skill?.placementMode ?? skillActionDraft.tacticalMode?.placementMode) !== 'target-unit' && (skillActionDraft.skill?.placementMode ?? skillActionDraft.tacticalMode?.placementMode) !== 'ally-unit'} onPlace={onPlaceSkillAction} onCancel={onCancelSkillAction} />
         <TileLayer
           url={config.tileUrl}
@@ -1164,6 +1219,7 @@ export default function MapView({
         {cinematicBattleCompare ? <CinematicBattleHighlights stage={cinematicBattleCompare} /> : null}
         <MapPropsLayer
           mapId={config.id}
+          stageId={runtimeStages[runtimeStageIndex]?.id}
           visible={layers.props}
           propVis={propVis}
           interactive={interactive}
@@ -1181,9 +1237,12 @@ export default function MapView({
           captureVisible={layers.pointsCapture}
           frontlineVisible={layers.pointsFrontline}
           interactive={interactive}
-          onSelect={onSelectPoint}
+          onSelect={(point, stageId) => { setBaseInspection(null); onSelectPoint(point, stageId) }}
           objectiveStates={battleContext.objectiveStates}
         />
+        <InfantrySpawnLayer groups={infantryGroups} view={view}
+          base={selectedBaseSpawn && selectedBaseData && baseInspection?.expanded
+            ? { ...selectedBaseData, origin: [selectedBaseSpawn.lat, selectedBaseSpawn.lng] } : null} />
         <SpawnMarkers
           stages={runtimeStages}
           capturedStageIndex={runtimeStageIndex}
@@ -1192,7 +1251,9 @@ export default function MapView({
           annotationsVisible={layers.spawnAnnotations}
           interactive={interactive}
           deployByStage={modeData?.deploy}
-          onSelect={onSpawnSelect}
+          onSelect={handleDeployFromBase}
+          onInspect={handleInspectBase}
+          selectedUid={selectedBaseSpawn?.uid}
         />
         <ActivityZones
           stages={runtimeStages}
@@ -1215,7 +1276,7 @@ export default function MapView({
           onLocateVehicle={onLocateVehicleRefresh}
         />
         {wargame.enabled && <UnitFireLineLayer view={view} visible={wargame.showFireLines} operators={operators} teams={teams} vehicles={vehicles} buildings={buildings} />}
-        {wargame.enabled && <FieldSupportLayer supports={fieldSupports} view={view} interactive={interactive} onMove={onMoveFieldSupport} onDelete={onDeleteFieldSupport} />}
+        {wargame.enabled && <FieldSupportLayer supports={fieldSupports} view={view} interactive={interactive} metersPerMapUnit={config.metersPerMapUnit} onMove={onMoveFieldSupport} onDelete={onDeleteFieldSupport} />}
         {wargame.enabled && <OperatorSkillLayer actions={state.skillActions ?? []} operators={operators} view={view} onDelete={onDeleteSkillAction} onUpdateGeometry={onUpdateSkillActionGeometry} />}
         <VehicleLayer
           vehicles={vehicles}
@@ -1381,7 +1442,7 @@ export default function MapView({
         )}
         <LayerManager
           view={view}
-          tool={tool}
+          tool={tool === 'measure' ? 'pan' : tool}
           geoJson={geoJson}
           draw={draw}
           onCommitDraw={onCommitDraw}
@@ -1527,6 +1588,20 @@ export default function MapView({
         </div>
       )}
 
+      {selectedBaseSpawn && selectedBaseData && baseInspection && <BaseSpawnPanel
+        spawn={selectedBaseSpawn}
+        data={selectedBaseData}
+        stageLabel={currentStage.label}
+        view={view}
+        expanded={baseInspection.expanded}
+        canDeployVehicles={(modeData?.deploy[currentStage.id]?.[selectedBaseSpawn.side] ?? [])
+          .some((vehicle) => vehicle.spawnUid === selectedBaseSpawn.uid)}
+        onToggle={() => setBaseInspection((previous) => previous ? { ...previous, expanded: !previous.expanded } : null)}
+        onDeployVehicles={() => handleDeployFromBase({ uid: selectedBaseSpawn.uid, stageId: currentStage.id,
+          side: selectedBaseSpawn.side, pos: [selectedBaseSpawn.lat, selectedBaseSpawn.lng], baseName: selectedBaseSpawn.name || null })}
+        onClose={() => setBaseInspection(null)}
+      />}
+
       {/* 选中点位详情卡 */}
       {selectedPoint && selectedStage && (
         <div className="point-detail objective-state-editor" style={{ '--objective-state-color': selectedObjectiveColor, '--objective-progress-color': selectedObjectiveProgressColor } as CSSProperties}>
@@ -1541,22 +1616,22 @@ export default function MapView({
           {selectedObjectiveState ? <div className="objective-state-controls">
             <span className="objective-control-label">据点归属</span>
             <div className="objective-owner-segments">
-              <button type="button" className={selectedObjectiveState.owner === view ? 'active own' : ''} onClick={() => onObjectiveStateChange(selectedPoint.point.name, { owner: view, capturingSide: null, progress: 100 })}>我方</button>
-              <button type="button" className={selectedObjectiveState.owner === 'neutral' ? 'active neutral' : ''} onClick={() => onObjectiveStateChange(selectedPoint.point.name, { owner: 'neutral', capturingSide: selectedObjectiveState.capturingSide ?? view, progress: selectedObjectiveState.owner === 'neutral' ? selectedObjectiveState.progress : 0 })}>中立</button>
-              <button type="button" className={selectedObjectiveState.owner !== 'neutral' && selectedObjectiveState.owner !== view ? 'active enemy' : ''} onClick={() => onObjectiveStateChange(selectedPoint.point.name, { owner: view === 'attack' ? 'defense' : 'attack', capturingSide: null, progress: 100 })}>敌方</button>
+              <button type="button" className={selectedObjectiveState.owner === view ? 'active own' : ''} onClick={() => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { owner: view, capturingSide: null, progress: 100 })}>我方</button>
+              <button type="button" className={selectedObjectiveState.owner === 'neutral' ? 'active neutral' : ''} onClick={() => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { owner: 'neutral', capturingSide: selectedObjectiveState.capturingSide ?? view, progress: selectedObjectiveState.owner === 'neutral' ? selectedObjectiveState.progress : 0 })}>中立</button>
+              <button type="button" className={selectedObjectiveState.owner !== 'neutral' && selectedObjectiveState.owner !== view ? 'active enemy' : ''} onClick={() => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { owner: view === 'attack' ? 'defense' : 'attack', capturingSide: null, progress: 100 })}>敌方</button>
             </div>
             {selectedObjectiveState.owner === 'neutral' ? <>
               <span className="objective-control-label">正在占领</span>
               <div className="objective-capturing-segments">
-                <button type="button" className={selectedObjectiveState.capturingSide === view ? 'active own' : ''} onClick={() => onObjectiveStateChange(selectedPoint.point.name, { ...selectedObjectiveState, capturingSide: view })}>我方读条</button>
-                <button type="button" className={selectedObjectiveState.capturingSide && selectedObjectiveState.capturingSide !== view ? 'active enemy' : ''} onClick={() => onObjectiveStateChange(selectedPoint.point.name, { ...selectedObjectiveState, capturingSide: view === 'attack' ? 'defense' : 'attack' })}>敌方读条</button>
+                <button type="button" className={selectedObjectiveState.capturingSide === view ? 'active own' : ''} onClick={() => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { ...selectedObjectiveState, capturingSide: view })}>我方读条</button>
+                <button type="button" className={selectedObjectiveState.capturingSide && selectedObjectiveState.capturingSide !== view ? 'active enemy' : ''} onClick={() => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { ...selectedObjectiveState, capturingSide: view === 'attack' ? 'defense' : 'attack' })}>敌方读条</button>
               </div>
-            </> : <button type="button" className={`objective-contested-toggle ${selectedObjectiveState.capturingSide ? 'active' : ''}`} onClick={() => onObjectiveStateChange(selectedPoint.point.name, { ...selectedObjectiveState, capturingSide: selectedObjectiveState.capturingSide ? null : selectedObjectiveState.owner === 'attack' ? 'defense' : 'attack', progress: 100 })}>
+            </> : <button type="button" className={`objective-contested-toggle ${selectedObjectiveState.capturingSide ? 'active' : ''}`} onClick={() => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { ...selectedObjectiveState, capturingSide: selectedObjectiveState.capturingSide ? null : selectedObjectiveState.owner === 'attack' ? 'defense' : 'attack', progress: 100 })}>
               <i className={`fa-solid ${selectedObjectiveState.capturingSide ? 'fa-toggle-on' : 'fa-toggle-off'}`} />{selectedObjectiveState.capturingSide ? '正在被另一方占领' : '当前无人读条'}
             </button>}
             {selectedObjectiveState.capturingSide ? <label className="objective-progress-control">
               <span>占领进度 <b>{Math.round(selectedObjectiveState.progress)}%</b></span>
-              <input type="range" min="0" max="100" step="1" value={selectedObjectiveState.progress} style={rangeProgressStyle(selectedObjectiveState.progress, 0, 100, selectedObjectiveProgressColor)} onChange={(event) => onObjectiveStateChange(selectedPoint.point.name, { ...selectedObjectiveState, progress: Number(event.target.value) })} />
+              <input type="range" min="0" max="100" step="1" value={selectedObjectiveState.progress} style={rangeProgressStyle(selectedObjectiveState.progress, 0, 100, selectedObjectiveProgressColor)} onChange={(event) => onObjectiveStateChange(selectedPoint.stageId, selectedPoint.point.name, { ...selectedObjectiveState, progress: Number(event.target.value) })} />
             </label> : null}
           </div> : null}
           {selectedPoint.point.note && (
@@ -1565,6 +1640,13 @@ export default function MapView({
               <span>{selectedPoint.point.note}</span>
             </div>
           )}
+          {infantryObjective && <InfantrySpawnPanel
+            objective={infantryObjective}
+            inspection={infantryInspection}
+            view={view}
+            mapLayerVisible={layers.points}
+            onChange={(next) => setInfantrySelection({ ...next, key: infantryKey })}
+          />}
           <button className="btn point-detail-close" onClick={onCloseDetail}>
             关闭
           </button>

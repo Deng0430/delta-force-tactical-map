@@ -16,6 +16,8 @@ import type {
 } from '../types'
 import { genUid } from '../utils/geo'
 import { DEPLOY_VEHICLE_CATALOG, type DeployVehicleEntry } from '../config/deployVehicles'
+import { normalizeDeploymentCount } from '../utils/deployVehicleCounts'
+import { airSupplyHeightLabel } from '../utils/airSupply'
 import { POINT_ICON_BASE } from '../config/points'
 import { refreshTriggerLabel } from '../utils/vehicleRefreshRules'
 import type { ModePaletteAsset } from './ModeAssetPalette'
@@ -49,6 +51,7 @@ const OBJECTIVE_ICON_OPTIONS = [
 const PROP_OPTIONS = [
   { name: '固定弹药箱', icon: 'q_gddyx' },
   { name: '载具补给站', icon: 'q_zjbjz' },
+  { name: '空中载具补给站', icon: 'q_zjbjz' },
   { name: '固定防空炮', icon: 'q_gdaap' },
   { name: '密集阵', icon: 'q_mjz' },
   { name: '固定机枪', icon: 'q_gdjq' },
@@ -333,6 +336,7 @@ export default function ModeConfigEditor({
           category: entry.category,
           cd: entry.cd,
           num: entry.num,
+          deployCount: normalizeDeploymentCount(entry.deployCount),
           allowTeammate: entry.allowTeammate,
         }]
     replaceSpawn(selectedSpawn.uid, {
@@ -785,8 +789,11 @@ export default function ModeConfigEditor({
                   {selectedSpawn.deployVehicles.map((vehicle) => (
                     <div key={vehicle.name}>
                       <img src={vehicle.iconUrl} alt="" /><strong>{vehicle.name}</strong>
-                      <label>CD<input type="number" min="0" value={vehicle.cd} onChange={(event) => replaceDeployVehicle(vehicle.name, { cd: Number(event.target.value) })} /></label>
-                      <label>数量<input type="number" min="1" value={vehicle.num} onChange={(event) => replaceDeployVehicle(vehicle.name, { num: Math.max(1, Number(event.target.value)) })} /></label>
+                      <label title={vehicle.cooldownKnown === false ? '有效冷却待核实，可手动填写'
+                        : vehicle.clientSpawner?.cooldownStatus === 'pc-template-verified' ? 'PC模板配置值；在线最终冷却仍待核实'
+                        : vehicle.clientSpawner ? '公共模板未解析，当前 CD 尚未经本次客户端表核实' : undefined}>CD<input type="number" min="0" placeholder="待核实" value={vehicle.cooldownKnown === false ? '' : vehicle.cd} onChange={(event) => replaceDeployVehicle(vehicle.name, { cd: Number(event.target.value), cooldownKnown: event.target.value !== '' })} /></label>
+                      <label title="可部署的载具数量">数量<input type="number" min="1" value={vehicle.num} onChange={(event) => replaceDeployVehicle(vehicle.name, { num: Math.max(1, Number(event.target.value)) })} /></label>
+                      <label className="deploy-count" title="累计部署次数，包含首次部署；PC资源未启用限制时显示待确认。">部署次数<input type="number" min="1" step="1" placeholder="待确认" value={vehicle.deployCountKnown === false ? '' : normalizeDeploymentCount(vehicle.deployCount)} onChange={(event) => replaceDeployVehicle(vehicle.name, { deployCount: normalizeDeploymentCount(Number(event.target.value)), deployCountKnown: event.target.value !== '' })} /></label>
                       <label className="check"><TacticalCheckbox checked={vehicle.allowTeammate} onChange={(allowTeammate) => replaceDeployVehicle(vehicle.name, { allowTeammate })} />友方可用</label>
                     </div>
                   ))}
@@ -819,7 +826,8 @@ export default function ModeConfigEditor({
           <div className="mode-config-properties-title">地图道具属性</div>
           <PermissionControl value={selectedProp.verification} onChange={(verification) => replaceProp(selectedProp.uid, { verification })} />
           <fieldset disabled={selectedProp.verification === 'confirmed'}>
-            <label className="mode-config-field"><span>类型</span><select value={`${selectedProp.name}:${selectedProp.icon}`} onChange={(event) => { const option = PROP_OPTIONS.find((item) => `${item.name}:${item.icon}` === event.target.value); if (option) replaceProp(selectedProp.uid, { name: option.name, icon: option.icon }) }}>{PROP_OPTIONS.map((item) => <option key={item.icon} value={`${item.name}:${item.icon}`}>{item.name}</option>)}</select></label>
+            <label className="mode-config-field"><span>类型</span><select value={`${selectedProp.name}:${selectedProp.icon}`} onChange={(event) => { const option = PROP_OPTIONS.find((item) => `${item.name}:${item.icon}` === event.target.value); if (option) replaceProp(selectedProp.uid, { name: option.name, icon: option.icon, airSupply: option.name === '空中载具补给站' ? selectedProp.airSupply : undefined }) }}>{PROP_OPTIONS.map((item) => <option key={item.name} value={`${item.name}:${item.icon}`}>{item.name}</option>)}</select></label>
+            {selectedProp.name === '空中载具补给站' ? <label className="mode-config-field"><span>高度（米）</span><input type="number" step="0.1" placeholder="PC 世界坐标 Z" title={airSupplyHeightLabel(selectedProp.airSupply)} value={selectedProp.airSupply?.elevationMeters ?? ''} onChange={(event) => replaceProp(selectedProp.uid, { airSupply: event.target.value === '' ? undefined : { elevationMeters: Number(event.target.value), reference: 'pc-world-z' } })} /></label> : null}
             <label className="mode-config-field"><span>显示阶段</span><select value={selectedProp.stageId} onChange={(event) => replaceProp(selectedProp.uid, { stageId: event.target.value })}><option value="*">全部阶段</option>{stageOptions.map((stage) => <option key={stage.id} value={stage.id}>{stage.id} · {stage.label}</option>)}</select></label>
             <div className="mode-config-coords">{selectedProp.lat.toFixed(3)}, {selectedProp.lng.toFixed(3)}</div>
             <button className="mode-config-delete" onClick={onDeleteSelection}>删除地图道具</button>

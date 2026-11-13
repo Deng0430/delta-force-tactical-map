@@ -1,5 +1,6 @@
 import type { MapConfig } from '../types'
 import skyportOfficial from './skyportOfficial.json'
+import { metersPerMapUnitForBasemap } from './mapMetricCalibration'
 
 /**
  * 腾讯 CDN 瓦片基地址。
@@ -16,17 +17,18 @@ const TILE_BASE = 'https://game.gtimg.cn/images/dfm/cp/a20240729directory/img'
  *   southWest = [0, -80]
  *   northEast = [-(boundsH - 70), -boundsW]
  */
-export const MAPS: MapConfig[] = [
+const BASE_MAPS: MapConfig[] = [
   {
     id: 'ascent',
     name: '攀升',
     enName: 'Ascent',
     layerName: 'map_pc',
-    tileUrl: `${TILE_BASE}/map_pc/{z}_{x}_{y}.jpg`,
+    // PC原生底图经无损顺时针90度对齐，Q80仅改变编码，不改变地图坐标。
+    tileUrl: '/maps/ascent-pc-q80-v1/{z}_{x}_{y}.webp',
     minZoom: 2.5,
     initZoom: 2.5,
     maxZoom: 8,
-    maxNativeZoom: 5,
+    maxNativeZoom: 4,
     boundsW: -300,
     boundsH: 300,
     southWest: [0, -80],
@@ -38,11 +40,12 @@ export const MAPS: MapConfig[] = [
     name: '临界点',
     enName: 'Flashpoint',
     layerName: 'map_ljd_pc',
-    tileUrl: `${TILE_BASE}/map_ljd_pc/{z}_{x}_{y}.jpg`,
+    // PC ClipMap原生4096/2048两级，无损顺时针90°对齐后按Q80切片。
+    tileUrl: '/maps/flashpoint-pc-q80-v1/{z}_{x}_{y}.webp',
     minZoom: 3,
     initZoom: 3,
     maxZoom: 8,
-    maxNativeZoom: 5,
+    maxNativeZoom: 4,
     boundsW: -250,
     boundsH: 300,
     southWest: [0, -80],
@@ -102,7 +105,7 @@ export const MAPS: MapConfig[] = [
     name: '风暴眼',
     enName: 'StormEye',
     layerName: 'map_hdz',
-    tileUrl: `${TILE_BASE}/map_hdz/{z}_{x}_{y}.jpg`,
+    tileUrl: '/maps/stormeye-pc-q80-v1/{z}_{x}_{y}.webp',
     minZoom: 2.6,
     initZoom: 2.6,
     maxZoom: 8,
@@ -118,12 +121,13 @@ export const MAPS: MapConfig[] = [
     name: '烬区',
     enName: 'Ember',
     layerName: 'map_jq',
-    // 官方总览瓦片与 map_jq 使用相同坐标系，但不含烘焙在普通瓦片中的活动区黑色遮罩。
-    tileUrl: `${TILE_BASE}/map_jq_zl/{z}_{x}_{y}.jpg`,
+    // 手游包原生底图已与官网总览瓦片完成像素对齐，保留现有据点/区域坐标。
+    // 4096 详细层对应原生 z4；Q80 只压缩编码，不改变像素网格。
+    tileUrl: '/maps/ember-mobile-q80-v1/{z}_{x}_{y}.webp',
     minZoom: 3,
     initZoom: 3,
     maxZoom: 8,
-    maxNativeZoom: 5,
+    maxNativeZoom: 4,
     boundsW: -300,
     boundsH: 300,
     southWest: [0, -80],
@@ -151,11 +155,13 @@ export const MAPS: MapConfig[] = [
     name: '堑壕战',
     enName: 'TrenchWarfare',
     layerName: 'map_qhz',
-    tileUrl: `${TILE_BASE}/map_qhz/{z}_{x}_{y}.jpg`,
+    // PC ClipMap 原生 Mip1/Mip0 分别为 2048/4096，直接对应 z3/z4。
+    // 保留官网坐标与平移边界；高于 z4 时复用真实原图，不伪造更高清层。
+    tileUrl: '/maps/trench-pc-q80-v1/{z}_{x}_{y}.webp',
     minZoom: 2.5,
     initZoom: 2.5,
     maxZoom: 8,
-    maxNativeZoom: 5,
+    maxNativeZoom: 4,
     boundsW: -300,
     boundsH: 300,
     southWest: [0, -80],
@@ -212,6 +218,11 @@ export const MAPS: MapConfig[] = [
   },
   skyportOfficial.mapConfig as unknown as MapConfig,
 ]
+
+export const MAPS: MapConfig[] = BASE_MAPS.map((map) => {
+  const metersPerMapUnit = metersPerMapUnitForBasemap(map.id, map.tileUrl)
+  return metersPerMapUnit === undefined ? map : { ...map, metersPerMapUnit }
+})
 
 export const MAP_BY_ID: Record<string, MapConfig> = Object.fromEntries(
   MAPS.map((m) => [m.id, m]),

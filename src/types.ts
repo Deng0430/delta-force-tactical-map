@@ -2,7 +2,7 @@
 export type Side = 'attack' | 'defense'
 
 /** 画笔工具模式（问题4：新增橡皮擦；第九轮：新增普通画笔 pen；第十一轮：新增套索 lasso；第二十二轮：新增防线 defense；第十六轮：编辑能力常驻，删除独立编辑工具） */
-export type ToolMode = 'pan' | 'pen' | 'line' | 'arrow' | 'rect' | 'circle' | 'text' | 'eraser' | 'lasso' | 'defense'
+export type ToolMode = 'pan' | 'measure' | 'pen' | 'line' | 'arrow' | 'rect' | 'circle' | 'text' | 'eraser' | 'lasso' | 'defense'
 
 /** 画笔线型（问题4：实线/虚线/点线） */
 export type DashType = 'solid' | 'dashed' | 'dotted'
@@ -80,6 +80,13 @@ export interface StageVehicle {
 }
 
 /** 地图道具（官网地图工具数据：固定防空炮/固定机枪/岸防炮/滑索/电梯/固定弹药箱/载具补给站） */
+export interface ZiplineEndpointInfo {
+  lineId: string
+  orientation: 'vertical' | 'span'
+  endpoint: 'green' | 'red'
+  elevationMeters: number
+}
+
 export interface MapProp {
   name: string
   /** 官网图标名（dzc_i 目录，如 q_gdaap） */
@@ -88,6 +95,14 @@ export interface MapProp {
   lng: number
   /** 阶段归属（如 攀升S1 / S1），可为空表示全局 */
   stage: string
+  zipline?: ZiplineEndpointInfo
+  airSupply?: AirSupplyInfo
+}
+
+/** 原生补给站 Actor 的世界 Z，单位米；不是海拔、离地高度或补给触发半径。 */
+export interface AirSupplyInfo {
+  elevationMeters: number
+  reference: 'pc-world-z'
 }
 
 /** 攻防阶段配置（阶段顺序即攻防推进顺序） */
@@ -134,8 +149,12 @@ export interface MapConfig {
   enName: string
   /** 腾讯 CDN 瓦片目录名，如 map_pc / map_ljd_pc */
   layerName: string
-  /** 瓦片 URL 模板（含 {z}_{x}_{y} 占位） */
+  /** 本地或 CDN 瓦片 URL 模板（含 {z}_{x}_{y} 占位） */
   tileUrl: string
+  /** 阶段专用底图；未列出的阶段继续使用 tileUrl。 */
+  stageTileUrls?: Record<string, string>
+  /** 经当前底图独立标定的水平米数/CRS.Simple 单位；未标定地图不提供此值。 */
+  metersPerMapUnit?: number
   minZoom: number
   initZoom: number
   maxZoom: number
@@ -188,8 +207,45 @@ export interface ModeDeployVehicle {
   badge: string
   category: VehicleCategory
   cd: number
+  /** false 表示当前来源未恢复有效冷却，不把占位数值展示为游戏 CD。 */
+  cooldownKnown?: boolean
+  /** 同时可部署数量，不包含损失后的再次部署次数。 */
   num: number
+  /** 累计部署次数（包含首次部署）；旧配置未填写时默认为 1。 */
+  deployCount?: number
+  /** false：来源未启用这套次数限制，显示待确认，不把兼容默认 1 当作资源上限。 */
+  deployCountKnown?: boolean
+  /** 载具生成位的地图坐标，按同时部署的槽位顺序排列。 */
+  deployPositions?: [number, number][]
   allowTeammate: boolean
+  /** 客户端生成表的已核实原字段；不等同于全局重生次数或地图坐标。 */
+  clientSpawner?: VehicleSpawnerInfo
+}
+
+/** 保留生成点与公共模板的来源，避免把未启用的 SelfInfo 当成有效刷新配置。 */
+export interface VehicleSpawnerInfo {
+  platform: 'pc' | 'mobile'
+  mapId: number
+  tablePath: string
+  rowName: string
+  section: 'standard' | 'camp'
+  template: string
+  vehicleId: number
+  sourceVehicleName: string
+  spawnerIds: string[]
+  sectorIndices: number[]
+  conditionKeys: number[]
+  singleUse: boolean
+  /** 只在 singleUse=true 时有意义；不是全局并发或整局重生上限。 */
+  singleUseLimit?: number
+  dynamicallyBalanced: boolean
+  /** 冷却模板与生成位置分别记录核实状态。 */
+  cooldownStatus: 'template-unresolved' | 'pc-template-verified'
+  /** 已解析的静态模板值；仍不声称等于在线对局最终冷却。 */
+  templateVehicleCd?: number
+  templateSelfVehicleCd?: number
+  positionStatus: 'existing-unverified' | 'pc-level-verified'
+  vehicleNameConflict?: boolean
 }
 
 /** 自定义模式据点标记，使用攻防模式相同的 q_jd_* 正式图标。 */
@@ -215,6 +271,8 @@ export interface ModeMapProp {
   lat: number
   lng: number
   verification: ModeConfigVerification
+  zipline?: ZiplineEndpointInfo
+  airSupply?: AirSupplyInfo
 }
 
 export type ModeVehicleRefreshTriggerType =
@@ -253,6 +311,7 @@ export interface ModeVehicleRefreshRule {
   refreshPointUid: string
   note: string
   verification: ModeConfigVerification
+  clientSpawner?: VehicleSpawnerInfo
 }
 
 /** 模式地图自身的阶段定义；允许不同于攻防模式增删阶段。 */
@@ -288,7 +347,7 @@ export interface GameModeProfile {
 }
 
 export interface ModeConfigStore {
-  version: 41
+  version: 72
   activeModeId: string
   profiles: GameModeProfile[]
 }
@@ -506,6 +565,8 @@ export interface FieldSupportDefinition {
   name: string
   iconUrl: string
   description: string
+  details?: readonly string[]
+  detailNote?: string
   defaultRadius: number
 }
 
@@ -694,11 +755,11 @@ export interface TacticalBattleContext {
   tickets: Record<Side, number | null>
   /** 已进行的比赛时间（秒）；null 表示尚未设置。 */
   matchTimeSeconds: number | null
-  /** 据点实时占领状态，以据点名称为键。 */
+  /** 据点实时占领状态，以 objectiveStateKey(阶段ID, 据点名) 为键；兼容旧名称键。 */
   objectiveStates: Record<string, TacticalObjectiveState>
   /** 旧版简单占领列表，仅用于读取迁移。 */
   capturedObjectives?: string[]
-  /** 据点倒计时剩余秒数，以据点名称为键；null/缺失表示尚未设置。 */
+  /** 据点倒计时剩余秒数，以阶段＋据点身份为键；null/缺失表示尚未设置。 */
   objectiveCountdowns: Record<string, number | null>
   /** 已触发的地图事件名称。 */
   mapEvents: string[]

@@ -1,33 +1,25 @@
 import { useMemo } from 'react'
-import { Marker, Tooltip } from 'react-leaflet'
+import { Marker, Polyline, Tooltip } from 'react-leaflet'
 import * as L from 'leaflet'
 import type { MapProp, PropVisibility } from '../types'
 import { MAP_PROPS } from '../config/pointsStages'
 import { POINT_ICON_BASE } from '../config/points'
+import { mapPropThemeOf } from '../config/mapPropTheme'
 import { platform } from '../platform'
+import { buildMapPropZiplineDisplay, ZIPLINE_VERTICAL_BADGE_HTML, ziplineEndpointHtml } from '../utils/mapZiplines'
+import { AIR_SUPPLY_BADGE_HTML, airSupplyHeightLabel } from '../utils/airSupply'
 
-/** 道具类型视觉配色 + 显示尺寸（问题4：24-28px，随缩放级别自适应） */
-const PROP_THEME: Record<string, { color: string; size: number }> = {
-  载具补给站: { color: '#2f6fed', size: 28 },
-  固定防空炮: { color: '#e0453a', size: 28 },
-  密集阵: { color: '#32b8c6', size: 28 },
-  火神炮: { color: '#e0453a', size: 28 },
-  固定机枪: { color: '#f08c2a', size: 26 },
-  岸防炮: { color: '#d63f3f', size: 28 },
-  滑索: { color: '#2ec4b6', size: 24 },
-  电梯: { color: '#8b98ab', size: 24 },
-  固定弹药箱: { color: '#f4cf67', size: 24 },
-}
-
-function propIcon(name: string, icon: string): L.DivIcon {
-  const t = PROP_THEME[name] ?? { color: '#8b98ab', size: 26 }
+function propIcon(prop: MapProp, endpoint = false): L.DivIcon {
+  const t = mapPropThemeOf(prop.name)
+  const iconUrl = `${POINT_ICON_BASE}/${encodeURIComponent(prop.icon).replace(/'/g, '%27')}.png`
   const touchSize = platform.kind === 'android' ? 44 : t.size
   return L.divIcon({
     className: 'prop-marker-wrap',
-    html: `
-      <div class="prop-marker" style="--pc:${t.color};--prop-visual-size:${t.size}px">
-        <span class="prop-bg"></span>
-        <img src="${POINT_ICON_BASE}/${icon}.png" draggable="false" />
+    html: endpoint ? ziplineEndpointHtml(prop.zipline!.endpoint, t.color) : `
+      <div class="prop-marker" style="--pc:${t.color};--prop-visual-size:${t.size}px;--prop-icon:url('${iconUrl}')">
+        <span class="prop-glyph" aria-hidden="true"></span>
+        ${prop.zipline?.orientation === 'vertical' ? ZIPLINE_VERTICAL_BADGE_HTML : ''}
+        ${prop.name === '空中载具补给站' ? AIR_SUPPLY_BADGE_HTML : ''}
       </div>`,
     iconSize: [touchSize, touchSize],
     iconAnchor: [touchSize / 2, touchSize / 2],
@@ -44,27 +36,35 @@ interface MapPropsLayerProps {
   interactive: boolean
   /** 自定义模式转换后的正式版道具数据；未提供时使用攻防模式内置数据。 */
   propsOverride?: MapProp[]
+  stageId?: string
 }
 
 /**
  * 地图道具图层（问题1/2/4）：
  * 渲染官网地图道具（载具补给站/固定防空炮/固定机枪/岸防炮/滑索/电梯/固定弹药箱），
- * 彩色底衬圆标 + 官网图标，24-28px 小尺寸；悬停/点击显示道具名称；
+ * 原图透明轮廓直接着色，无圆形底片；悬停/点击显示道具名称；
  * 受左侧面板"地图道具"总开关与各类型开关双重控制，开关状态存入 localStorage。
  */
-export default function MapPropsLayer({ mapId, visible, propVis, interactive, propsOverride }: MapPropsLayerProps) {
-  const props = useMemo(() => propsOverride ?? MAP_PROPS[mapId] ?? [], [mapId, propsOverride])
+export default function MapPropsLayer({ mapId, visible, propVis, interactive, propsOverride, stageId }: MapPropsLayerProps) {
+  const props = useMemo<MapProp[]>(() => propsOverride ?? MAP_PROPS[mapId] ?? [], [mapId, propsOverride])
+  const display = useMemo(() => buildMapPropZiplineDisplay(props.filter((prop) => (propVis[prop.name] ?? true)
+    && (!stageId || !/^S\d+$/.test(prop.stage) || prop.stage === stageId))), [props, propVis, stageId])
   if (!visible || props.length === 0) return null
 
   return (
     <>
-      {props.map((p, i) => {
-        if (!(propVis[p.name] ?? true)) return null
+      {display.connections.map((line) => <Polyline key={line.id} positions={line.latlngs}
+        pathOptions={{ color: mapPropThemeOf('滑索').color, weight: 1.8, opacity: .8, dashArray: '4 4', interactive: false, className: 'map-zipline-connection' }} interactive={false} />)}
+      {display.midpoints.map(({ id, prop }) => <Marker key={`zipline-mid-${id}`} position={[prop.lat, prop.lng]}
+        icon={propIcon(prop)} zIndexOffset={521} interactive={interactive}>
+        {interactive ? <Tooltip sticky direction="top" opacity={1}>滑索 · 斜向{prop.stage ? ` · ${prop.stage}` : ''}</Tooltip> : null}
+      </Marker>)}
+      {[...display.markers, ...display.endpoints].map((p, i) => {
         return (
           <Marker
             key={`prop-${mapId}-${i}-${p.icon}`}
             position={[p.lat, p.lng]}
-            icon={propIcon(p.name, p.icon)}
+            icon={propIcon(p, display.endpoints.includes(p))}
             zIndexOffset={520}
             interactive={interactive}
           >
@@ -73,7 +73,9 @@ export default function MapPropsLayer({ mapId, visible, propVis, interactive, pr
               <Tooltip sticky direction="top" opacity={1}>
                 <span className="prop-tip">
                   {p.name}
+                  {p.zipline ? <em> · {p.zipline.orientation === 'vertical' ? '垂直' : p.zipline.endpoint === 'green' ? 'A端' : 'B端'}</em> : null}
                   {p.stage ? <em> · {p.stage}</em> : null}
+                  {p.name === '空中载具补给站' ? <><br /><em>{airSupplyHeightLabel(p.airSupply)}</em></> : null}
                 </span>
               </Tooltip>
             )}

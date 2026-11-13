@@ -17,7 +17,11 @@ import type {
   Side,
 } from '../types'
 import { MAPS, MAP_BY_ID } from '../config/maps'
+import { mapConfigForStage } from '../config/stageBasemaps'
+import MapMetricScale from './MapMetricScale'
 import { deployForPlatform, propsForPlatform, stagesForPlatform, type GameDataPlatform } from '../config/gameDataPlatform'
+import { withSkyportPcHotfix } from '../config/skyportPcHotfix'
+import { ascentPcAttackDefenseDefaults } from '../config/ascentPcAttackDefense'
 import { genUid, mapBounds } from '../utils/geo'
 import { downloadText } from '../utils/exportTactical'
 import {
@@ -132,9 +136,13 @@ function storeHistoryReducer(state: StoreHistory, action: StoreHistoryAction): S
 
 function WorkbenchMapSync({ config, onReady }: { config: (typeof MAPS)[number]; onReady: (map: L.Map) => void }) {
   const map = useMap()
+  const appliedMap = useRef('')
   useEffect(() => {
     onReady(map)
-    map.setView(config.initCenter, config.initZoom, { animate: false })
+    if (appliedMap.current !== config.id) {
+      appliedMap.current = config.id
+      map.setView(config.initCenter, config.initZoom, { animate: false })
+    }
     map.setMaxBounds(mapBounds(config))
   }, [config, map, onReady])
   return null
@@ -289,7 +297,8 @@ export default function ModeConfigWorkbench() {
     return () => window.removeEventListener('resize', constrainWidths)
   }, [])
 
-  const config = MAP_BY_ID[mapId] ?? MAPS[0]
+  const config = useMemo(() => mapConfigForStage(MAP_BY_ID[mapId] ?? MAPS[0], session.stageId, editorDataPlatform),
+    [mapId, session.stageId, editorDataPlatform])
   const attackStages = stagesForPlatform(editorDataPlatform)[mapId] ?? []
   const profile = store.profiles.find((item) => item.id === session.profileId) ?? store.profiles[0]
   const profileMaps = profile ? modeMapsForPlatform(profile, editorDataPlatform) : undefined
@@ -1071,7 +1080,7 @@ export default function ModeConfigWorkbench() {
   return (
     <main
       className={`mode-workbench platform-${device.platform} ${device.mobileLayout ? 'mobile-layout' : 'desktop-layout'}${leftPaletteOpen ? '' : ' left-palette-collapsed'}${toolbarCollapsed ? ' toolbar-collapsed' : ''}`}
-      style={{ '--mode-palette-width': `${panelWidths.left}px`, '--mode-editor-width': `${panelWidths.right}px` } as CSSProperties}
+      style={{ '--mode-palette-width': `${panelWidths.left}px`, '--mode-editor-width': `${panelWidths.right}px`, '--metric-scale-right': rightEditorOpen ? device.mobileLayout ? 'calc(var(--mode-mobile-right-width) + var(--safe-right, 0px))' : 'var(--mode-editor-width)' : 'var(--safe-right, 0px)' } as CSSProperties}
     >
       {toolbarCollapsed ? (
         <button className="mode-workbench-toolbar-expand" type="button" onClick={() => setToolbarVisibility(false)} title="展开顶部栏" aria-label="展开顶部栏">
@@ -1258,6 +1267,7 @@ export default function ModeConfigWorkbench() {
             updateWhenZooming={false}
           />
           <WorkbenchMapSync config={config} onReady={handleMapReady} />
+          <MapMetricScale metersPerMapUnit={config.metersPerMapUnit} />
           <KeyboardMapPan />
           <ModeConfigLayer
             config={mapConfig}
@@ -1317,7 +1327,12 @@ export default function ModeConfigWorkbench() {
             profiles: current.profiles.map((item) => item.id === id ? { ...item, ...patch, updatedAt: Date.now() } : item),
           }))}
           onMapConfigChange={updateMapConfig}
-          onSyncAttackDefense={() => updateMapConfig(syncModeMapFromAttackDefense(mapId, attackStages, propsForPlatform(editorDataPlatform), deployForPlatform(editorDataPlatform)))}
+          onSyncAttackDefense={() => {
+            const synced = syncModeMapFromAttackDefense(mapId, attackStages, propsForPlatform(editorDataPlatform), deployForPlatform(editorDataPlatform))
+            updateMapConfig(editorDataPlatform === 'pc' && mapId === 'ascent'
+              ? ascentPcAttackDefenseDefaults()
+              : editorDataPlatform === 'pc' ? withSkyportPcHotfix(synced, 'attack-defense') : synced)
+          }}
           selectedVehicleRefreshRuleIds={selectedVehicleRefreshRuleIds}
           onSelectedVehicleRefreshRuleIdsChange={setSelectedVehicleRefreshRuleIds}
           onImportVehicleRefreshRules={importVehicleRefreshRules}

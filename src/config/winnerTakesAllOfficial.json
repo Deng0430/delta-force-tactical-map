@@ -6303,11 +6303,42 @@
               "iconUrl": "/icons/vehicles/legend/主战坦克.png",
               "badge": "坦",
               "category": "tank",
-              "cd": 120,
+              "cd": 150.0,
               "num": 1,
               "allowTeammate": false,
               "note": "北边滩头",
-              "spawnUid": "spawn_wta_pc_ascent_s1_attack_a8acem"
+              "spawnUid": "spawn_wta_pc_ascent_s1_attack_a8acem",
+              "deployPositions": [
+                [
+                  -91.97124,
+                  67.46838
+                ]
+              ],
+              "deployCount": 3,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101001,
+                "sourceVehicleName": "M1A4主战坦克",
+                "spawnerIds": [
+                  "Tank_S1_Attack1"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 150.0,
+                "templateSelfVehicleCd": 150.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 3
+              }
             },
             {
               "name": "突击直升机",
@@ -6316,11 +6347,42 @@
               "legendKey": "nav_tjzsj",
               "badge": "突",
               "category": "helo",
-              "cd": 150,
+              "cd": 100.0,
               "num": 1,
+              "deployCount": 2,
               "allowTeammate": false,
               "note": "海上基地",
-              "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir"
+              "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+              "deployPositions": [
+                [
+                  -86.76872,
+                  24.48785
+                ]
+              ],
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1301002,
+                "sourceVehicleName": "AH-1035D“长弓猎人”突击直升机",
+                "spawnerIds": [
+                  "Heli_S1_Attack1"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 100.0,
+                "templateSelfVehicleCd": 100.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 2
+              }
             },
             {
               "name": "UCB-95/97攻击艇",
@@ -6328,11 +6390,42 @@
               "iconUrl": "/icons/vehicles/legend/UCB-95-97攻击艇-透明.png",
               "badge": "攻",
               "category": "water",
-              "cd": 90,
+              "cd": 150.0,
               "num": 1,
               "allowTeammate": false,
               "note": "海上基地",
-              "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir"
+              "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+              "deployPositions": [
+                [
+                  -125.49868,
+                  17.07059
+                ]
+              ],
+              "deployCount": 3,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1201003,
+                "sourceVehicleName": "冲锋艇",
+                "spawnerIds": [
+                  "AgainstBoat_S1_Attack"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 150.0,
+                "templateSelfVehicleCd": 150.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 3
+              }
             },
             {
               "name": "两栖装甲运输车",
@@ -6341,11 +6434,42 @@
               "legendKey": "nav_sxzjc",
               "badge": "载",
               "category": "apc",
-              "cd": 90,
+              "cd": 90.0,
               "num": 1,
               "allowTeammate": true,
               "note": "海上基地",
-              "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir"
+              "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+              "deployPositions": [
+                [
+                  -129.10734,
+                  20.13439
+                ]
+              ],
+              "deployCount": 3,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101006,
+                "sourceVehicleName": "AAV7",
+                "spawnerIds": [
+                  "GTI_AAV7"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 90.0,
+                "templateSelfVehicleCd": 90.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 3
+              }
             }
           ],
           "defense": [
@@ -6355,11 +6479,42 @@
               "iconUrl": "/icons/vehicles/deploy/deploy_losvjpc.png",
               "badge": "轻",
               "category": "recon",
-              "cd": 45,
+              "cd": 40.0,
               "num": 1,
               "allowTeammate": true,
               "note": "临时营地",
-              "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o"
+              "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+              "deployPositions": [
+                [
+                  -120.76596,
+                  116.23944
+                ]
+              ],
+              "deployCount": 1,
+              "deployCountKnown": false,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1103012,
+                "sourceVehicleName": "LOSV越野车",
+                "spawnerIds": [
+                  "Jeep_S1_Defend"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": false,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 40.0,
+                "templateSelfVehicleCd": 40.0,
+                "positionStatus": "pc-level-verified"
+              }
             },
             {
               "name": "LAV AA防空车",
@@ -6368,11 +6523,42 @@
               "legendKey": "nav_fkc",
               "badge": "防",
               "category": "ifv",
-              "cd": 90,
+              "cd": 90.0,
               "num": 1,
               "allowTeammate": false,
               "note": "临时营地",
-              "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o"
+              "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+              "deployPositions": [
+                [
+                  -122.13442,
+                  117.72586
+                ]
+              ],
+              "deployCount": 4,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101002,
+                "sourceVehicleName": "LAV_AA防空车",
+                "spawnerIds": [
+                  "AntiAirTank_S1_Defend"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 90.0,
+                "templateSelfVehicleCd": 90.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 4
+              }
             },
             {
               "name": "M1A4主战坦克",
@@ -6380,11 +6566,42 @@
               "iconUrl": "/icons/vehicles/legend/主战坦克.png",
               "badge": "坦",
               "category": "tank",
-              "cd": 120,
+              "cd": 150.0,
               "num": 1,
               "allowTeammate": false,
               "note": "临时营地",
-              "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o"
+              "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+              "deployPositions": [
+                [
+                  -131.40092,
+                  120.96952
+                ]
+              ],
+              "deployCount": 3,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101001,
+                "sourceVehicleName": "M1A4主战坦克",
+                "spawnerIds": [
+                  "Tank_S1_Defend1"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 150.0,
+                "templateSelfVehicleCd": 150.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 3
+              }
             }
           ]
         },
@@ -6396,11 +6613,42 @@
               "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
               "badge": "全",
               "category": "recon",
-              "cd": 15,
-              "num": 2,
+              "cd": 15.0,
+              "num": 1,
               "allowTeammate": false,
               "note": "北边废墟",
-              "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8"
+              "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+              "deployPositions": [
+                [
+                  -113.11132,
+                  80.22784
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1103007,
+                "sourceVehicleName": "ATV全地形车",
+                "spawnerIds": [
+                  "ATV_S2_Attack"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 15.0,
+                "templateSelfVehicleCd": 15.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             },
             {
               "name": "ATV全地形车",
@@ -6408,11 +6656,42 @@
               "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
               "badge": "全",
               "category": "recon",
-              "cd": 15,
-              "num": 2,
+              "cd": 15.0,
+              "num": 1,
               "allowTeammate": false,
               "note": "南边高坡",
-              "spawnUid": "spawn_wta_pc_ascent_s2_attack_1odq54w"
+              "spawnUid": "spawn_wta_pc_ascent_s2_attack_1odq54w",
+              "deployPositions": [
+                [
+                  -123.58636,
+                  86.24164
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1103007,
+                "sourceVehicleName": "ATV全地形车",
+                "spawnerIds": [
+                  "ATV_S2_Attack2"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 15.0,
+                "templateSelfVehicleCd": 15.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             },
             {
               "name": "轻型战术车",
@@ -6420,23 +6699,85 @@
               "iconUrl": "/icons/vehicles/deploy/deploy_losvjpc.png",
               "badge": "轻",
               "category": "recon",
-              "cd": 15,
+              "cd": 40.0,
               "num": 1,
               "allowTeammate": false,
               "note": "S2 · 进攻方复活点 3",
-              "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2"
+              "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2",
+              "deployPositions": [
+                [
+                  -142.12224,
+                  90.4234
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1103012,
+                "sourceVehicleName": "LOSV越野车",
+                "spawnerIds": [
+                  "Wheeltank_S2_Attack"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 40.0,
+                "templateSelfVehicleCd": 40.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             },
             {
-              "name": "ATV全地形车",
-              "icon": "atvqdxc",
-              "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
-              "badge": "全",
-              "category": "recon",
-              "cd": 15,
-              "num": 2,
+              "name": "GTQ-35轻型坦克",
+              "icon": "qxtk",
+              "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+              "badge": "轻",
+              "category": "tank",
+              "cd": 150.0,
+              "num": 1,
               "allowTeammate": false,
-              "note": "S2 · 进攻方复活点 3",
-              "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2"
+              "note": "北边废墟",
+              "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+              "deployPositions": [
+                [
+                  -112.38314,
+                  78.83458
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101005,
+                "sourceVehicleName": "GTQ-35",
+                "spawnerIds": [
+                  "Tank_S1_Attack1"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 150.0,
+                "templateSelfVehicleCd": 150.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             }
           ],
           "defense": [
@@ -6446,11 +6787,42 @@
               "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
               "badge": "轻",
               "category": "tank",
-              "cd": 90,
+              "cd": 150.0,
               "num": 1,
               "allowTeammate": false,
               "note": "隧道入口",
-              "spawnUid": "spawn_wta_pc_ascent_s2_defense_nn4bk3"
+              "spawnUid": "spawn_wta_pc_ascent_s2_defense_nn4bk3",
+              "deployPositions": [
+                [
+                  -162.46176,
+                  129.12536
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101005,
+                "sourceVehicleName": "GTQ-35",
+                "spawnerIds": [
+                  "Tank_S2_Defend"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 150.0,
+                "templateSelfVehicleCd": 150.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             }
           ]
         },
@@ -6462,11 +6834,42 @@
               "iconUrl": "/icons/vehicles/legend/步战车.png",
               "badge": "步",
               "category": "ifv",
-              "cd": 120,
+              "cd": 150.0,
               "num": 1,
               "allowTeammate": false,
               "note": "隧道平台入口",
-              "spawnUid": "spawn_wta_pc_ascent_s3_attack_1fl1jkk"
+              "spawnUid": "spawn_wta_pc_ascent_s3_attack_1fl1jkk",
+              "deployPositions": [
+                [
+                  -128.42474,
+                  183.531
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101003,
+                "sourceVehicleName": "LAV_G1步战车",
+                "spawnerIds": [
+                  "IFV_S3_Attack"
+                ],
+                "sectorIndices": [
+                  2
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 150.0,
+                "templateSelfVehicleCd": 150.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             }
           ],
           "defense": []
@@ -6479,11 +6882,47 @@
               "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
               "badge": "全",
               "category": "recon",
-              "cd": 15,
+              "cd": 15.0,
               "num": 2,
               "allowTeammate": false,
               "note": "洞穴出口",
-              "spawnUid": "spawn_wta_pc_ascent_s4_attack_1xdd3ey"
+              "spawnUid": "spawn_wta_pc_ascent_s4_attack_1xdd3ey",
+              "deployPositions": [
+                [
+                  -154.30636,
+                  207.58564
+                ],
+                [
+                  -144.21698,
+                  199.78612
+                ]
+              ],
+              "deployCount": 1,
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 601,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官攀升攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1103007,
+                "sourceVehicleName": "ATV全地形车",
+                "spawnerIds": [
+                  "ATV_S4_Attack",
+                  "ATV_S4_Attack2"
+                ],
+                "sectorIndices": [
+                  3
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "pc-template-verified",
+                "templateVehicleCd": 15.0,
+                "templateSelfVehicleCd": 15.0,
+                "positionStatus": "pc-level-verified",
+                "singleUseLimit": 1
+              }
             }
           ],
           "defense": []
@@ -6497,68 +6936,80 @@
         {
           "uid": "vehicle_refresh_point_msu2ffnd_1",
           "name": "A点载具刷新位置 1",
-          "lat": -92.0017607781982,
-          "lng": 67.62679118107059
+          "lat": -90.88468,
+          "lng": 66.6654
         },
         {
           "uid": "vehicle_refresh_point_msu2xox6_1",
           "name": "C点载具刷新位置 2",
-          "lat": -129.43074576488033,
-          "lng": 182.9363747708659
+          "lat": -130.76684,
+          "lng": 182.0986
         },
         {
           "uid": "vehicle_refresh_point_msu38cg3_3",
           "name": "B点载具刷新位置 3",
-          "lat": -122.49235161970157,
-          "lng": 84.25424953033088
+          "lat": -122.6741,
+          "lng": 84.41586
         },
         {
           "uid": "vehicle_refresh_point_mt5ffpzm_e",
           "name": "A点载具刷新位置 4",
-          "lat": -87.80589708175675,
-          "lng": 39.994366901654416
+          "lat": -86.06684,
+          "lng": 37.28557
         },
         {
           "uid": "vehicle_refresh_point_mt5fftmy_g",
           "name": "A点载具刷新位置 5",
-          "lat": -86.8063372763063,
-          "lng": 35.43367048138787
+          "lat": -85.09054,
+          "lng": 34.12895
         },
         {
           "uid": "vehicle_refresh_point_mt5ffzom_i",
           "name": "A点载具刷新位置 6",
-          "lat": -82.62068059098254,
-          "lng": 39.49456455422795
+          "lat": -81.99956,
+          "lng": 36.79877
         },
         {
           "uid": "vehicle_refresh_point_mt5fg2gu_k",
           "name": "A点载具刷新位置 7",
-          "lat": -81.43370332201013,
-          "lng": 34.68396696024817
+          "lat": -80.34494,
+          "lng": 33.6014
         },
         {
           "uid": "vehicle_refresh_point_mt5fg65b_m",
           "name": "A点载具刷新位置 8",
-          "lat": -78.43502390565878,
-          "lng": 40.24426807536766
+          "lat": -79.30786,
+          "lng": 38.35303
         },
         {
           "uid": "vehicle_refresh_point_mt5fg8vl_o",
           "name": "A点载具刷新位置 9",
-          "lat": -76.6857942461205,
-          "lng": 34.68396696024817
+          "lat": -77.01106,
+          "lng": 35.16284
         },
         {
           "uid": "vehicle_refresh_point_mt5fgdkw_q",
           "name": "A点载具刷新位置 10",
-          "lat": -75.24892702578548,
-          "lng": 30.872974061121326
+          "lat": -76.11466,
+          "lng": 32.88099
         },
         {
           "uid": "vehicle_refresh_point_mt5fghag_s",
           "name": "A点载具刷新位置 11",
-          "lat": -79.55952868679054,
-          "lng": 27.99911056341912
+          "lat": -77.45412,
+          "lng": 30.67739
+        },
+        {
+          "uid": "vehicle_refresh_point_pc_ascent_s1_fsv",
+          "name": "A点 FSV 刷新位置",
+          "lat": -88.73196,
+          "lng": 66.44004
+        },
+        {
+          "uid": "vehicle_refresh_point_pc_ascent_s4_orv",
+          "name": "D点 ORV 刷新位置",
+          "lat": -151.62918,
+          "lng": 210.02646
         }
       ],
       "vehicleRefreshRules": [
@@ -6607,7 +7058,7 @@
             "allowTeammate": false
           },
           "quantity": 1,
-          "refreshPointUid": "vehicle_refresh_point_msu2ffnd_1",
+          "refreshPointUid": "vehicle_refresh_point_pc_ascent_s1_fsv",
           "note": ""
         },
         {
@@ -6849,6 +7300,31 @@
           "quantity": 1,
           "refreshPointUid": "vehicle_refresh_point_mt5ffpzm_e",
           "note": "开局部署8"
+        },
+        {
+          "uid": "vehicle_refresh_rule_pc_ascent_s4_orv_100",
+          "objective": "D",
+          "side": "attack",
+          "action": "refresh",
+          "trigger": {
+            "type": "tickets",
+            "value": 100
+          },
+          "vehicle": {
+            "name": "突击车",
+            "icon": "orvtjc",
+            "iconUrl": "/icons/vehicles/legend/nav_orvtjc.png",
+            "legendKey": "nav_orvtjc",
+            "badge": "突",
+            "category": "recon",
+            "cd": 80,
+            "num": 1,
+            "allowTeammate": true,
+            "cooldownKnown": false
+          },
+          "quantity": 1,
+          "refreshPointUid": "vehicle_refresh_point_pc_ascent_s4_orv",
+          "note": ""
         }
       ]
     },
@@ -24078,7 +24554,39 @@
               "num": 2,
               "allowTeammate": false,
               "spawnUid": "spawn_wta_pc_ember_s1_attack_eydzbu",
-              "note": "S1 · 进攻复活点3"
+              "note": "S1 · 进攻复活点3",
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 602,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官烬区攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1103007,
+                "sourceVehicleName": "ATV全地形车",
+                "spawnerIds": [
+                  "S1_GTI_ATV",
+                  "S1_GTI_ATV2"
+                ],
+                "sectorIndices": [
+                  0
+                ],
+                "conditionKeys": [],
+                "singleUse": false,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "template-unresolved",
+                "positionStatus": "pc-level-verified"
+              },
+              "deployPositions": [
+                [
+                  -179.97944345541762,
+                  47.2079576862382
+                ],
+                [
+                  -180.38483706853052,
+                  48.787927929490095
+                ]
+              ]
             }
           ],
           "defense": []
@@ -24095,7 +24603,35 @@
               "num": 1,
               "allowTeammate": false,
               "spawnUid": "spawn_wta_pc_ember_s2_attack_1qohxbw",
-              "note": "岩下村"
+              "note": "岩下村",
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 602,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官烬区攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101001,
+                "sourceVehicleName": "M1A4主战坦克",
+                "spawnerIds": [
+                  "S2_GTI_Tank"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "singleUseLimit": 1,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "template-unresolved",
+                "positionStatus": "pc-level-verified"
+              },
+              "deployPositions": [
+                [
+                  -126.04032400936941,
+                  31.596729194506494
+                ]
+              ]
             }
           ],
           "defense": [
@@ -24109,7 +24645,35 @@
               "num": 1,
               "allowTeammate": false,
               "spawnUid": "spawn_wta_pc_ember_s2_defense_1bzkq7f",
-              "note": "办公区"
+              "note": "办公区",
+              "clientSpawner": {
+                "platform": "pc",
+                "mapId": 602,
+                "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+                "rowName": "指挥官烬区攻防",
+                "section": "standard",
+                "template": "Template5",
+                "vehicleId": 1101005,
+                "sourceVehicleName": "GTQ-35轻型坦克",
+                "spawnerIds": [
+                  "S2_Hvk_Lav"
+                ],
+                "sectorIndices": [
+                  1
+                ],
+                "conditionKeys": [],
+                "singleUse": true,
+                "singleUseLimit": 1,
+                "dynamicallyBalanced": false,
+                "cooldownStatus": "template-unresolved",
+                "positionStatus": "pc-level-verified"
+              },
+              "deployPositions": [
+                [
+                  -122.07778013833416,
+                  143.95729301572686
+                ]
+              ]
             }
           ]
         },
@@ -24153,7 +24717,32 @@
           },
           "quantity": 1,
           "refreshPointUid": "vehicle_refresh_point_msu28emv_1",
-          "note": ""
+          "note": "",
+          "clientSpawner": {
+            "platform": "pc",
+            "mapId": 602,
+            "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+            "rowName": "指挥官烬区攻防",
+            "section": "camp",
+            "template": "Template4",
+            "vehicleId": 1102001,
+            "sourceVehicleName": "ORV突击车",
+            "spawnerIds": [
+              "S1_GTI_Camp_ORV"
+            ],
+            "sectorIndices": [
+              0,
+              1,
+              2
+            ],
+            "conditionKeys": [
+              0
+            ],
+            "singleUse": false,
+            "dynamicallyBalanced": true,
+            "cooldownStatus": "template-unresolved",
+            "positionStatus": "existing-unverified"
+          }
         },
         {
           "uid": "vehicle_refresh_rule_mstr2ka9_q",
@@ -24177,7 +24766,33 @@
           },
           "quantity": 1,
           "refreshPointUid": "vehicle_refresh_point_msu28emv_1",
-          "note": ""
+          "note": "",
+          "clientSpawner": {
+            "platform": "pc",
+            "mapId": 602,
+            "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+            "rowName": "指挥官烬区攻防",
+            "section": "camp",
+            "template": "Template4",
+            "vehicleId": 1101006,
+            "sourceVehicleName": "M1A4主战坦克",
+            "spawnerIds": [
+              "S2_GTI_Tank"
+            ],
+            "sectorIndices": [
+              0,
+              1,
+              2
+            ],
+            "conditionKeys": [
+              0
+            ],
+            "singleUse": false,
+            "dynamicallyBalanced": true,
+            "cooldownStatus": "template-unresolved",
+            "positionStatus": "existing-unverified",
+            "vehicleNameConflict": true
+          }
         },
         {
           "uid": "vehicle_refresh_rule_mstr2ka9_r",
@@ -24201,7 +24816,32 @@
           },
           "quantity": 1,
           "refreshPointUid": "vehicle_refresh_point_msu28emv_1",
-          "note": ""
+          "note": "",
+          "clientSpawner": {
+            "platform": "pc",
+            "mapId": 602,
+            "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+            "rowName": "指挥官烬区攻防",
+            "section": "camp",
+            "template": "Template4",
+            "vehicleId": 1102001,
+            "sourceVehicleName": "ORV突击车",
+            "spawnerIds": [
+              "S2_GTI_Camp_ORV"
+            ],
+            "sectorIndices": [
+              0,
+              1,
+              2
+            ],
+            "conditionKeys": [
+              1
+            ],
+            "singleUse": false,
+            "dynamicallyBalanced": true,
+            "cooldownStatus": "template-unresolved",
+            "positionStatus": "existing-unverified"
+          }
         }
       ]
     },

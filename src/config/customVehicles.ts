@@ -1,9 +1,8 @@
 /**
  * 自定义载具库
  *
- * 图标优先级：优先使用官网图例图标（nav_* base64），没有对应图例图标的回退到 deploy_* PNG。
- * - 图例图标提取自官网 main.css .img_nav_* 类，base64 内嵌，无需外部请求，为官网图例栏原图。
- * - deploy_* 图标为地图上载具部署点的 mark 级 PNG 标志，非图例图标。
+ * 图标统一经 vehicleLegendAssetUrl 解析到本地客户端 HUD 素材。
+ * 未确认专用 HUD 图标的车型保留既有图例；无需访问 source 或外部资源。
  */
 
 import type { VehicleCategory } from '../types'
@@ -15,7 +14,7 @@ export interface CustomVehicleTemplate {
   category: VehicleCategory
   /** 官网图例图标名（nav_*，如有），否则为 deploy_* */
   iconKey: string
-  /** 图标 URL（优先 base64 图例图标，回退 PNG） */
+  /** 图标 URL（优先本地包内 HUD 图例，回退既有图标） */
   iconUrl: string
   /** 可用地图（[]=全地图可用） */
   maps: string[]
@@ -76,6 +75,10 @@ export const CUSTOM_VEHICLES: CustomVehicleTemplate[] = [
   {
     name: '轻型战术车', badge: '轻', category: 'recon', iconKey: 'losvjpc',
     iconUrl: deployPng('losvjpc'), maps: ['ascent', 'flashpoint', 'fault', 'brokentrack', 'colosseum', 'stormeye', 'ember', 'pyramid', 'trench', 'umuscanal', 'aftershock'], group: '地面载具',
+  },
+  {
+    name: '山猫全地形车', badge: '猫', category: 'recon', iconKey: 'csvp',
+    iconUrl: deployPng('csvp'), maps: [], group: '地面载具',
   },
   // ── 空中载具 ──
   {

@@ -1,0 +1,5759 @@
+{
+  "format": "deltaforce-skyport-pc-hotfix",
+  "schemaVersion": 2,
+  "updatedAt": "2026-11-12",
+  "source": {
+    "platform": "pc",
+    "attackDefenseMapId": 165,
+    "commanderMapId": 616,
+    "mainPatch": "1.101.37119.18.565_WindowsNoEditor_37684_P.pak",
+    "levelFile": "source/PC提取资源/天际港/热更新提取_2026-11-12_1836/区域与据点/PC关卡提取.json",
+    "levelSha256": "123404f402704c5d3bcb3f3a1bbd7dd4dcca92c08ba27708f8a5e6616f6f63e6",
+    "ziplineFile": "source/PC提取资源/天际港/热更新提取_2026-11-12_1836/滑索校正端点.json",
+    "ziplineSha256": "198e12b7ac71ec62621997a0324c18165658ead4c05fe418761e5df988d6ec47",
+    "ziplineDisplay": {
+      "verticalClass": "BP_Interactor_DFMZipline_Type2_C",
+      "verticalFlag": "bIsVerticalZipline=true",
+      "inheritedTransformsRecovered": true,
+      "verticalMarker": "lower endpoint, collapsed per rope",
+      "spanLine": "paired red and green endpoints; no one-way assumption"
+    },
+    "ziplineIcon": {
+      "asset": "CommonHud_MapMarker2_Icon_0103",
+      "sha256": "b6bb1d295654cdd3a5a5a8de9bb5f7dff155acf4417e44a59ec8d5ccde028a6e"
+    },
+    "commanderRules": {
+      "file": "source/PC提取资源/天际港/模式数据/指挥官_MapID616/PC规则.json",
+      "sha256": "d782b2cafc761cb8fab778c37ac7d837ffb0128d877c929176f99ca71d21565b",
+      "rowName": "指挥官天际港",
+      "standardTemplate": "ESpawnerCommonInfoTemplate::Template5",
+      "campTemplate": "ESpawnerCommonInfoTemplate::Template3",
+      "sharedLevelVehicleReplacements": [
+        "S2_GTI_ORV -> S2_GTI_FSV",
+        "S3_Havvk_Tank -> S3_Havvk_G1"
+      ],
+      "vehicleIdMappingAndEffectiveCooldownUnresolved": true
+    },
+    "s2FsvCondition": {
+      "percent": 80,
+      "inheritedFromSpawnerId": "S2_GTI_ORV",
+      "spawnerId": "S2_GTI_FSV",
+      "adoption": "user-requested-inheritance",
+      "independentlyVerifiedForNewSpawner": false
+    },
+    "postEventPhase": {
+      "file": "source/PC提取资源/天际港/热更新提取_2026-11-12_1836/S4大事件后阶段证据.json",
+      "sha256": "fee6c3874d50eebd87f8123afa8f161530142a629cd32150d16d39897bf5a80b",
+      "nativeSectorId": "10153",
+      "hubCampGroupingVerified": true,
+      "runtimeGroupSwitchOrderVerified": false,
+      "activityBoundariesVerified": false,
+      "sharedOutlineReferenceOnly": true
+    },
+    "mobileApplicabilityVerified": false
+  },
+  "attackDefense": {
+    "stages": [
+      {
+        "id": "S1",
+        "label": "阶段1",
+        "points": [
+          {
+            "name": "据点A1",
+            "icon": "q_jd_a1",
+            "note": "A1点",
+            "lat": -126.758,
+            "lng": 160.868,
+            "capturable": [
+              [
+                -130.755,
+                157.637
+              ],
+              [
+                -125.267,
+                156.939
+              ],
+              [
+                -124.564,
+                162.361
+              ],
+              [
+                -130,
+                163.042
+              ],
+              [
+                -130.755,
+                157.637
+              ]
+            ]
+          },
+          {
+            "name": "据点A2",
+            "icon": "q_jd_a2",
+            "note": "A2点",
+            "lat": -118.237,
+            "lng": 148.11,
+            "capturable": [
+              [
+                -122.625,
+                144.48
+              ],
+              [
+                -117.315,
+                144.44
+              ],
+              [
+                -116.92,
+                152.657
+              ],
+              [
+                -122.225,
+                153.007
+              ],
+              [
+                -122.625,
+                144.48
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S1 防线",
+          "latlngs": [
+            [
+              -103.047,
+              133.314
+            ],
+            [
+              -102.955,
+              165.528
+            ],
+            [
+              -131.088,
+              168.841
+            ],
+            [
+              -131.878,
+              162.608
+            ],
+            [
+              -202.507,
+              163.972
+            ],
+            [
+              -168.257,
+              133.157
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -103.047,
+              133.314
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI1号阵地",
+            "lat": -177.952,
+            "lng": 209.915
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI2号阵地",
+            "lat": -183.429,
+            "lng": 182.264
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克1号阵地",
+            "lat": -130.467,
+            "lng": 117.397
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克2号阵地",
+            "lat": -110.476,
+            "lng": 114.955
+          }
+        ],
+        "attackSpawns": [
+          [
+            -177.952,
+            209.915
+          ],
+          [
+            -183.429,
+            182.264
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -130.467,
+            117.397
+          ],
+          [
+            -110.476,
+            114.955
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI1号阵地",
+          "GTI2号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克1号阵地",
+          "哈夫克2号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -106.942,
+            185.6
+          ],
+          [
+            -142.892,
+            187.507
+          ],
+          [
+            -143.763,
+            196.16
+          ],
+          [
+            -149.382,
+            202.17
+          ],
+          [
+            -161.122,
+            200.6
+          ],
+          [
+            -165.949,
+            225.98
+          ],
+          [
+            -201.817,
+            227.362
+          ],
+          [
+            -202.507,
+            163.972
+          ],
+          [
+            -131.878,
+            162.608
+          ],
+          [
+            -131.088,
+            168.841
+          ],
+          [
+            -102.955,
+            165.528
+          ],
+          [
+            -102.943,
+            170.511
+          ],
+          [
+            -104.861,
+            170.667
+          ],
+          [
+            -104.892,
+            174.842
+          ],
+          [
+            -105.4,
+            174.852
+          ],
+          [
+            -105.382,
+            182.75
+          ],
+          [
+            -106.942,
+            185.6
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -168.257,
+            133.157
+          ],
+          [
+            -172.171,
+            96.149
+          ],
+          [
+            -108.431,
+            95.571
+          ],
+          [
+            -108.312,
+            104.694
+          ],
+          [
+            -95.547,
+            104.523
+          ],
+          [
+            -79.78,
+            116.844
+          ],
+          [
+            -93.101,
+            133.338
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -168.257,
+            133.157
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "FSV轮式突击炮",
+            "icon": "q_lstjp",
+            "badge": "炮",
+            "category": "ifv",
+            "trigger": "进攻方剩余兵力低于80%",
+            "pos": [
+              -136.228585,
+              176.44478
+            ],
+            "posList": [
+              [
+                -136.228585,
+                176.44478
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S2",
+        "label": "阶段2",
+        "points": [
+          {
+            "name": "据点B1",
+            "icon": "q_jd_b1",
+            "note": "B1点",
+            "lat": -130.839,
+            "lng": 122.475,
+            "capturable": [
+              [
+                -135.662,
+                119.445
+              ],
+              [
+                -130.446,
+                118.465
+              ],
+              [
+                -129.103,
+                126.009
+              ],
+              [
+                -134.318,
+                127.044
+              ],
+              [
+                -135.662,
+                119.445
+              ]
+            ]
+          },
+          {
+            "name": "据点B2",
+            "icon": "q_jd_b2",
+            "note": "B2点",
+            "lat": -120.414,
+            "lng": 109.597,
+            "capturable": [
+              [
+                -125.953,
+                107.701
+              ],
+              [
+                -123.673,
+                107.484
+              ],
+              [
+                -123.771,
+                106.269
+              ],
+              [
+                -120.181,
+                105.992
+              ],
+              [
+                -120.174,
+                106.2
+              ],
+              [
+                -119.433,
+                106.182
+              ],
+              [
+                -119.445,
+                111.338
+              ],
+              [
+                -119.464,
+                112.053
+              ],
+              [
+                -119.47,
+                112.304
+              ],
+              [
+                -119.45,
+                113.26
+              ],
+              [
+                -120.396,
+                113.272
+              ],
+              [
+                -123.985,
+                113.315
+              ],
+              [
+                -123.989,
+                112.984
+              ],
+              [
+                -124.657,
+                112.997
+              ],
+              [
+                -125.597,
+                112.162
+              ],
+              [
+                -125.953,
+                107.701
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S2 防线",
+          "latlngs": [
+            [
+              -108.363,
+              102.217
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -168.212,
+              133.146
+            ],
+            [
+              -172.171,
+              96.149
+            ],
+            [
+              -114.242,
+              95.708
+            ],
+            [
+              -114.221,
+              102.361
+            ],
+            [
+              -108.363,
+              102.217
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI3号阵地",
+            "lat": -131.01196,
+            "lng": 141.21781
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI4号阵地",
+            "lat": -116.64527,
+            "lng": 140.25375
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克3号阵地",
+            "lat": -99.33238,
+            "lng": 115.23086
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克4号阵地",
+            "lat": -99.20229,
+            "lng": 92.94385
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s2_attack_hub_mid_4",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "B区进攻基地·中部",
+            "lat": -124.58957,
+            "lng": 140.25375
+          }
+        ],
+        "attackSpawns": [
+          [
+            -131.01196,
+            141.21781
+          ],
+          [
+            -116.64527,
+            140.25375
+          ],
+          [
+            -124.58957,
+            140.25375
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -99.33238,
+            115.23086
+          ],
+          [
+            -99.20229,
+            92.94385
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI3号阵地",
+          "GTI4号阵地",
+          "B区进攻基地·中部"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克3号阵地",
+          "哈夫克4号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -102.859,
+            187.257
+          ],
+          [
+            -162.049,
+            187.585
+          ],
+          [
+            -168.212,
+            133.146
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.375,
+            148.897
+          ],
+          [
+            -102.577,
+            148.956
+          ],
+          [
+            -102.859,
+            187.257
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.363,
+            102.217
+          ],
+          [
+            -114.221,
+            102.361
+          ],
+          [
+            -114.255,
+            91.736
+          ],
+          [
+            -106.637,
+            91.856
+          ],
+          [
+            -93.194,
+            75.004
+          ],
+          [
+            -61.893,
+            100.805
+          ],
+          [
+            -85.712,
+            132.985
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "FSV轮式突击炮",
+            "icon": "q_lstjp",
+            "badge": "炮",
+            "category": "ifv",
+            "trigger": "进攻方剩余兵力低于80%",
+            "pos": [
+              -112.02618,
+              165.11853
+            ],
+            "posList": [
+              [
+                -112.02618,
+                165.11853
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S3",
+        "label": "阶段3",
+        "points": [
+          {
+            "name": "据点C1",
+            "icon": "q_jd_c1",
+            "note": "C1点",
+            "lat": -94.591,
+            "lng": 123.167,
+            "capturable": [
+              [
+                -97.019,
+                129.209
+              ],
+              [
+                -96.994,
+                124.068
+              ],
+              [
+                -97,
+                118.318
+              ],
+              [
+                -94.845,
+                120.094
+              ],
+              [
+                -89.508,
+                124.533
+              ],
+              [
+                -89.788,
+                125.53
+              ],
+              [
+                -92.904,
+                129.264
+              ],
+              [
+                -97.019,
+                129.209
+              ]
+            ]
+          },
+          {
+            "name": "据点C2",
+            "icon": "q_jd_c2",
+            "note": "C2点",
+            "lat": -81.912,
+            "lng": 101.116,
+            "capturable": [
+              [
+                -89.644,
+                104.672
+              ],
+              [
+                -89.334,
+                104.326
+              ],
+              [
+                -89.104,
+                104.054
+              ],
+              [
+                -82.511,
+                96.108
+              ],
+              [
+                -75.732,
+                101.753
+              ],
+              [
+                -82.89,
+                110.299
+              ],
+              [
+                -89.644,
+                104.672
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S3 防线",
+          "latlngs": [
+            [
+              -84.385,
+              87.015
+            ],
+            [
+              -81.594,
+              83.628
+            ],
+            [
+              -62.186,
+              99.517
+            ],
+            [
+              -69.175,
+              107.658
+            ],
+            [
+              -66.323,
+              109.89
+            ],
+            [
+              -74.022,
+              119.705
+            ],
+            [
+              -75.608,
+              121.727
+            ],
+            [
+              -78.531,
+              126.056
+            ],
+            [
+              -80.827,
+              130.806
+            ],
+            [
+              -84.186,
+              129.56
+            ],
+            [
+              -85.712,
+              132.985
+            ],
+            [
+              -102.542,
+              132.991
+            ],
+            [
+              -102.509,
+              107.861
+            ],
+            [
+              -101.157,
+              107.834
+            ],
+            [
+              -101.145,
+              100.904
+            ],
+            [
+              -99.27,
+              98.336
+            ],
+            [
+              -106.711,
+              91.63
+            ],
+            [
+              -95.416,
+              77.789
+            ],
+            [
+              -84.385,
+              87.015
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI5号阵地",
+            "lat": -111.64493,
+            "lng": 116.41187
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI6号阵地",
+            "lat": -111.57493,
+            "lng": 134.80803
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI7号阵地",
+            "lat": -99.34298,
+            "lng": 148.02029
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克5号阵地",
+            "lat": -63.20583,
+            "lng": 110.90233
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克6号阵地",
+            "lat": -64.85998,
+            "lng": 92.72493
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_defend_hub_down",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "C区防守基地·下部",
+            "lat": -75.37808,
+            "lng": 83.866365
+          }
+        ],
+        "attackSpawns": [
+          [
+            -111.64493,
+            116.41187
+          ],
+          [
+            -111.57493,
+            134.80803
+          ],
+          [
+            -99.34298,
+            148.02029
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -63.20583,
+            110.90233
+          ],
+          [
+            -64.85998,
+            92.72493
+          ],
+          [
+            -75.37808,
+            83.866365
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI5号阵地",
+          "GTI6号阵地",
+          "GTI7号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克5号阵地",
+          "哈夫克6号阵地",
+          "C区防守基地·下部"
+        ],
+        "attackBaseZone": [
+          [
+            -149.874,
+            140.023
+          ],
+          [
+            -155.365,
+            96.131
+          ],
+          [
+            -114.289,
+            95.857
+          ],
+          [
+            -114.319,
+            91.632
+          ],
+          [
+            -106.711,
+            91.63
+          ],
+          [
+            -99.27,
+            98.336
+          ],
+          [
+            -101.145,
+            100.904
+          ],
+          [
+            -101.157,
+            107.834
+          ],
+          [
+            -102.509,
+            107.861
+          ],
+          [
+            -102.542,
+            132.991
+          ],
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -87.559,
+            137.501
+          ],
+          [
+            -89.969,
+            137.479
+          ],
+          [
+            -89.988,
+            139.542
+          ],
+          [
+            -92.709,
+            142.213
+          ],
+          [
+            -92.454,
+            153.978
+          ],
+          [
+            -102.957,
+            154.086
+          ],
+          [
+            -103.013,
+            162.389
+          ],
+          [
+            -114.1,
+            162.555
+          ],
+          [
+            -114.377,
+            139.639
+          ],
+          [
+            -149.874,
+            140.023
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -53.96,
+            85.543
+          ],
+          [
+            -62.466,
+            95.905
+          ],
+          [
+            -56.25,
+            101.081
+          ],
+          [
+            -51.001,
+            121.897
+          ],
+          [
+            -53.942,
+            123.088
+          ],
+          [
+            -61.221,
+            115.77
+          ],
+          [
+            -68.998,
+            123.726
+          ],
+          [
+            -74.022,
+            119.705
+          ],
+          [
+            -66.323,
+            109.89
+          ],
+          [
+            -69.175,
+            107.658
+          ],
+          [
+            -62.186,
+            99.517
+          ],
+          [
+            -81.594,
+            83.628
+          ],
+          [
+            -84.385,
+            87.015
+          ],
+          [
+            -92.017,
+            80.632
+          ],
+          [
+            -79.009,
+            64.921
+          ],
+          [
+            -53.96,
+            85.543
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "ORV突击车",
+            "icon": "q_orvtjc",
+            "badge": "突",
+            "category": "recon",
+            "trigger": "进攻方剩余兵力低于80%",
+            "pos": [
+              -112.97288,
+              144.04569
+            ],
+            "posList": [
+              [
+                -112.97288,
+                144.04569
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S4",
+        "label": "阶段4 · 大事件后",
+        "points": [
+          {
+            "name": "据点C3",
+            "icon": "q_jd_c3",
+            "note": "大事件后启用；原生区域 10153。",
+            "lat": -82.77532,
+            "lng": 102.83321,
+            "capturable": [
+              [
+                -88.41713005800638,
+                103.6125251752642
+              ],
+              [
+                -84.03732058193533,
+                98.29019502740702
+              ],
+              [
+                -77.52003937202286,
+                103.71882466542529
+              ],
+              [
+                -81.86461961560668,
+                109.08281477169699
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "C区共享主轮廓（事件后边界待核实）",
+          "latlngs": [
+            [
+              -84.38505699158492,
+              87.015443474863
+            ],
+            [
+              -81.59369649539951,
+              83.62828015205885
+            ],
+            [
+              -62.18590081130404,
+              99.51650900196572
+            ],
+            [
+              -69.17531160293747,
+              107.65837330754235
+            ],
+            [
+              -66.3228008432002,
+              109.88954530614294
+            ],
+            [
+              -74.02198601886734,
+              119.7046914459232
+            ],
+            [
+              -75.6082320562216,
+              121.72688385924552
+            ],
+            [
+              -78.53122302909323,
+              126.05561310403043
+            ],
+            [
+              -80.82672446270473,
+              130.80550355758217
+            ],
+            [
+              -84.18579334625987,
+              129.56006206762612
+            ],
+            [
+              -85.71208516575297,
+              132.98506152872457
+            ],
+            [
+              -102.54219389828269,
+              132.9906484250761
+            ],
+            [
+              -102.50949997681207,
+              107.86088942057744
+            ],
+            [
+              -101.15664996705655,
+              107.83422980730346
+            ],
+            [
+              -101.14485904917963,
+              100.90409049699514
+            ],
+            [
+              -99.26986791771262,
+              98.3355205349063
+            ],
+            [
+              -106.71110629523719,
+              91.63031887101639
+            ],
+            [
+              -95.41612422878211,
+              77.78858196095103
+            ]
+          ]
+        },
+        "attackBaseZone": [],
+        "defenseBaseZone": [],
+        "spawns": [
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+            "stageId": "S4",
+            "side": "attack",
+            "name": "大事件后进攻基地 1",
+            "lat": -95.11628,
+            "lng": 124.55847
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent2",
+            "stageId": "S4",
+            "side": "attack",
+            "name": "大事件后进攻基地 2",
+            "lat": -99.49529,
+            "lng": 109.51899
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent",
+            "stageId": "S4",
+            "side": "defense",
+            "name": "大事件后防守基地 1",
+            "lat": -72.29892,
+            "lng": 106.57563
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2",
+            "stageId": "S4",
+            "side": "defense",
+            "name": "大事件后防守基地 2",
+            "lat": -74.80296,
+            "lng": 96.15995
+          }
+        ],
+        "attackSpawns": [
+          [
+            -95.11628,
+            124.55847
+          ],
+          [
+            -99.49529,
+            109.51899
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -72.29892,
+            106.57563
+          ],
+          [
+            -74.80296,
+            96.15995
+          ]
+        ],
+        "attackSpawnNames": [
+          "大事件后进攻基地 1",
+          "大事件后进攻基地 2"
+        ],
+        "defenseSpawnNames": [
+          "大事件后防守基地 1",
+          "大事件后防守基地 2"
+        ],
+        "attackVehicles": [],
+        "defenseVehicles": []
+      }
+    ],
+    "props": [
+      {
+        "name": "岸防炮",
+        "icon": "q_afp",
+        "lat": -129.019,
+        "lng": 144.055,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.802,
+        "lng": 149.966,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.144,
+        "lng": 149.935,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -87.677,
+        "lng": 109.058,
+        "stage": ""
+      },
+      {
+        "name": "火神炮",
+        "icon": "q_hsp",
+        "lat": -82.384,
+        "lng": 103.131,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -118.912,
+        "lng": 149.133,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -126.221,
+        "lng": 121.51,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -132.198,
+        "lng": 121.73,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -134.722,
+        "lng": 128.773,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.033,
+        "lng": 107.557,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.278,
+        "lng": 114.227,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -97.613,
+        "lng": 132.416,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -92.924,
+        "lng": 121.874,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -96.909,
+        "lng": 109.453,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -85.782,
+        "lng": 118.463,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -80.371,
+        "lng": 100.586,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -115.359,
+        "lng": 159.205,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -84.668,
+        "lng": 105.669,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -82.094,
+        "lng": 95.043,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -76.926,
+        "lng": 107.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.085,
+        "lng": 120.306,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.368,
+        "lng": 169.459,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.774,
+        "lng": 149.683,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.797,
+        "lng": 170.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -119.622,
+        "lng": 147.377,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.672,
+        "lng": 140.019,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.973,
+        "lng": 129.946,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -117.349,
+        "lng": 117.982,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -111.706,
+        "lng": 168.934,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 139.457,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -123.584,
+        "lng": 130.317,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 105.216,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -89.754,
+        "lng": 130.189,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -76.388,
+        "lng": 87.724,
+        "stage": ""
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -85.34646690429753,
+        "lng": 99.0949287386292,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_90dd68d477fa480e",
+          "orientation": "span",
+          "endpoint": "green",
+          "elevationMeters": 207.44623046875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.83181698085745,
+        "lng": 98.6098187836045,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_90dd68d477fa480e",
+          "orientation": "span",
+          "endpoint": "red",
+          "elevationMeters": 214.75125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.21167999960291,
+        "lng": 96.07873999975865,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_f35b8ce42aa33b83",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.7455078125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.21709,
+        "lng": 96.08606,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_f35b8ce42aa33b83",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 10.277923583984375
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -90.7931999984811,
+        "lng": 102.22547000024758,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb4097da28c95f21",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.66104736328125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -90.78647,
+        "lng": 102.23033,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb4097da28c95f21",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 11.411741943359376
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -81.73106999259757,
+        "lng": 108.64644999989139,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7b1f91a640049662",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.60759765625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -82.00329000445637,
+        "lng": 108.97215999073961,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7b1f91a640049662",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 178.54654296875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -78.08159,
+        "lng": 105.26291998046875,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb0637b633e49870",
+          "orientation": "span",
+          "endpoint": "green",
+          "elevationMeters": 207.4805078125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -77.62604,
+        "lng": 104.6789600390625,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb0637b633e49870",
+          "orientation": "span",
+          "endpoint": "red",
+          "elevationMeters": 214.75125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -69.26237999999726,
+        "lng": 107.75105999999802,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_1f13b9e33868e00c",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 17.37437194824219
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -69.26237,
+        "lng": 107.75103,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_1f13b9e33868e00c",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 5.465845947265625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -77.43120999964617,
+        "lng": 106.7580499980927,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_5db7d4876b26bd59",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 29.7354345703125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -77.45787,
+        "lng": 106.73643,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_5db7d4876b26bd59",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 10.40892333984375
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -75.897059999627,
+        "lng": 102.15192999987217,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_70f26fbc71750217",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 26.41517822265625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -75.90412,
+        "lng": 102.14678,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_70f26fbc71750217",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 12.55465087890625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -134.8858299999951,
+        "lng": 138.1569900000036,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_3108adfb9e351283",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 5.971971435546875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -134.92260499973037,
+        "lng": 138.15713999864332,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_3108adfb9e351283",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.509005126953125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -133.58104,
+        "lng": 149.10575,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_222ab1efdd671670",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 6
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -133.6578399981644,
+        "lng": 149.10574999750526,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_222ab1efdd671670",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.2199700927734376
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -66.29781000001313,
+        "lng": 158.3513599999983,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7922a8c6d5700e17",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.371199951171874
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -66.29785,
+        "lng": 158.35136,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7922a8c6d5700e17",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 14.770855712890626
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -65.78699000001313,
+        "lng": 158.2270699999983,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_18abd4bda513e24f",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.528096923828127
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -65.78702999999828,
+        "lng": 158.22710999998688,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_18abd4bda513e24f",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 14.751754150390624
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -46.35218999999268,
+        "lng": 148.45138999999674,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_4ae4e7091ca1e2c2",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 23.9760498046875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -46.35212,
+        "lng": 148.45139,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_4ae4e7091ca1e2c2",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 14.186832275390625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -140.32119000149166,
+        "lng": 171.64455999911348,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_188c75a733683edf",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 5.1599897766113285
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -140.3559,
+        "lng": 171.64796,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_188c75a733683edf",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.6806150817871093
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -131.718725,
+        "lng": 164.81123,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7243006c2dc4d0c8",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 6
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -131.85952500090104,
+        "lng": 164.8112299933488,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7243006c2dc4d0c8",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.2199700927734376
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.70834,
+        "lng": 100.53282,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_c08087487a9ec285",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.23355834960938
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -86.11621001156402,
+        "lng": 101.06047000605358,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_012d63170e2e5334",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 195.1144189453125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -86.09120000771394,
+        "lng": 101.08155999219201,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_012d63170e2e5334",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 22.0829443359375
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.28226999982357,
+        "lng": 106.93264000004913,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_b164ea248a067196",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 195.03345947265626
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.28942,
+        "lng": 106.92679,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_b164ea248a067196",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 27.03255126953125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.40308000284094,
+        "lng": 105.93277000076517,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_a93f2ab4afabfffd",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.10622924804687
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.39481,
+        "lng": 105.93951,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_a93f2ab4afabfffd",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 12.302861328125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -85.55725,
+        "lng": 101.54171,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7059341bcad5ede5",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.16662475585937
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -79.55982000284094,
+        "lng": 104.92727000076518,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_db96844df1f33ac7",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.10622924804687
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -79.55155,
+        "lng": 104.93401,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_db96844df1f33ac7",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 12.302861328125
+        }
+      }
+    ],
+    "deploy": {
+      "S1": {
+        "attack": [
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI1号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s1_attack_ytnfab"
+          }
+        ],
+        "defense": [
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 90,
+            "num": 1,
+            "note": "哈夫克1号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_pc_skyport_s1_defense_ssgumn"
+          }
+        ]
+      },
+      "S2": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 2,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq"
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI4号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_i8ti2y"
+          }
+        ],
+        "defense": [
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 3,
+            "note": "哈夫克4号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_defense_179bujk"
+          },
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 90,
+            "num": 1,
+            "note": "哈夫克4号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_defense_179bujk"
+          }
+        ]
+      },
+      "S3": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3"
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 2,
+            "note": "GTI6号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_ty75ls"
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI6号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_ty75ls"
+          }
+        ],
+        "defense": [
+          {
+            "name": "LAV G1步战车",
+            "icon": "g1bzc",
+            "cd": 0,
+            "num": 1,
+            "note": "哈夫克5号阵地",
+            "allowTeammate": false,
+            "badge": "步",
+            "category": "ifv",
+            "deployCount": 1,
+            "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0107.png",
+            "cooldownKnown": false,
+            "spawnUid": "spawn_ad_pc_skyport_s3_defense_198tcf4"
+          }
+        ]
+      },
+      "S4": {
+        "attack": [
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "大事件后进攻基地 1",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+            "cooldownKnown": false
+          }
+        ],
+        "defense": [
+          {
+            "name": "LAV G1步战车",
+            "icon": "g1bzc",
+            "cd": 90,
+            "num": 1,
+            "note": "大事件后防守基地 2",
+            "allowTeammate": false,
+            "badge": "步",
+            "category": "ifv",
+            "deployCount": 1,
+            "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0107.png",
+            "cooldownKnown": false,
+            "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2"
+          }
+        ]
+      }
+    },
+    "vehicleRefreshPoints": [
+      {
+        "uid": "skyport_pc_refresh_s1_gti_fsv",
+        "name": "S1 · FSV轮式突击炮刷新点",
+        "lat": -136.228585,
+        "lng": 176.44478,
+        "verification": "confirmed"
+      },
+      {
+        "uid": "skyport_pc_refresh_s2_gti_fsv",
+        "name": "S2 · FSV轮式突击炮刷新点",
+        "lat": -112.02618,
+        "lng": 165.11853,
+        "verification": "confirmed"
+      },
+      {
+        "uid": "skyport_pc_refresh_s3_gti_orv",
+        "name": "S3 · ORV突击车刷新点",
+        "lat": -112.97288,
+        "lng": 144.04569,
+        "verification": "confirmed"
+      }
+    ],
+    "vehicleRefreshRules": [
+      {
+        "uid": "skyport_pc_refresh_s1_gti_fsv_rule",
+        "objective": "S1",
+        "side": "attack",
+        "action": "refresh",
+        "trigger": {
+          "type": "map-event",
+          "value": "S1 · 进攻方剩余兵力低于80%"
+        },
+        "vehicle": {
+          "name": "FSV轮式突击炮",
+          "icon": "lstjp",
+          "legendKey": "nav_lstjp",
+          "cd": 0,
+          "num": 1,
+          "note": "进攻方8号阵地",
+          "allowTeammate": false,
+          "badge": "炮",
+          "category": "ifv",
+          "deployCount": 1,
+          "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0110.png",
+          "cooldownKnown": false
+        },
+        "quantity": 1,
+        "refreshPointUid": "skyport_pc_refresh_s1_gti_fsv",
+        "note": "",
+        "verification": "confirmed"
+      },
+      {
+        "uid": "skyport_pc_refresh_s2_gti_fsv_rule",
+        "objective": "S2",
+        "side": "attack",
+        "action": "refresh",
+        "trigger": {
+          "type": "map-event",
+          "value": "S2 · 进攻方剩余兵力低于80%"
+        },
+        "vehicle": {
+          "name": "FSV轮式突击炮",
+          "icon": "lstjp",
+          "legendKey": "nav_lstjp",
+          "cd": 0,
+          "num": 1,
+          "note": "进攻方8号阵地",
+          "allowTeammate": false,
+          "badge": "炮",
+          "category": "ifv",
+          "deployCount": 1,
+          "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0110.png",
+          "cooldownKnown": false
+        },
+        "quantity": 1,
+        "refreshPointUid": "skyport_pc_refresh_s2_gti_fsv",
+        "note": "",
+        "verification": "draft"
+      },
+      {
+        "uid": "skyport_pc_refresh_s3_gti_orv_rule",
+        "objective": "S3",
+        "side": "attack",
+        "action": "refresh",
+        "trigger": {
+          "type": "map-event",
+          "value": "S3 · 进攻方剩余兵力低于80%"
+        },
+        "vehicle": {
+          "name": "突击车",
+          "icon": "orvtjc",
+          "legendKey": "nav_orvtjc",
+          "cd": 0,
+          "num": 1,
+          "note": "防守方4号阵地",
+          "allowTeammate": true,
+          "badge": "突",
+          "category": "recon",
+          "deployCount": 1,
+          "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0108.png",
+          "cooldownKnown": false
+        },
+        "quantity": 1,
+        "refreshPointUid": "skyport_pc_refresh_s3_gti_orv",
+        "note": "",
+        "verification": "confirmed"
+      }
+    ]
+  },
+  "commanderDraft": {
+    "stages": [
+      {
+        "id": "S1",
+        "label": "阶段1",
+        "points": [
+          {
+            "name": "据点A1",
+            "icon": "q_jd_a1",
+            "note": "A1点",
+            "lat": -126.758,
+            "lng": 160.868,
+            "capturable": [
+              [
+                -130.755,
+                157.637
+              ],
+              [
+                -125.267,
+                156.939
+              ],
+              [
+                -124.564,
+                162.361
+              ],
+              [
+                -130,
+                163.042
+              ],
+              [
+                -130.755,
+                157.637
+              ]
+            ]
+          },
+          {
+            "name": "据点A2",
+            "icon": "q_jd_a2",
+            "note": "A2点",
+            "lat": -118.237,
+            "lng": 148.11,
+            "capturable": [
+              [
+                -122.625,
+                144.48
+              ],
+              [
+                -117.315,
+                144.44
+              ],
+              [
+                -116.92,
+                152.657
+              ],
+              [
+                -122.225,
+                153.007
+              ],
+              [
+                -122.625,
+                144.48
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S1 防线",
+          "latlngs": [
+            [
+              -103.047,
+              133.314
+            ],
+            [
+              -102.955,
+              165.528
+            ],
+            [
+              -131.088,
+              168.841
+            ],
+            [
+              -131.878,
+              162.608
+            ],
+            [
+              -202.507,
+              163.972
+            ],
+            [
+              -168.257,
+              133.157
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -103.047,
+              133.314
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI1号阵地",
+            "lat": -177.952,
+            "lng": 209.915
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+            "stageId": "S1",
+            "side": "attack",
+            "name": "GTI2号阵地",
+            "lat": -183.429,
+            "lng": 182.264
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克1号阵地",
+            "lat": -130.467,
+            "lng": 117.397
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+            "stageId": "S1",
+            "side": "defense",
+            "name": "哈夫克2号阵地",
+            "lat": -110.476,
+            "lng": 114.955
+          }
+        ],
+        "attackSpawns": [
+          [
+            -177.952,
+            209.915
+          ],
+          [
+            -183.429,
+            182.264
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -130.467,
+            117.397
+          ],
+          [
+            -110.476,
+            114.955
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI1号阵地",
+          "GTI2号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克1号阵地",
+          "哈夫克2号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -106.942,
+            185.6
+          ],
+          [
+            -142.892,
+            187.507
+          ],
+          [
+            -143.763,
+            196.16
+          ],
+          [
+            -149.382,
+            202.17
+          ],
+          [
+            -161.122,
+            200.6
+          ],
+          [
+            -165.949,
+            225.98
+          ],
+          [
+            -201.817,
+            227.362
+          ],
+          [
+            -202.507,
+            163.972
+          ],
+          [
+            -131.878,
+            162.608
+          ],
+          [
+            -131.088,
+            168.841
+          ],
+          [
+            -102.955,
+            165.528
+          ],
+          [
+            -102.943,
+            170.511
+          ],
+          [
+            -104.861,
+            170.667
+          ],
+          [
+            -104.892,
+            174.842
+          ],
+          [
+            -105.4,
+            174.852
+          ],
+          [
+            -105.382,
+            182.75
+          ],
+          [
+            -106.942,
+            185.6
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -168.257,
+            133.157
+          ],
+          [
+            -172.171,
+            96.149
+          ],
+          [
+            -108.431,
+            95.571
+          ],
+          [
+            -108.312,
+            104.694
+          ],
+          [
+            -95.547,
+            104.523
+          ],
+          [
+            -79.78,
+            116.844
+          ],
+          [
+            -93.101,
+            133.338
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -168.257,
+            133.157
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "FSV轮式突击炮",
+            "icon": "q_lstjp",
+            "badge": "炮",
+            "category": "ifv",
+            "trigger": "进攻方剩余兵力低于80%",
+            "pos": [
+              -136.228585,
+              176.44478
+            ],
+            "posList": [
+              [
+                -136.228585,
+                176.44478
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S2",
+        "label": "阶段2",
+        "points": [
+          {
+            "name": "据点B1",
+            "icon": "q_jd_b1",
+            "note": "B1点",
+            "lat": -130.839,
+            "lng": 122.475,
+            "capturable": [
+              [
+                -135.662,
+                119.445
+              ],
+              [
+                -130.446,
+                118.465
+              ],
+              [
+                -129.103,
+                126.009
+              ],
+              [
+                -134.318,
+                127.044
+              ],
+              [
+                -135.662,
+                119.445
+              ]
+            ]
+          },
+          {
+            "name": "据点B2",
+            "icon": "q_jd_b2",
+            "note": "B2点",
+            "lat": -120.414,
+            "lng": 109.597,
+            "capturable": [
+              [
+                -125.953,
+                107.701
+              ],
+              [
+                -123.673,
+                107.484
+              ],
+              [
+                -123.771,
+                106.269
+              ],
+              [
+                -120.181,
+                105.992
+              ],
+              [
+                -120.174,
+                106.2
+              ],
+              [
+                -119.433,
+                106.182
+              ],
+              [
+                -119.445,
+                111.338
+              ],
+              [
+                -119.464,
+                112.053
+              ],
+              [
+                -119.47,
+                112.304
+              ],
+              [
+                -119.45,
+                113.26
+              ],
+              [
+                -120.396,
+                113.272
+              ],
+              [
+                -123.985,
+                113.315
+              ],
+              [
+                -123.989,
+                112.984
+              ],
+              [
+                -124.657,
+                112.997
+              ],
+              [
+                -125.597,
+                112.162
+              ],
+              [
+                -125.953,
+                107.701
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S2 防线",
+          "latlngs": [
+            [
+              -108.363,
+              102.217
+            ],
+            [
+              -108.551,
+              133.301
+            ],
+            [
+              -168.212,
+              133.146
+            ],
+            [
+              -172.171,
+              96.149
+            ],
+            [
+              -114.242,
+              95.708
+            ],
+            [
+              -114.221,
+              102.361
+            ],
+            [
+              -108.363,
+              102.217
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI3号阵地",
+            "lat": -131.01196,
+            "lng": 141.21781
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "GTI4号阵地",
+            "lat": -116.64527,
+            "lng": 140.25375
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克3号阵地",
+            "lat": -99.33238,
+            "lng": 115.23086
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+            "stageId": "S2",
+            "side": "defense",
+            "name": "哈夫克4号阵地",
+            "lat": -99.20229,
+            "lng": 92.94385
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s2_attack_hub_mid_4",
+            "stageId": "S2",
+            "side": "attack",
+            "name": "B区进攻基地·中部",
+            "lat": -124.58957,
+            "lng": 140.25375
+          }
+        ],
+        "attackSpawns": [
+          [
+            -131.01196,
+            141.21781
+          ],
+          [
+            -116.64527,
+            140.25375
+          ],
+          [
+            -124.58957,
+            140.25375
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -99.33238,
+            115.23086
+          ],
+          [
+            -99.20229,
+            92.94385
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI3号阵地",
+          "GTI4号阵地",
+          "B区进攻基地·中部"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克3号阵地",
+          "哈夫克4号阵地"
+        ],
+        "attackBaseZone": [
+          [
+            -102.859,
+            187.257
+          ],
+          [
+            -162.049,
+            187.585
+          ],
+          [
+            -168.212,
+            133.146
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.375,
+            148.897
+          ],
+          [
+            -102.577,
+            148.956
+          ],
+          [
+            -102.859,
+            187.257
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -103.047,
+            133.314
+          ],
+          [
+            -108.551,
+            133.301
+          ],
+          [
+            -108.363,
+            102.217
+          ],
+          [
+            -114.221,
+            102.361
+          ],
+          [
+            -114.255,
+            91.736
+          ],
+          [
+            -106.637,
+            91.856
+          ],
+          [
+            -93.194,
+            75.004
+          ],
+          [
+            -61.893,
+            100.805
+          ],
+          [
+            -85.712,
+            132.985
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "FSV轮式突击炮",
+            "icon": "q_lstjp",
+            "badge": "炮",
+            "category": "ifv",
+            "trigger": "进攻方剩余兵力低于80%",
+            "pos": [
+              -112.02618,
+              165.11853
+            ],
+            "posList": [
+              [
+                -112.02618,
+                165.11853
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S3",
+        "label": "阶段3",
+        "points": [
+          {
+            "name": "据点C1",
+            "icon": "q_jd_c1",
+            "note": "C1点",
+            "lat": -94.591,
+            "lng": 123.167,
+            "capturable": [
+              [
+                -97.019,
+                129.209
+              ],
+              [
+                -96.994,
+                124.068
+              ],
+              [
+                -97,
+                118.318
+              ],
+              [
+                -94.845,
+                120.094
+              ],
+              [
+                -89.508,
+                124.533
+              ],
+              [
+                -89.788,
+                125.53
+              ],
+              [
+                -92.904,
+                129.264
+              ],
+              [
+                -97.019,
+                129.209
+              ]
+            ]
+          },
+          {
+            "name": "据点C2",
+            "icon": "q_jd_c2",
+            "note": "C2点",
+            "lat": -81.912,
+            "lng": 101.116,
+            "capturable": [
+              [
+                -89.644,
+                104.672
+              ],
+              [
+                -89.334,
+                104.326
+              ],
+              [
+                -89.104,
+                104.054
+              ],
+              [
+                -82.511,
+                96.108
+              ],
+              [
+                -75.732,
+                101.753
+              ],
+              [
+                -82.89,
+                110.299
+              ],
+              [
+                -89.644,
+                104.672
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "天际港 S3 防线",
+          "latlngs": [
+            [
+              -84.385,
+              87.015
+            ],
+            [
+              -81.594,
+              83.628
+            ],
+            [
+              -62.186,
+              99.517
+            ],
+            [
+              -69.175,
+              107.658
+            ],
+            [
+              -66.323,
+              109.89
+            ],
+            [
+              -74.022,
+              119.705
+            ],
+            [
+              -75.608,
+              121.727
+            ],
+            [
+              -78.531,
+              126.056
+            ],
+            [
+              -80.827,
+              130.806
+            ],
+            [
+              -84.186,
+              129.56
+            ],
+            [
+              -85.712,
+              132.985
+            ],
+            [
+              -102.542,
+              132.991
+            ],
+            [
+              -102.509,
+              107.861
+            ],
+            [
+              -101.157,
+              107.834
+            ],
+            [
+              -101.145,
+              100.904
+            ],
+            [
+              -99.27,
+              98.336
+            ],
+            [
+              -106.711,
+              91.63
+            ],
+            [
+              -95.416,
+              77.789
+            ],
+            [
+              -84.385,
+              87.015
+            ]
+          ]
+        },
+        "spawns": [
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI5号阵地",
+            "lat": -111.64493,
+            "lng": 116.41187
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI6号阵地",
+            "lat": -111.57493,
+            "lng": 134.80803
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+            "stageId": "S3",
+            "side": "attack",
+            "name": "GTI7号阵地",
+            "lat": -99.34298,
+            "lng": 148.02029
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克5号阵地",
+            "lat": -63.20583,
+            "lng": 110.90233
+          },
+          {
+            "uid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "哈夫克6号阵地",
+            "lat": -64.85998,
+            "lng": 92.72493
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_defend_hub_down",
+            "stageId": "S3",
+            "side": "defense",
+            "name": "C区防守基地·下部",
+            "lat": -75.37808,
+            "lng": 83.866365
+          }
+        ],
+        "attackSpawns": [
+          [
+            -111.64493,
+            116.41187
+          ],
+          [
+            -111.57493,
+            134.80803
+          ],
+          [
+            -99.34298,
+            148.02029
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -63.20583,
+            110.90233
+          ],
+          [
+            -64.85998,
+            92.72493
+          ],
+          [
+            -75.37808,
+            83.866365
+          ]
+        ],
+        "attackSpawnNames": [
+          "GTI5号阵地",
+          "GTI6号阵地",
+          "GTI7号阵地"
+        ],
+        "defenseSpawnNames": [
+          "哈夫克5号阵地",
+          "哈夫克6号阵地",
+          "C区防守基地·下部"
+        ],
+        "attackBaseZone": [
+          [
+            -149.874,
+            140.023
+          ],
+          [
+            -155.365,
+            96.131
+          ],
+          [
+            -114.289,
+            95.857
+          ],
+          [
+            -114.319,
+            91.632
+          ],
+          [
+            -106.711,
+            91.63
+          ],
+          [
+            -99.27,
+            98.336
+          ],
+          [
+            -101.145,
+            100.904
+          ],
+          [
+            -101.157,
+            107.834
+          ],
+          [
+            -102.509,
+            107.861
+          ],
+          [
+            -102.542,
+            132.991
+          ],
+          [
+            -85.712,
+            132.985
+          ],
+          [
+            -87.559,
+            137.501
+          ],
+          [
+            -89.969,
+            137.479
+          ],
+          [
+            -89.988,
+            139.542
+          ],
+          [
+            -92.709,
+            142.213
+          ],
+          [
+            -92.454,
+            153.978
+          ],
+          [
+            -102.957,
+            154.086
+          ],
+          [
+            -103.013,
+            162.389
+          ],
+          [
+            -114.1,
+            162.555
+          ],
+          [
+            -114.377,
+            139.639
+          ],
+          [
+            -149.874,
+            140.023
+          ]
+        ],
+        "defenseBaseZone": [
+          [
+            -53.96,
+            85.543
+          ],
+          [
+            -62.466,
+            95.905
+          ],
+          [
+            -56.25,
+            101.081
+          ],
+          [
+            -51.001,
+            121.897
+          ],
+          [
+            -53.942,
+            123.088
+          ],
+          [
+            -61.221,
+            115.77
+          ],
+          [
+            -68.998,
+            123.726
+          ],
+          [
+            -74.022,
+            119.705
+          ],
+          [
+            -66.323,
+            109.89
+          ],
+          [
+            -69.175,
+            107.658
+          ],
+          [
+            -62.186,
+            99.517
+          ],
+          [
+            -81.594,
+            83.628
+          ],
+          [
+            -84.385,
+            87.015
+          ],
+          [
+            -92.017,
+            80.632
+          ],
+          [
+            -79.009,
+            64.921
+          ],
+          [
+            -53.96,
+            85.543
+          ]
+        ],
+        "attackVehicles": [
+          {
+            "name": "ORV突击车",
+            "icon": "q_orvtjc",
+            "badge": "突",
+            "category": "recon",
+            "trigger": "进攻方剩余兵力低于80%",
+            "pos": [
+              -112.97288,
+              144.04569
+            ],
+            "posList": [
+              [
+                -112.97288,
+                144.04569
+              ]
+            ]
+          }
+        ],
+        "defenseVehicles": []
+      },
+      {
+        "id": "S4",
+        "label": "阶段4 · 大事件后",
+        "points": [
+          {
+            "name": "据点C3",
+            "icon": "q_jd_c3",
+            "note": "大事件后启用；原生区域 10153。",
+            "lat": -82.77532,
+            "lng": 102.83321,
+            "capturable": [
+              [
+                -88.41713005800638,
+                103.6125251752642
+              ],
+              [
+                -84.03732058193533,
+                98.29019502740702
+              ],
+              [
+                -77.52003937202286,
+                103.71882466542529
+              ],
+              [
+                -81.86461961560668,
+                109.08281477169699
+              ]
+            ]
+          }
+        ],
+        "zone": {
+          "name": "C区共享主轮廓（事件后边界待核实）",
+          "latlngs": [
+            [
+              -84.38505699158492,
+              87.015443474863
+            ],
+            [
+              -81.59369649539951,
+              83.62828015205885
+            ],
+            [
+              -62.18590081130404,
+              99.51650900196572
+            ],
+            [
+              -69.17531160293747,
+              107.65837330754235
+            ],
+            [
+              -66.3228008432002,
+              109.88954530614294
+            ],
+            [
+              -74.02198601886734,
+              119.7046914459232
+            ],
+            [
+              -75.6082320562216,
+              121.72688385924552
+            ],
+            [
+              -78.53122302909323,
+              126.05561310403043
+            ],
+            [
+              -80.82672446270473,
+              130.80550355758217
+            ],
+            [
+              -84.18579334625987,
+              129.56006206762612
+            ],
+            [
+              -85.71208516575297,
+              132.98506152872457
+            ],
+            [
+              -102.54219389828269,
+              132.9906484250761
+            ],
+            [
+              -102.50949997681207,
+              107.86088942057744
+            ],
+            [
+              -101.15664996705655,
+              107.83422980730346
+            ],
+            [
+              -101.14485904917963,
+              100.90409049699514
+            ],
+            [
+              -99.26986791771262,
+              98.3355205349063
+            ],
+            [
+              -106.71110629523719,
+              91.63031887101639
+            ],
+            [
+              -95.41612422878211,
+              77.78858196095103
+            ]
+          ]
+        },
+        "attackBaseZone": [],
+        "defenseBaseZone": [],
+        "spawns": [
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+            "stageId": "S4",
+            "side": "attack",
+            "name": "大事件后进攻基地 1",
+            "lat": -95.11628,
+            "lng": 124.55847
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent2",
+            "stageId": "S4",
+            "side": "attack",
+            "name": "大事件后进攻基地 2",
+            "lat": -99.49529,
+            "lng": 109.51899
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent",
+            "stageId": "S4",
+            "side": "defense",
+            "name": "大事件后防守基地 1",
+            "lat": -72.29892,
+            "lng": 106.57563
+          },
+          {
+            "uid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2",
+            "stageId": "S4",
+            "side": "defense",
+            "name": "大事件后防守基地 2",
+            "lat": -74.80296,
+            "lng": 96.15995
+          }
+        ],
+        "attackSpawns": [
+          [
+            -95.11628,
+            124.55847
+          ],
+          [
+            -99.49529,
+            109.51899
+          ]
+        ],
+        "defenseSpawns": [
+          [
+            -72.29892,
+            106.57563
+          ],
+          [
+            -74.80296,
+            96.15995
+          ]
+        ],
+        "attackSpawnNames": [
+          "大事件后进攻基地 1",
+          "大事件后进攻基地 2"
+        ],
+        "defenseSpawnNames": [
+          "大事件后防守基地 1",
+          "大事件后防守基地 2"
+        ],
+        "attackVehicles": [],
+        "defenseVehicles": []
+      }
+    ],
+    "props": [
+      {
+        "name": "岸防炮",
+        "icon": "q_afp",
+        "lat": -129.019,
+        "lng": 144.055,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.802,
+        "lng": 149.966,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -119.144,
+        "lng": 149.935,
+        "stage": ""
+      },
+      {
+        "name": "固定机枪",
+        "icon": "q_gdjq",
+        "lat": -87.677,
+        "lng": 109.058,
+        "stage": ""
+      },
+      {
+        "name": "火神炮",
+        "icon": "q_hsp",
+        "lat": -82.384,
+        "lng": 103.131,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -118.912,
+        "lng": 149.133,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -126.221,
+        "lng": 121.51,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -132.198,
+        "lng": 121.73,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -134.722,
+        "lng": 128.773,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.033,
+        "lng": 107.557,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.278,
+        "lng": 114.227,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -97.613,
+        "lng": 132.416,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -92.924,
+        "lng": 121.874,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -96.909,
+        "lng": 109.453,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -85.782,
+        "lng": 118.463,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -80.371,
+        "lng": 100.586,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -115.359,
+        "lng": 159.205,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -84.668,
+        "lng": 105.669,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -82.094,
+        "lng": 95.043,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -76.926,
+        "lng": 107.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.085,
+        "lng": 120.306,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -114.368,
+        "lng": 169.459,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.774,
+        "lng": 149.683,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -108.797,
+        "lng": 170.65,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -119.622,
+        "lng": 147.377,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -116.672,
+        "lng": 140.019,
+        "stage": ""
+      },
+      {
+        "name": "固定弹药箱",
+        "icon": "q_gddyx",
+        "lat": -122.973,
+        "lng": 129.946,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -117.349,
+        "lng": 117.982,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -111.706,
+        "lng": 168.934,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 139.457,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -123.584,
+        "lng": 130.317,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -112.294,
+        "lng": 105.216,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -89.754,
+        "lng": 130.189,
+        "stage": ""
+      },
+      {
+        "name": "载具补给站",
+        "icon": "q_zjbjz",
+        "lat": -76.388,
+        "lng": 87.724,
+        "stage": ""
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -85.34646690429753,
+        "lng": 99.0949287386292,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_90dd68d477fa480e",
+          "orientation": "span",
+          "endpoint": "green",
+          "elevationMeters": 207.44623046875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.83181698085745,
+        "lng": 98.6098187836045,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_90dd68d477fa480e",
+          "orientation": "span",
+          "endpoint": "red",
+          "elevationMeters": 214.75125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.21167999960291,
+        "lng": 96.07873999975865,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_f35b8ce42aa33b83",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.7455078125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.21709,
+        "lng": 96.08606,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_f35b8ce42aa33b83",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 10.277923583984375
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -90.7931999984811,
+        "lng": 102.22547000024758,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb4097da28c95f21",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.66104736328125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -90.78647,
+        "lng": 102.23033,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb4097da28c95f21",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 11.411741943359376
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -81.73106999259757,
+        "lng": 108.64644999989139,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7b1f91a640049662",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.60759765625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -82.00329000445637,
+        "lng": 108.97215999073961,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7b1f91a640049662",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 178.54654296875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -78.08159,
+        "lng": 105.26291998046875,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb0637b633e49870",
+          "orientation": "span",
+          "endpoint": "green",
+          "elevationMeters": 207.4805078125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -77.62604,
+        "lng": 104.6789600390625,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_cb0637b633e49870",
+          "orientation": "span",
+          "endpoint": "red",
+          "elevationMeters": 214.75125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -69.26237999999726,
+        "lng": 107.75105999999802,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_1f13b9e33868e00c",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 17.37437194824219
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -69.26237,
+        "lng": 107.75103,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_1f13b9e33868e00c",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 5.465845947265625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -77.43120999964617,
+        "lng": 106.7580499980927,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_5db7d4876b26bd59",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 29.7354345703125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -77.45787,
+        "lng": 106.73643,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_5db7d4876b26bd59",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 10.40892333984375
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -75.897059999627,
+        "lng": 102.15192999987217,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_70f26fbc71750217",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 26.41517822265625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -75.90412,
+        "lng": 102.14678,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_70f26fbc71750217",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 12.55465087890625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -134.8858299999951,
+        "lng": 138.1569900000036,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_3108adfb9e351283",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 5.971971435546875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -134.92260499973037,
+        "lng": 138.15713999864332,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_3108adfb9e351283",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.509005126953125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -133.58104,
+        "lng": 149.10575,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_222ab1efdd671670",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 6
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -133.6578399981644,
+        "lng": 149.10574999750526,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_222ab1efdd671670",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.2199700927734376
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -66.29781000001313,
+        "lng": 158.3513599999983,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7922a8c6d5700e17",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.371199951171874
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -66.29785,
+        "lng": 158.35136,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7922a8c6d5700e17",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 14.770855712890626
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -65.78699000001313,
+        "lng": 158.2270699999983,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_18abd4bda513e24f",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 24.528096923828127
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -65.78702999999828,
+        "lng": 158.22710999998688,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_18abd4bda513e24f",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 14.751754150390624
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -46.35218999999268,
+        "lng": 148.45138999999674,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_4ae4e7091ca1e2c2",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 23.9760498046875
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -46.35212,
+        "lng": 148.45139,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_4ae4e7091ca1e2c2",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 14.186832275390625
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -140.32119000149166,
+        "lng": 171.64455999911348,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_188c75a733683edf",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 5.1599897766113285
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -140.3559,
+        "lng": 171.64796,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_188c75a733683edf",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.6806150817871093
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -131.718725,
+        "lng": 164.81123,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7243006c2dc4d0c8",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 6
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -131.85952500090104,
+        "lng": 164.8112299933488,
+        "stage": "",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7243006c2dc4d0c8",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": -1.2199700927734376
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -84.70834,
+        "lng": 100.53282,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_c08087487a9ec285",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.23355834960938
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -86.11621001156402,
+        "lng": 101.06047000605358,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_012d63170e2e5334",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 195.1144189453125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -86.09120000771394,
+        "lng": 101.08155999219201,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_012d63170e2e5334",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 22.0829443359375
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.28226999982357,
+        "lng": 106.93264000004913,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_b164ea248a067196",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 195.03345947265626
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.28942,
+        "lng": 106.92679,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_b164ea248a067196",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 27.03255126953125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.40308000284094,
+        "lng": 105.93277000076517,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_a93f2ab4afabfffd",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.10622924804687
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -80.39481,
+        "lng": 105.93951,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_a93f2ab4afabfffd",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 12.302861328125
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -85.55725,
+        "lng": 101.54171,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_7059341bcad5ede5",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.16662475585937
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -79.55982000284094,
+        "lng": 104.92727000076518,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_db96844df1f33ac7",
+          "orientation": "vertical",
+          "endpoint": "green",
+          "elevationMeters": 207.10622924804687
+        }
+      },
+      {
+        "name": "滑索",
+        "icon": "q_hs",
+        "lat": -79.55155,
+        "lng": 104.93401,
+        "stage": "S4",
+        "zipline": {
+          "lineId": "skyport_pc_zipline_db96844df1f33ac7",
+          "orientation": "vertical",
+          "endpoint": "red",
+          "elevationMeters": 12.302861328125
+        }
+      }
+    ],
+    "deploy": {
+      "S1": {
+        "attack": [
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI1号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+            "cooldownKnown": false
+          }
+        ],
+        "defense": [
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 150,
+            "num": 1,
+            "note": "哈夫克1号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+            "cooldownKnown": false
+          }
+        ]
+      },
+      "S2": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 150,
+            "num": 1,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+            "cooldownKnown": false
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 2,
+            "note": "GTI3号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+            "cooldownKnown": false
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI4号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+            "cooldownKnown": false
+          }
+        ],
+        "defense": [
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 3,
+            "note": "哈夫克4号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+            "cooldownKnown": false
+          },
+          {
+            "name": "GTQ-35轻型坦克",
+            "icon": "qxtk",
+            "cd": 150,
+            "num": 1,
+            "note": "哈夫克4号阵地",
+            "allowTeammate": false,
+            "badge": "轻",
+            "category": "tank",
+            "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+            "spawnUid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+            "cooldownKnown": false
+          }
+        ]
+      },
+      "S3": {
+        "attack": [
+          {
+            "name": "冲锋舟",
+            "icon": "cfz",
+            "legendKey": "nav_cfz",
+            "cd": 150,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "舟",
+            "category": "supply",
+            "iconUrl": "/icons/vehicles/legend/nav_cfz.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+            "cooldownKnown": false
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 1,
+            "note": "GTI5号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+            "cooldownKnown": false
+          },
+          {
+            "name": "摩托艇",
+            "icon": "mtt",
+            "cd": 15,
+            "num": 2,
+            "note": "GTI6号阵地",
+            "allowTeammate": false,
+            "badge": "艇",
+            "category": "water",
+            "iconUrl": "/icons/vehicles/deploy/deploy_mtt.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+            "cooldownKnown": false
+          },
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "GTI6号阵地",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+            "cooldownKnown": false
+          }
+        ],
+        "defense": [
+          {
+            "name": "LAV G1步战车",
+            "icon": "g1bzc",
+            "cd": 150,
+            "num": 1,
+            "note": "哈夫克5号阵地",
+            "allowTeammate": false,
+            "badge": "步",
+            "category": "ifv",
+            "deployCount": 1,
+            "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0107.png",
+            "cooldownKnown": false,
+            "spawnUid": "spawn_ad_pc_skyport_s3_defense_198tcf4"
+          }
+        ]
+      },
+      "S4": {
+        "attack": [
+          {
+            "name": "两栖装甲运输车",
+            "icon": "sxzjc",
+            "legendKey": "nav_sxzjc",
+            "cd": 90,
+            "num": 1,
+            "note": "大事件后进攻基地 1",
+            "allowTeammate": false,
+            "badge": "载",
+            "category": "apc",
+            "iconUrl": "/icons/vehicles/legend/两栖车.png",
+            "spawnUid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+            "cooldownKnown": false
+          }
+        ],
+        "defense": [
+          {
+            "name": "LAV G1步战车",
+            "icon": "g1bzc",
+            "cd": 150,
+            "num": 1,
+            "note": "大事件后防守基地 2",
+            "allowTeammate": false,
+            "badge": "步",
+            "category": "ifv",
+            "deployCount": 1,
+            "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0107.png",
+            "cooldownKnown": false,
+            "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2"
+          }
+        ]
+      }
+    },
+    "vehicleRefreshPoints": [
+      {
+        "uid": "skyport_pc_commander_refresh_s1_gti_fsv",
+        "name": "S1 · FSV轮式突击炮刷新点",
+        "lat": -136.228585,
+        "lng": 176.44478,
+        "verification": "confirmed"
+      },
+      {
+        "uid": "skyport_pc_commander_refresh_s2_gti_fsv",
+        "name": "S2 · FSV轮式突击炮刷新点",
+        "lat": -112.02618,
+        "lng": 165.11853,
+        "verification": "confirmed"
+      },
+      {
+        "uid": "skyport_pc_commander_refresh_s3_gti_orv",
+        "name": "S3 · ORV突击车刷新点",
+        "lat": -112.97288,
+        "lng": 144.04569,
+        "verification": "confirmed"
+      }
+    ],
+    "vehicleRefreshRules": [
+      {
+        "uid": "skyport_pc_commander_refresh_s1_gti_fsv_rule",
+        "objective": "S1",
+        "side": "attack",
+        "action": "refresh",
+        "trigger": {
+          "type": "map-event",
+          "value": "指挥官 · S1 · 进攻方剩余兵力低于80%"
+        },
+        "vehicle": {
+          "name": "FSV轮式突击炮",
+          "icon": "lstjp",
+          "legendKey": "nav_lstjp",
+          "cd": 0,
+          "num": 1,
+          "note": "进攻方8号阵地",
+          "allowTeammate": false,
+          "badge": "炮",
+          "category": "ifv",
+          "deployCount": 1,
+          "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0110.png",
+          "cooldownKnown": false
+        },
+        "quantity": 1,
+        "refreshPointUid": "skyport_pc_commander_refresh_s1_gti_fsv",
+        "note": "",
+        "verification": "confirmed"
+      },
+      {
+        "uid": "skyport_pc_commander_refresh_s2_gti_fsv_rule",
+        "objective": "S2",
+        "side": "attack",
+        "action": "refresh",
+        "trigger": {
+          "type": "map-event",
+          "value": "指挥官 · S2 · 进攻方剩余兵力低于80%"
+        },
+        "vehicle": {
+          "name": "FSV轮式突击炮",
+          "icon": "lstjp",
+          "legendKey": "nav_lstjp",
+          "cd": 0,
+          "num": 1,
+          "note": "进攻方8号阵地",
+          "allowTeammate": false,
+          "badge": "炮",
+          "category": "ifv",
+          "deployCount": 1,
+          "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0110.png",
+          "cooldownKnown": false
+        },
+        "quantity": 1,
+        "refreshPointUid": "skyport_pc_commander_refresh_s2_gti_fsv",
+        "note": "",
+        "verification": "draft"
+      },
+      {
+        "uid": "skyport_pc_commander_refresh_s3_gti_orv_rule",
+        "objective": "S3",
+        "side": "attack",
+        "action": "refresh",
+        "trigger": {
+          "type": "map-event",
+          "value": "指挥官 · S3 · 进攻方剩余兵力低于80%"
+        },
+        "vehicle": {
+          "name": "突击车",
+          "icon": "orvtjc",
+          "legendKey": "nav_orvtjc",
+          "cd": 0,
+          "num": 1,
+          "note": "防守方4号阵地",
+          "allowTeammate": true,
+          "badge": "突",
+          "category": "recon",
+          "deployCount": 1,
+          "iconUrl": "/icons/vehicles/mobile-hud/HUD_Screen_Icon_0108.png",
+          "cooldownKnown": false
+        },
+        "quantity": 1,
+        "refreshPointUid": "skyport_pc_commander_refresh_s3_gti_orv",
+        "note": "",
+        "verification": "confirmed"
+      }
+    ]
+  },
+  "sharedZiplineProps": [
+    {
+      "uid": "skyport_pc_zipline_b485db23edea110f",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -85.34646690429753,
+      "lng": 99.0949287386292,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type15",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_90dd68d477fa480e",
+        "orientation": "span",
+        "endpoint": "green",
+        "elevationMeters": 207.44623046875
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_746494bad3155f56",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -84.83181698085745,
+      "lng": 98.6098187836045,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type15",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_90dd68d477fa480e",
+        "orientation": "span",
+        "endpoint": "red",
+        "elevationMeters": 214.75125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_33fb3ba5dd107ee1",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -84.21167999960291,
+      "lng": 96.07873999975865,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type19",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_f35b8ce42aa33b83",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 24.7455078125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_d246bb52c2d8cbb1",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -84.21709,
+      "lng": 96.08606,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type19",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_f35b8ce42aa33b83",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 10.277923583984375
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_902165969d0dab8d",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -90.7931999984811,
+      "lng": 102.22547000024758,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type12_2",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_cb4097da28c95f21",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 24.66104736328125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_9a107f52f3ae744a",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -90.78647,
+      "lng": 102.23033,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type12_2",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_cb4097da28c95f21",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 11.411741943359376
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_ef2fa31e61df93bc",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -81.73106999259757,
+      "lng": 108.64644999989139,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type8_2",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7b1f91a640049662",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 207.60759765625
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_6824ea71cc381ea0",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -82.00329000445637,
+      "lng": 108.97215999073961,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type8_2",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7b1f91a640049662",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 178.54654296875
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_d14258cd7e7038a5",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -78.08159,
+      "lng": 105.26291998046875,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type13_0",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_cb0637b633e49870",
+        "orientation": "span",
+        "endpoint": "green",
+        "elevationMeters": 207.4805078125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_ef9bc4e47a7fefe0",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -77.62604,
+      "lng": 104.6789600390625,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type13_0",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_cb0637b633e49870",
+        "orientation": "span",
+        "endpoint": "red",
+        "elevationMeters": 214.75125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_d92c64a2f7bac79c",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -69.26237999999726,
+      "lng": 107.75105999999802,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type10",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_1f13b9e33868e00c",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 17.37437194824219
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_af798cbf0d377435",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -69.26237,
+      "lng": 107.75103,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type10",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_1f13b9e33868e00c",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 5.465845947265625
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_02095680086c4f01",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -77.43120999964617,
+      "lng": 106.7580499980927,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type14_0",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_5db7d4876b26bd59",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 29.7354345703125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_558c8884671f7fed",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -77.45787,
+      "lng": 106.73643,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type14_0",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_5db7d4876b26bd59",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 10.40892333984375
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_6d0f9881ee30d6b5",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -75.897059999627,
+      "lng": 102.15192999987217,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type25",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_70f26fbc71750217",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 26.41517822265625
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_42a9b3ab9f588312",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -75.90412,
+      "lng": 102.14678,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type25",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_70f26fbc71750217",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 12.55465087890625
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_bc4f2d33cc96d6b8",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -134.8858299999951,
+      "lng": 138.1569900000036,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type24",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_3108adfb9e351283",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 5.971971435546875
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_e86b2cfbc1394500",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -134.92260499973037,
+      "lng": 138.15713999864332,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type24",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_3108adfb9e351283",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": -1.509005126953125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_f03a7e3c68c954ff",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -133.58104,
+      "lng": 149.10575,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type22",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_222ab1efdd671670",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 6
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_8a6848a78d89158b",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -133.6578399981644,
+      "lng": 149.10574999750526,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type22",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_222ab1efdd671670",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": -1.2199700927734376
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_f9a2a59326060954",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -66.29781000001313,
+      "lng": 158.3513599999983,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type20_2",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7922a8c6d5700e17",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 24.371199951171874
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_9ee5231c8ad6a173",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -66.29785,
+      "lng": 158.35136,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type20_2",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7922a8c6d5700e17",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 14.770855712890626
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_2e7780ddee0bf55c",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -65.78699000001313,
+      "lng": 158.2270699999983,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type21",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_18abd4bda513e24f",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 24.528096923828127
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_1a2ab2e0bcc26b3a",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -65.78702999999828,
+      "lng": 158.22710999998688,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type21",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_18abd4bda513e24f",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 14.751754150390624
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_ef333807d7fcff12",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -46.35218999999268,
+      "lng": 148.45138999999674,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type7_5",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_4ae4e7091ca1e2c2",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 23.9760498046875
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_a3b0e6086f09b99d",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -46.35212,
+      "lng": 148.45139,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type7_5",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_4ae4e7091ca1e2c2",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 14.186832275390625
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_f76556b180d9af68",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -140.32119000149166,
+      "lng": 171.64455999911348,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type16",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_188c75a733683edf",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 5.1599897766113285
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_d81887c43c8152e4",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -140.3559,
+      "lng": 171.64796,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type16",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_188c75a733683edf",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": -1.6806150817871093
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_34a3338687d34095",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -131.718725,
+      "lng": 164.81123,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type4",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7243006c2dc4d0c8",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 6
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_06cac6b8c517ae5c",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -131.85952500090104,
+      "lng": 164.8112299933488,
+      "stage": "",
+      "actor": "BP_Interactor_DFMZipline_Type4",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7243006c2dc4d0c8",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": -1.2199700927734376
+      }
+    }
+  ],
+  "eventZiplineProps": [
+    {
+      "uid": "skyport_pc_zipline_2cf9d2a90dd91c17",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -84.70834,
+      "lng": 100.53282,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type10",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_c08087487a9ec285",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 207.23355834960938
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_36afe2ac13ec5921",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -86.11621001156402,
+      "lng": 101.06047000605358,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type12",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_012d63170e2e5334",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 195.1144189453125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_43ecf380be53b3ba",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -86.09120000771394,
+      "lng": 101.08155999219201,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type12",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_012d63170e2e5334",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 22.0829443359375
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_a998423f6da8ade4",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -80.28226999982357,
+      "lng": 106.93264000004913,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type16",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_b164ea248a067196",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 195.03345947265626
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_6cae97bc2811bf66",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -80.28942,
+      "lng": 106.92679,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type16",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_b164ea248a067196",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 27.03255126953125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_9b26d6584eedf5ab",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -80.40308000284094,
+      "lng": 105.93277000076517,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type19",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_a93f2ab4afabfffd",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 207.10622924804687
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_fecbcc946ad927d1",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -80.39481,
+      "lng": 105.93951,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type19",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_a93f2ab4afabfffd",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 12.302861328125
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_f128c2f78531c0ee",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -85.55725,
+      "lng": 101.54171,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type4",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_7059341bcad5ede5",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 207.16662475585937
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_b3e4ef081e39088f",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -79.55982000284094,
+      "lng": 104.92727000076518,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type26",
+      "endpoint": "GreenTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_db96844df1f33ac7",
+        "orientation": "vertical",
+        "endpoint": "green",
+        "elevationMeters": 207.10622924804687
+      }
+    },
+    {
+      "uid": "skyport_pc_zipline_6ca84970acdb6dbe",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -79.55155,
+      "lng": 104.93401,
+      "stage": "S4",
+      "actor": "BP_Interactor_DFMZipline_Type26",
+      "endpoint": "RedTopPoint1",
+      "zipline": {
+        "lineId": "skyport_pc_zipline_db96844df1f33ac7",
+        "orientation": "vertical",
+        "endpoint": "red",
+        "elevationMeters": 12.302861328125
+      }
+    }
+  ],
+  "priorZiplinePositions": [
+    {
+      "uid": "skyport_pc_zipline_b485db23edea110f",
+      "latlng": [
+        -84.9174000294153,
+        98.78211999196465
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_746494bad3155f56",
+      "latlng": [
+        -85.40250998444,
+        98.26747006852457
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_33fb3ba5dd107ee1",
+      "latlng": [
+        -84.21167999960291,
+        96.07873999975865
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_d246bb52c2d8cbb1",
+      "latlng": [
+        -84.21709,
+        96.08606
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_902165969d0dab8d",
+      "latlng": [
+        -90.7931999984811,
+        102.22547000024758
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_9a107f52f3ae744a",
+      "latlng": [
+        -90.78647,
+        102.23033
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_ef2fa31e61df93bc",
+      "latlng": [
+        -81.73106999259757,
+        108.64644999989139
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_6824ea71cc381ea0",
+      "latlng": [
+        -82.00329000445637,
+        108.97215999073961
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_d14258cd7e7038a5",
+      "latlng": [
+        -77.73040001953125,
+        105.11051
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_ef9bc4e47a7fefe0",
+      "latlng": [
+        -78.3143599609375,
+        104.65496
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_d92c64a2f7bac79c",
+      "latlng": [
+        -69.26237999999726,
+        107.75105999999802
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_af798cbf0d377435",
+      "latlng": [
+        -69.26237,
+        107.75103
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_02095680086c4f01",
+      "latlng": [
+        -77.43120999964617,
+        106.7580499980927
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_558c8884671f7fed",
+      "latlng": [
+        -77.45787,
+        106.73643
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_6d0f9881ee30d6b5",
+      "latlng": [
+        -75.897059999627,
+        102.15192999987217
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_42a9b3ab9f588312",
+      "latlng": [
+        -75.90412,
+        102.14678
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_bc4f2d33cc96d6b8",
+      "latlng": [
+        -134.8858299999951,
+        138.1569900000036
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_e86b2cfbc1394500",
+      "latlng": [
+        -134.92260499973037,
+        138.15713999864332
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_f03a7e3c68c954ff",
+      "latlng": [
+        -133.58104,
+        149.10575
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_8a6848a78d89158b",
+      "latlng": [
+        -133.6578399981644,
+        149.10574999750526
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_f9a2a59326060954",
+      "latlng": [
+        -66.29781000001313,
+        158.3513599999983
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_9ee5231c8ad6a173",
+      "latlng": [
+        -66.29785,
+        158.35136
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_2e7780ddee0bf55c",
+      "latlng": [
+        -65.78699000001313,
+        158.2270699999983
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_1a2ab2e0bcc26b3a",
+      "latlng": [
+        -65.78702999999828,
+        158.22710999998688
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_ef333807d7fcff12",
+      "latlng": [
+        -46.35218999999268,
+        148.45138999999674
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_a3b0e6086f09b99d",
+      "latlng": [
+        -46.35212,
+        148.45139
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_f76556b180d9af68",
+      "latlng": [
+        -140.32119000149166,
+        171.64455999911348
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_d81887c43c8152e4",
+      "latlng": [
+        -140.3559,
+        171.64796
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_34a3338687d34095",
+      "latlng": [
+        -131.718725,
+        164.81123
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_06cac6b8c517ae5c",
+      "latlng": [
+        -131.85952500090104,
+        164.8112299933488
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_2cf9d2a90dd91c17",
+      "latlng": [
+        -84.70834,
+        100.53282
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_36afe2ac13ec5921",
+      "latlng": [
+        -86.11621001156402,
+        101.06047000605358
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_43ecf380be53b3ba",
+      "latlng": [
+        -86.09120000771394,
+        101.08155999219201
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_a998423f6da8ade4",
+      "latlng": [
+        -80.28226999982357,
+        106.93264000004913
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_6cae97bc2811bf66",
+      "latlng": [
+        -80.28942,
+        106.92679
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_9b26d6584eedf5ab",
+      "latlng": [
+        -80.40308000284094,
+        105.93277000076517
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_fecbcc946ad927d1",
+      "latlng": [
+        -80.39481,
+        105.93951
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_f128c2f78531c0ee",
+      "latlng": [
+        -85.55725,
+        101.54171
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_b3e4ef081e39088f",
+      "latlng": [
+        -79.55982000284094,
+        104.92727000076518
+      ]
+    },
+    {
+      "uid": "skyport_pc_zipline_6ca84970acdb6dbe",
+      "latlng": [
+        -79.55155,
+        104.93401
+      ]
+    }
+  ],
+  "affectedSpawnUids": [
+    "spawn_ad_pc_skyport_s2_attack_104zqqq",
+    "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+    "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+    "spawn_ad_pc_skyport_s2_defense_179bujk",
+    "spawn_ad_pc_skyport_s3_attack_97pmt3",
+    "spawn_ad_pc_skyport_s3_attack_ty75ls",
+    "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+    "spawn_ad_pc_skyport_s3_defense_198tcf4",
+    "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+    "spawn_pc_skyport_hotfix565_s2_attack_hub_mid_4",
+    "spawn_pc_skyport_hotfix565_s3_defend_hub_down",
+    "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+    "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent2",
+    "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent",
+    "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2"
+  ],
+  "inactiveObjectives": [
+    {
+      "stageId": "S3",
+      "name": "据点C3"
+    }
+  ],
+  "legacyModeMaps": {
+    "attack-defense": {
+      "spawns": [
+        {
+          "uid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+          "stageId": "S1",
+          "side": "attack",
+          "name": "GTI1号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+          "stageId": "S1",
+          "side": "attack",
+          "name": "GTI2号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+          "stageId": "S1",
+          "side": "defense",
+          "name": "哈夫克1号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+          "stageId": "S1",
+          "side": "defense",
+          "name": "哈夫克2号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+          "stageId": "S2",
+          "side": "attack",
+          "name": "GTI3号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+          "stageId": "S2",
+          "side": "attack",
+          "name": "GTI4号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+          "stageId": "S2",
+          "side": "defense",
+          "name": "哈夫克3号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+          "stageId": "S2",
+          "side": "defense",
+          "name": "哈夫克4号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+          "stageId": "S3",
+          "side": "attack",
+          "name": "GTI5号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+          "stageId": "S3",
+          "side": "attack",
+          "name": "GTI6号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+          "stageId": "S3",
+          "side": "attack",
+          "name": "GTI7号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+          "stageId": "S3",
+          "side": "defense",
+          "name": "哈夫克5号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+          "stageId": "S3",
+          "side": "defense",
+          "name": "哈夫克6号阵地"
+        }
+      ],
+      "objectives": [
+        {
+          "uid": "sync_skyport_S3_objective-2",
+          "stageId": "S3",
+          "name": "据点C3",
+          "note": "C3点",
+          "icon": "q_jd_c3",
+          "captureZoneUid": "sync_skyport_S3_point-2",
+          "lat": -82.775,
+          "lng": 102.833,
+          "verification": "confirmed"
+        }
+      ]
+    },
+    "winner-takes-all": {
+      "spawns": [
+        {
+          "uid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+          "stageId": "S1",
+          "side": "attack",
+          "name": "GTI1号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+          "stageId": "S1",
+          "side": "attack",
+          "name": "GTI2号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+          "stageId": "S1",
+          "side": "defense",
+          "name": "哈夫克1号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+          "stageId": "S1",
+          "side": "defense",
+          "name": "哈夫克2号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+          "stageId": "S2",
+          "side": "attack",
+          "name": "GTI3号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+          "stageId": "S2",
+          "side": "attack",
+          "name": "GTI4号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+          "stageId": "S2",
+          "side": "defense",
+          "name": "哈夫克3号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+          "stageId": "S2",
+          "side": "defense",
+          "name": "哈夫克4号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+          "stageId": "S3",
+          "side": "attack",
+          "name": "GTI5号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+          "stageId": "S3",
+          "side": "attack",
+          "name": "GTI6号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+          "stageId": "S3",
+          "side": "attack",
+          "name": "GTI7号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+          "stageId": "S3",
+          "side": "defense",
+          "name": "哈夫克5号阵地"
+        },
+        {
+          "uid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+          "stageId": "S3",
+          "side": "defense",
+          "name": "哈夫克6号阵地"
+        }
+      ],
+      "objectives": [
+        {
+          "uid": "sync_skyport_S3_objective-2",
+          "stageId": "S3",
+          "name": "据点C3",
+          "note": "C3点",
+          "icon": "q_jd_c3",
+          "captureZoneUid": "sync_skyport_S3_point-2",
+          "lat": -82.775,
+          "lng": 102.833,
+          "verification": "confirmed"
+        }
+      ]
+    }
+  }
+}

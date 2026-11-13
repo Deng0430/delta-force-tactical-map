@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#fff">
+  <title>通用地面载具标记（非车型专用图标）</title>
+  <path d="M11 3h10v3H11zm-3 5h16v18H8zm3 3v7h10v-7zm0 10v2h10v-2z" fill-rule="evenodd"/>
+  <rect x="4" y="9" width="3" height="6" rx="1"/>
+  <rect x="25" y="9" width="3" height="6" rx="1"/>
+  <rect x="4" y="21" width="3" height="6" rx="1"/>
+  <rect x="25" y="21" width="3" height="6" rx="1"/>
+</svg>

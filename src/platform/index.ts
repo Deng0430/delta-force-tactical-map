@@ -65,6 +65,31 @@ async function downloadText(filename: string, text: string, mime?: string): Prom
 
   const contentType = mime ?? (filename.toLowerCase().endsWith('.json') ? 'application/json' : 'text/html')
   const blob = new Blob([text], { type: `${contentType};charset=utf-8` })
+  await downloadBlob(filename, blob)
+}
+
+async function downloadBlob(filename: string, blob: Blob): Promise<void> {
+  if (kind === 'android' && capacitorBridge()?.isNativePlatform?.() === true) {
+    const [{ Directory, Filesystem }, { Share }] = await Promise.all([
+      import('@capacitor/filesystem'), import('@capacitor/share'),
+    ])
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onerror = () => reject(reader.error ?? new Error('图片读取失败'))
+      reader.onload = () => resolve(String(reader.result).split(',')[1])
+      reader.readAsDataURL(blob)
+    })
+    const result = await Filesystem.writeFile({
+      path: `exports/${Date.now()}_${filename}`, data: base64, directory: Directory.Cache, recursive: true,
+    })
+    // 不指定 UTF8 编码：PNG 必须作为 base64 二进制写入。
+    try {
+      await Share.share({ title: filename, url: result.uri, dialogTitle: '导出图片到' })
+    } catch (error) {
+      if (!/cancel/i.test(String(error))) throw error
+    }
+    return
+  }
   const url = URL.createObjectURL(blob)
   const anchor = document.createElement('a')
   anchor.href = url
@@ -74,7 +99,7 @@ async function downloadText(filename: string, text: string, mime?: string): Prom
   window.setTimeout(() => {
     anchor.remove()
     URL.revokeObjectURL(url)
-  }, 100)
+  }, 30_000)
 }
 
 export const platform: PlatformAdapter = {
@@ -95,6 +120,7 @@ export const platform: PlatformAdapter = {
   isFullscreen: () => Boolean(document.fullscreenElement),
   toggleFullscreen,
   downloadText,
+  downloadBlob,
 }
 
 export type { OpenPathOptions, PlatformAdapter, PlatformKind } from './types'

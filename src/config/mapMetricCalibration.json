@@ -1,0 +1,152 @@
+{
+  "verifiedAt": "2026-11-12",
+  "coordinateSystem": "UE local XY centimeters to Leaflet CRS.Simple; horizontal distance, not geographic coordinates",
+  "maps": {
+    "skyport": {
+      "tileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_tjg/{z}_{x}_{y}.jpg",
+      "surfaceReferenceTileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_tjg/{z}_{x}_{y}.jpg",
+      "mapUnitsXY": [256,256],
+      "worldCenterXYcm": [97420,-63420],
+      "worldExtentXYcm": [100000,100000],
+      "worldToMapPlaneFromBlender": [[1,0],[0,1]],
+      "sourceAsset": "/Game/BluePrints/Map/MapInfoConfig/MapInfoConfig_Dday_Breakthrough",
+      "surfaceSampleWindowGrid": {"left":26,"top":0,"right":2000,"bottom":1634},
+      "surfaceSourceHashes": {
+        "assembly":"a262af5fbdf4f0f4e2fbf75e2d37fd0b501f55426be11e3f6a4bafb810a2e1dd",
+        "meshes":"dc187ca08ba0c8e10150089fe923715e7cfe7a495550107996b364168ba572fe",
+        "terrain":"5cf4ca3e663e7ec69536fdea2c02f16c0daba5a6df284e5d1d499ffe5b3cc3a3"
+      },
+      "registration": {
+        "lat": "-(Y+163420)*256/200000",
+        "lng": "(X+2580)*256/200000",
+        "source": "source/PC提取资源/天际港/高度/dataset-identity-and-registration.json",
+        "independentEvidence": "source/PC提取资源/天际港/高度/skyport-dataset-identity-independent.json",
+        "evidence": "Dday gameplay directly references Skyline art; seven native objective polygons independently agree with current application under P0 within 0.004738m. MiniMapSceneRotation alone is not used."
+      }
+    },
+    "ascent": {
+      "tileUrl": "/maps/ascent-pc-q80-v1/{z}_{x}_{y}.webp",
+      "surfaceReferenceTileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_pc/{z}_{x}_{y}.jpg",
+      "basemapUpdatedAt": "2026-11-12",
+      "mapUnitsXY": [256,256],
+      "worldCenterXYcm": [198908.15625,-190243.71875],
+      "worldExtentXYcm": [100000,100000],
+      "worldToMapPlaneFromBlender": [[0,1],[-1,0]],
+      "sourceAsset": "/Game/BluePrints/Map/MapInfoConfig/MapInfoConfig_IceLand",
+      "registration": {
+        "lat": "-(X-98908.15625)*256/200000",
+        "lng": "(-90243.71875-Y)*256/200000",
+        "source": "source/PC提取资源/攀升/底图/map-info-summary.json",
+        "evidence": "Native objective polygon vertices and independent basemap image registration"
+      },
+      "pixelAlignment": {
+        "source": "source/PC提取资源/攀升/底图/pixel-registration.json",
+        "clockwisePixelRotationDegrees": 90,
+        "inliers": 4061,
+        "p95ResidualPx": 0.724414606472129,
+        "localTileManifest": "public/maps/ascent-pc-q80-v1/manifest.json",
+        "localTileMapping": "Lossless clockwise 90 degree source pixel permutation; native Mip0/Mip1 at z4/z3; Q80 without resampling"
+      }
+    },
+    "flashpoint": {
+      "tileUrl": "/maps/flashpoint-pc-q80-v1/{z}_{x}_{y}.webp",
+      "surfaceReferenceTileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_ljd_pc/{z}_{x}_{y}.jpg",
+      "basemapUpdatedAt": "2026-11-12",
+      "mapUnitsXY": [256,256],
+      "worldCenterXYcm": [249293.03125,-154100.4375],
+      "worldExtentXYcm": [63154.7890625,63154.7890625],
+      "worldToMapPlaneFromBlender": [[0,1],[-1,0]],
+      "sourceAsset": "/Game/BluePrints/Map/MapInfoConfig/MapInfoConfig_Gibraltar_Breakthrough",
+      "registration": {
+        "lat": "-(X-186138.2421875)*256/126309.578125",
+        "lng": "(-90945.6484375-Y)*256/126309.578125",
+        "source": "source/PC提取资源/临界点/底图/map-info-summary.json",
+        "evidence": "Native objective polygon vertices and independent basemap image registration"
+      },
+      "pixelAlignment": {
+        "source": "source/PC提取资源/临界点/底图/pixel-registration.json",
+        "clockwisePixelRotationDegrees": 90,
+        "inliers": 257,
+        "p95ResidualPx": 2.1042587550354996,
+        "localTileManifest": "public/maps/flashpoint-pc-q80-v1/manifest.json",
+        "localTileMapping": "Lossless clockwise 90 degree source pixel permutation; native Mip0/Mip1 at z4/z3; Q80 without resampling"
+      }
+    },
+    "stormeye": {
+      "tileUrl": "/maps/stormeye-pc-q80-v1/{z}_{x}_{y}.webp",
+      "surfaceReferenceTileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_hdz/{z}_{x}_{y}.jpg",
+      "basemapUpdatedAt": "2026-11-12",
+      "mapUnitsXY": [256,256],
+      "worldCenterXYcm": [103980.6328125,-87713.5703125],
+      "worldExtentXYcm": [87241.0078125,87241.0078125],
+      "worldToMapPlaneFromBlender": [[1,0],[0,1]],
+      "sourceAsset": "/Game/BluePrints/Map/MapInfoConfig/MapInfoNavalBattle_Breakthrough",
+      "registration": {
+        "lat": "-(Y+174954.578125)*256/174482.015625",
+        "lng": "(X-16739.625)*256/174482.015625",
+        "source": "source/PC提取资源/风暴眼/底图/map-info-summary.json",
+        "evidence": "Native objective polygon vertices; MiniMapSceneRotation is not used as a full-map rotation"
+      },
+      "pixelAlignment": {
+        "source": "source/PC提取资源/风暴眼/底图/pixel-registration.json",
+        "clockwisePixelRotationDegrees": 0,
+        "inliers": 2175,
+        "p95ResidualPx": 0.7430236672802564,
+        "localTileManifest": "public/maps/stormeye-pc-q80-v1/manifest.json",
+        "localTileMapping": "Native unrotated Mip0/Mip1 at z4/z3; Q80 without resampling"
+      }
+    },
+    "trench": {
+      "tileUrl": "/maps/trench-pc-q80-v1/{z}_{x}_{y}.webp",
+      "surfaceReferenceTileUrl": "/maps/trench-pc-v1/{z}_{x}_{y}.webp",
+      "basemapUpdatedAt": "2026-11-12",
+      "mapUnitsXY": [256, 256],
+      "worldCenterXYcm": [102500, -103500],
+      "worldExtentXYcm": [60000, 60000],
+      "sourceAsset": "/Game/BluePrints/Map/MapInfoConfig/MapInfoConfig_Retrowar_Breakthrough",
+      "registration": {
+        "source": "source/PC提取资源/堑壕战/应用对比/区域几何对比.json",
+        "sha256": "2ffa817ba5e243b13db78e79827cbe646541535083b463746482942ccf3bf97d",
+        "lat": "-(Y+163500)*256/120000",
+        "lng": "(X-42500)*256/120000"
+      },
+      "pixelAlignment": {
+        "source": "source/PC提取资源/堑壕战/应用对比/底图像素标定.json",
+        "sha256": "9fba0502b72eb80bd8c4174784de5b8f5e50eceec63f37ca1e0f74041d9de3ba",
+        "sourceAndTargetSize": 4096,
+        "referenceTileUrl": "https://game.gtimg.cn/images/dfm/cp/a20240729directory/img/map_qhz/{z}_{x}_{y}.jpg",
+        "localTileManifest": "public/maps/trench-pc-q80-v1/manifest.json",
+        "localTileMapping": "Native PC Mip0/Mip1 at z4/z3 use WebP Q80 without resampling; z4 pixel (x,y) -> lat=-y/16,lng=x/16",
+        "inliers": 4158,
+        "medianResidualPx": 0.16801267225845465,
+        "p95ResidualPx": 0.722610784952148
+      }
+    },
+    "ember": {
+      "tileUrl": "/maps/ember-mobile-q80-v1/{z}_{x}_{y}.webp",
+      "surfaceReferenceTileUrl": "/maps/ember-mobile-v1/{z}_{x}_{y}.webp",
+      "mapUnitsXY": [256, 256],
+      "worldCenterXYcm": [105280, -96320],
+      "worldExtentXYcm": [60000, 60000],
+      "sourceAsset": "/Game/BluePrints/Map/MapInfoConfig/MapInfoConfig_Cracked_Breakthrough",
+      "sourceHeaderSha256": "35e94caf43821e36158f3db39bffc842f50cd98063e4e21ec8b2f6e552c24a8d",
+      "sourcePayloadSha256": "600bbc1a6beba26dffcd49cfdcf48cd6eb467833ca7faee4a7cee7e660be61ae",
+      "registration": {
+        "lat": "-(Y+156320)*256/120000",
+        "lng": "(X-45280)*256/120000",
+        "independentObjectiveAnchors": 5,
+        "maxObjectiveErrorPxAtZoom4": 0.010189319026439742
+      },
+      "pixelAlignment": {
+        "source": "tmp/ember-basemap-registration/report.json",
+        "sha256": "827656d88f615c3a3b19f57eb00eb980962643b5f9744a4cf9359f2c98ba4bd6",
+        "sourceSize": 4096,
+        "referenceZoom": 4,
+        "matchedSampleTiles": 8,
+        "maxSampleMedianResidualPx": 0.2643483116621852,
+        "localTileManifest": "public/maps/ember-mobile-q80-v1/manifest.json",
+        "localTileMapping": "z4 pixel (x,y) -> map (lat=-y/16,lng=x/16); WebP Q80 without resampling"
+      }
+    }
+  }
+}

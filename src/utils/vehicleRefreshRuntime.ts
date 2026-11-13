@@ -1,5 +1,6 @@
 import type { CapturePoint, ModeVehicleRefreshRule, TacticalBattleContext } from '../types'
 import { refreshTriggerLabel } from './vehicleRefreshRules'
+import { normalizeObjectiveName, parseObjectiveStateKey, readStageObjectiveValue } from './objectiveStates'
 
 export interface VehicleRefreshEvaluation {
   eligible: boolean
@@ -37,8 +38,28 @@ function objectiveKey(rule: RuntimeVehicleRefreshRule): string {
   return triggerValue && !/^\d+(?::\d+){0,2}$/.test(triggerValue) ? triggerValue : rule.objective
 }
 
-function normalizeObjectiveName(value: string): string {
-  return value.trim().replace(/^据点/i, '').replace(/点$/i, '').replace(/\s+/g, '').toUpperCase()
+function objectiveValue<T>(values: Record<string, T>, name: string, stageContext?: VehicleRefreshStageContext): T | undefined {
+  const normalized = normalizeObjectiveName(name)
+  if (!stageContext) {
+    // 无阶段上下文时仅兼容旧格式，不猜测某个阶段的新版状态。
+    return values[name] ?? Object.entries(values).find(([key]) => !parseObjectiveStateKey(key) && normalizeObjectiveName(key) === normalized)?.[1]
+  }
+  const activeStage = stageContext.stages[stageContext.currentStageIndex]
+  if (!activeStage) return undefined
+  const matches = stageContext.stages.flatMap((stage) => stage.points
+    .filter((point) => normalizeObjectiveName(point.name) === normalized)
+    .map((point) => ({ stageId: stage.id, name: point.name })))
+  const target = matches.find((point) => point.stageId === activeStage.id)
+    ?? (matches.length === 1 ? matches[0] : undefined)
+  const stageId = target?.stageId ?? activeStage.id
+  const direct = readStageObjectiveValue(values, stageId, target?.name ?? name, activeStage.id)
+  if (direct !== undefined) return direct
+  return Object.entries(values).find(([key]) => {
+    const identity = parseObjectiveStateKey(key)
+    return identity
+      ? identity[0] === stageId && normalizeObjectiveName(identity[1]) === normalized
+      : stageId === activeStage.id && normalizeObjectiveName(key) === normalized
+  })?.[1]
 }
 
 function requiredStageIndex(rule: RuntimeVehicleRefreshRule, stageContext: VehicleRefreshStageContext): number {
@@ -102,7 +123,7 @@ export function evaluateVehicleRefreshRule(
 
   if (rule.trigger.type === 'objective-countdown') {
     const key = rule.objective
-    const current = context.objectiveCountdowns[key]
+    const current = objectiveValue(context.objectiveCountdowns, key, stageContext)
     const threshold = parseClockSeconds(rule.trigger.value)
     if (current == null) return { eligible: false, reason: `尚未设置${key}倒计时（条件：${triggerLabel}）` }
     if (threshold == null) return { eligible: false, reason: `无法识别倒计时条件：${String(rule.trigger.value)}` }
@@ -113,8 +134,7 @@ export function evaluateVehicleRefreshRule(
 
   if (rule.trigger.type === 'objective-captured') {
     const key = objectiveKey(rule)
-    const normalizedKey = normalizeObjectiveName(key)
-    const state = context.objectiveStates[key] ?? Object.entries(context.objectiveStates).find(([name]) => normalizeObjectiveName(name) === normalizedKey)?.[1]
+    const state = objectiveValue(context.objectiveStates, key, stageContext)
     return state?.owner === rule.side
       ? { eligible: true, reason: `${key}已被${rule.side === 'attack' ? '进攻方' : '防守方'}占领` }
       : { eligible: false, reason: `等待${rule.side === 'attack' ? '进攻方' : '防守方'}占领${key}` }

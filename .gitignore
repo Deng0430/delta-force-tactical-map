@@ -32,10 +32,47 @@
 
 # Local detailed development notes (README keeps the public summary)
 /docs/双端详细更新记录.md
+# Local extraction reports and audits (not application documentation)
+/docs/ascent-pc-attack-defense-sync.md
+/docs/ascent-pc-s5-basemap.md
+/docs/ember-client-regions.md
+/docs/ember-mobile-basemap.md
+/docs/ember-pc-winner-vehicles.md
+/docs/ember-surface-heights.md
+/docs/trench-pc-basemap.md
+/docs/trench-surface-heights.md
+/docs/烬区胜者为王区域_PC资源对标.md
+
+# Local resource extraction/probing tools; the app builds from frozen runtime data.
+/scripts/*.py
+/scripts/lib/*.py
+/scripts/archive-*.ps1
+/scripts/audit-*.cjs
+/scripts/capture-*-runtime.cjs
+/scripts/snapshot-*-app.cjs
+/scripts/sync-*.cjs
+# Local evidence/archived-resource audits require ignored source files.
+/scripts/test-ascent-event-basemap.cjs
+/scripts/test-ascent-infantry-spawn-areas.cjs
+/scripts/test-flashpoint-infantry-spawn-areas.cjs
+/scripts/test-infantry-spawn-areas.cjs
+/scripts/test-ascent-pc-ad-deployment.cjs
+/scripts/test-ascent-pc-ad-isolation.cjs
+/scripts/test-ascent-pc-ad-spatial.cjs
 
 # Local map source assets
 /map_source/
 /source/
+# Retired uncompressed basemaps; keep only the selected Q80 runtime versions.
+/public/maps/ember-mobile-v1/
+/public/maps/trench-pc-v1/
+# Superseded height packs and disabled S5 experiment (active versions remain tracked).
+/public/maps/ascent-pc-s5-render-v1/
+/public/maps/ascent-surfaces-v1/
+/public/maps/flashpoint-surfaces-v1/
+/public/maps/stormeye-surfaces-v1/
+/public/maps/trench-surfaces-v1/
+/public/maps/trench-surfaces-v2/
 
 # Logs and runtime files
 /logs/
@@ -58,6 +95,8 @@ lerna-debug.log*
 # Tests and caches
 /coverage/
 /.vite/
+__pycache__/
+*.py[cod]
 *.tsbuildinfo
 .eslintcache
 

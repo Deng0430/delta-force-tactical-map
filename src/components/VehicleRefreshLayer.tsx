@@ -93,7 +93,7 @@ export default function VehicleRefreshLayer({
           <Tooltip direction="top" offset={[0, -16]}>{point.name} · {pointRules.length} 条刷新规则</Tooltip>
           <Popup className="vehicle-refresh-popup" minWidth={290} maxWidth={360}>
             <div className="vehicle-refresh-card">
-              <header><i className="fa-solid fa-truck-fast" /><span><strong>{point.name}</strong><small>官方载具刷新位置</small></span></header>
+              <header><i className="fa-solid fa-truck-fast" /><span><strong>{point.name}</strong><small>{pointRules.some((rule) => rule.clientSpawner?.positionStatus === 'existing-unverified') ? '载具刷新位置 · 沿用现有标注' : '官方载具刷新位置'}</small></span></header>
               <div className="vehicle-refresh-rule-list">
                 {pointRules.map((rule) => {
                   const isUsed = used.has(rule.uid)

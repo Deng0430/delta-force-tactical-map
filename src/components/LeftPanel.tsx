@@ -21,7 +21,7 @@ const POINT_LAYER_ITEMS: { key: keyof LayerVisibility; label: string }[] = [
 ]
 
 /** 道具类型清单（问题2：按类型独立开关，与 MAP_PROPS 名称一致） */
-const PROP_TYPES = ['载具补给站', '固定防空炮', '密集阵', '火神炮', '固定机枪', '岸防炮', '滑索', '电梯', '固定弹药箱']
+const PROP_TYPES = ['载具补给站', '空中载具补给站', '固定防空炮', '密集阵', '火神炮', '固定机枪', '岸防炮', '滑索', '电梯', '固定弹药箱']
 
 /** 左侧面板折叠区块 key（展开状态持久化，收缩侧栏不重置） */
 export type PanelSectionKey = 'layers' | 'props' | 'points' | 'vehicles' | 'wargame' | 'vehGroups'
@@ -101,6 +101,7 @@ interface LeftPanelProps {
   onAddBuilding: (kind: BuildingUnitKind, own: boolean, team?: OperatorTeam) => void
   stageLabel: string
   objectiveNames: string[]
+  objectiveStageId: string
   vehicleRefreshRules: Omit<ModeVehicleRefreshRule, 'verification'>[]
   stageOptions: Array<{ id: string; label: string }>
   onStageChange: (stageId: string) => void
@@ -168,6 +169,7 @@ export default function LeftPanel({
   onCreateRound,
   onDeleteRound,
   objectiveNames,
+  objectiveStageId,
   vehicleRefreshRules,
   fieldSupports,
   onAddFieldSupport,
@@ -474,6 +476,7 @@ export default function LeftPanel({
           onAddBuilding={onAddBuilding}
           stageLabel={stageLabel}
           objectiveNames={objectiveNames}
+          objectiveStageId={objectiveStageId}
           vehicleRefreshRules={vehicleRefreshRules}
           fieldSupports={fieldSupports}
           onAddFieldSupport={onAddFieldSupport}

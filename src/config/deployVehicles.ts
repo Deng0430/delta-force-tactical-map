@@ -10,8 +10,9 @@
  * - CD：冷却时间（秒）
  * - num：可部署数量
  */
-import type { VehicleCategory } from '../types'
+import type { VehicleCategory, VehicleSpawnerInfo } from '../types'
 import { vehicleLegendAssetUrl } from './vehicleLegendAssets'
+import { normalizeDeploymentCount } from '../utils/deployVehicleCounts'
 
 export interface DeployVehicleEntry {
   /** 所属复活点唯一 ID；正式运行只用该字段关联复活点。 */
@@ -22,12 +23,18 @@ export interface DeployVehicleEntry {
   icon: string
   /** 地图图例图标 key（nav_*，优先使用）；无对应图例时回退本地展示图标 */
   legendKey?: string
-  /** 地图标记图标 URL（图例 base64 优先，回退本地 deploy PNG） */
+  /** 地图标记图标 URL（本地包内 HUD 图例优先，回退既有图标） */
   iconUrl: string
   /** 冷却时间（秒） */
   cd: number
-  /** 可部署数量 */
+  cooldownKnown?: boolean
+  /** 同时可部署数量，与累计部署次数分开。 */
   num: number
+  /** 累计部署次数，包含首次部署；缺省为 1。 */
+  deployCount?: number
+  deployCountKnown?: boolean
+  /** 按生成位排列的地图坐标；缺省时沿用复活点附近放置。 */
+  deployPositions?: [number, number][]
   /** 官网备注（出生点位置名），仅用于显示与旧数据导入兼容。 */
   note: string
   /** 是否允许非队友的友方部署 */
@@ -36,6 +43,7 @@ export interface DeployVehicleEntry {
   badge: string
   /** 载具分类 */
   category: VehicleCategory
+  clientSpawner?: VehicleSpawnerInfo
 }
 
 /** 单阶段载具部署（按阵营） */
@@ -53,8 +61,7 @@ export function localDeployIconUrl(deployKey: string): string {
 }
 
 /**
- * 解析地图标记图标：优先官网图例图标（nav_* base64，与地图图例栏一致），
- * 无图例时回退本地 deploy 展示图标。
+ * 解析地图标记图标：优先本地包内 HUD 图例；未确认对应资源时保留既有图标。
  */
 function resolveIcon(deployKey: string, legendKey?: string): string {
   const suppliedLegend = vehicleLegendAssetUrl(deployKey)
@@ -75,6 +82,7 @@ function build(raw: RawStage): Record<string, StageDeploy> {
   const out: Record<string, StageDeploy> = {}
   const withDerivedFields = (entry: RawEntry): DeployVehicleEntry => ({
     ...entry,
+    deployCount: normalizeDeploymentCount(entry.deployCount),
     // 摩托艇是独立水面载具，不属于支援载具；兼容旧抓取数据中的分类值。
     category: entry.name === '摩托艇' ? 'water' : entry.category,
     iconUrl: resolveIcon(entry.icon, entry.legendKey),
@@ -528,6 +536,11 @@ export const DEPLOY_BY_MAP: Record<string, Record<string, StageDeploy>> = {
 
 /** 编辑器可补充配置、但攻防默认部署表中未预置的正式载具。 */
 const EXTRA_DEPLOY_VEHICLES: DeployVehicleEntry[] = [
+  {
+    name: '山猫全地形车', icon: 'csvp',
+    // 原生 VehicleID=1101009/BP_CSVP4_HD；用户指定暂用PC同族新增图标0118。
+    iconUrl: resolveIcon('csvp'), cd: 90, num: 1, note: '', allowTeammate: false, badge: '猫', category: 'recon',
+  },
   {
     name: 'UCB-95/97攻击艇',
     icon: 'ucb9597',

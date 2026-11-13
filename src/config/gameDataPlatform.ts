@@ -8,9 +8,16 @@ import mobileDeploySnapshot from './mobileDeploySnapshot.json'
 import pcAttackDefenseOfficial from './pcAttackDefenseOfficial.json'
 import mogOldTownOfficial from './mogOldTownOfficial.json'
 import skyportOfficial from './skyportOfficial.json'
+import skyportPcHotfix from './skyportPcHotfixData.json'
+import { ascentPcZiplineProps } from './ascentPcZiplines'
 import { DEPLOY_BY_MAP, localDeployIconUrl, type DeployVehicleEntry, type StageDeploy } from './deployVehicles'
 import { vehicleLegendAssetUrl } from './vehicleLegendAssets'
 import { normalizeAttackDefenseData } from './attackDefenseSpawns'
+import { withEmberClientRegions } from './emberClientRegions'
+import { withEmberStageFourDeploy, withEmberStageFourProps, withEmberStageFourStages } from './emberStageFour'
+import { withPcAirSupplyProps } from './airSupplyStations'
+import { withAscentPcStages } from './ascentPcData'
+import pcOrdinaryAttackDefense from './pcOrdinaryAttackDefenseData.json'
 
 export type GameDataPlatform = 'pc' | 'mobile'
 
@@ -85,19 +92,23 @@ const RAW_PC_STAGES_BY_MAP: Record<string, StageConfig[]> = {
   ...STAGES_BY_MAP,
   ...Object.fromEntries(Object.entries(PC_OFFICIAL_MAPS).map(([mapId, map]) => [mapId, structuredClone(map.stages)])),
   mogoldtown: structuredClone(mogOldTownOfficial.pc.stages) as unknown as StageConfig[],
-  skyport: structuredClone(skyportOfficial.pc.stages) as unknown as StageConfig[],
+  skyport: structuredClone(skyportPcHotfix.attackDefense.stages) as unknown as StageConfig[],
 }
+RAW_PC_STAGES_BY_MAP.ascent = withAscentPcStages(RAW_PC_STAGES_BY_MAP.ascent)
 const PC_MAP_PROPS: Record<string, MapProp[]> = {
   ...MAP_PROPS,
   ...Object.fromEntries(Object.entries(PC_OFFICIAL_MAPS).map(([mapId, map]) => [mapId, structuredClone(map.props)])),
+  ascent: ascentPcZiplineProps(MAP_PROPS.ascent),
   mogoldtown: structuredClone(mogOldTownOfficial.pc.props) as unknown as MapProp[],
-  skyport: structuredClone(skyportOfficial.pc.props) as unknown as MapProp[],
+  skyport: structuredClone(skyportPcHotfix.attackDefense.props) as unknown as MapProp[],
+  ember: withEmberStageFourProps(PC_OFFICIAL_MAPS.ember?.props ?? MAP_PROPS.ember ?? []),
 }
+for (const mapId of ['ascent', 'stormeye', 'skyport']) PC_MAP_PROPS[mapId] = withPcAirSupplyProps(mapId, PC_MAP_PROPS[mapId] ?? [])
 const RAW_PC_DEPLOY_BY_MAP: Record<string, Record<string, StageDeploy>> = {
   ...DEPLOY_BY_MAP,
   ...Object.fromEntries(Object.entries(PC_OFFICIAL_MAPS).map(([mapId, map]) => [mapId, structuredClone(map.deploy)])),
   mogoldtown: structuredClone(mogOldTownOfficial.pc.deploy) as unknown as Record<string, StageDeploy>,
-  skyport: structuredClone(skyportOfficial.pc.deploy) as unknown as Record<string, StageDeploy>,
+  skyport: structuredClone(skyportPcHotfix.attackDefense.deploy) as unknown as Record<string, StageDeploy>,
 }
 export const MOBILE_MAP_PROPS: Record<string, MapProp[]> = {
   ...MAP_PROPS,
@@ -106,6 +117,7 @@ export const MOBILE_MAP_PROPS: Record<string, MapProp[]> = {
   ...Object.fromEntries(Object.entries(mobileAttackDefenseOfficial.maps).map(([mapId, map]) => [mapId, map.props])) as Record<string, MapProp[]>,
   mogoldtown: structuredClone(mogOldTownOfficial.mobile.props) as unknown as MapProp[],
   skyport: structuredClone(skyportOfficial.mobile.props) as unknown as MapProp[],
+  ember: withEmberStageFourProps(mobileAttackDefenseOfficial.maps.ember.props),
 }
 
 type SnapshotDeployEntry = Omit<DeployVehicleEntry, 'iconUrl' | 'spawnUid'>
@@ -141,20 +153,39 @@ const MOBILE_DEPLOY_BY_MAP: Record<string, Record<string, StageDeploy>> = {
   skyport: structuredClone(skyportOfficial.mobile.deploy) as unknown as Record<string, StageDeploy>,
 }
 
-const PC_ATTACK_DEFENSE_DATA = normalizeAttackDefenseData('pc', RAW_PC_STAGES_BY_MAP, RAW_PC_DEPLOY_BY_MAP)
-const MOBILE_ATTACK_DEFENSE_DATA = normalizeAttackDefenseData('mobile', RAW_MOBILE_STAGES_BY_MAP, MOBILE_DEPLOY_BY_MAP)
+const PC_EMBER_STAGES = withEmberStageFourStages(withEmberClientRegions('ember', RAW_PC_STAGES_BY_MAP.ember ?? []))
+const MOBILE_EMBER_STAGES = withEmberStageFourStages(withEmberClientRegions('ember', RAW_MOBILE_STAGES_BY_MAP.ember ?? []))
+const PC_ATTACK_DEFENSE_DATA = normalizeAttackDefenseData('pc', {
+  ...RAW_PC_STAGES_BY_MAP,
+  ember: PC_EMBER_STAGES,
+}, { ...RAW_PC_DEPLOY_BY_MAP, ember: withEmberStageFourDeploy(PC_EMBER_STAGES, RAW_PC_DEPLOY_BY_MAP.ember ?? {}) })
+const MOBILE_ATTACK_DEFENSE_DATA = normalizeAttackDefenseData('mobile', {
+  ...RAW_MOBILE_STAGES_BY_MAP,
+  ember: MOBILE_EMBER_STAGES,
+}, { ...MOBILE_DEPLOY_BY_MAP, ember: withEmberStageFourDeploy(MOBILE_EMBER_STAGES, MOBILE_DEPLOY_BY_MAP.ember ?? {}) })
+
+// These snapshots belong only to PC ordinary attack/defense. Mobile continues to use its own frozen sources.
+const pcOrdinaryMaps = pcOrdinaryAttackDefense.maps as unknown as Record<string, { official: {
+  stages: StageConfig[]; props: MapProp[]; deploy: Record<string, StageDeploy>
+} }>
+const UPDATED_PC_STAGES = { ...PC_ATTACK_DEFENSE_DATA.stages,
+  ...Object.fromEntries(Object.entries(pcOrdinaryMaps).map(([id, value]) => [id, structuredClone(value.official.stages)])) }
+const UPDATED_PC_PROPS = { ...PC_MAP_PROPS,
+  ...Object.fromEntries(Object.entries(pcOrdinaryMaps).map(([id, value]) => [id, structuredClone(value.official.props)])) }
+const UPDATED_PC_DEPLOY = { ...PC_ATTACK_DEFENSE_DATA.deploy,
+  ...Object.fromEntries(Object.entries(pcOrdinaryMaps).map(([id, value]) => [id, structuredClone(value.official.deploy)])) }
 
 /** 已补齐统一复活点 UID 的移动端攻防阶段。 */
 export const MOBILE_STAGES_BY_MAP = MOBILE_ATTACK_DEFENSE_DATA.stages
 
 export function stagesForPlatform(platform: GameDataPlatform): Record<string, StageConfig[]> {
-  return platform === 'mobile' ? MOBILE_STAGES_BY_MAP : PC_ATTACK_DEFENSE_DATA.stages
+  return platform === 'mobile' ? MOBILE_STAGES_BY_MAP : UPDATED_PC_STAGES
 }
 
 export function propsForPlatform(platform: GameDataPlatform): Record<string, MapProp[]> {
-  return platform === 'mobile' ? MOBILE_MAP_PROPS : PC_MAP_PROPS
+  return platform === 'mobile' ? MOBILE_MAP_PROPS : UPDATED_PC_PROPS
 }
 
 export function deployForPlatform(platform: GameDataPlatform): Record<string, Record<string, StageDeploy>> {
-  return platform === 'mobile' ? MOBILE_ATTACK_DEFENSE_DATA.deploy : PC_ATTACK_DEFENSE_DATA.deploy
+  return platform === 'mobile' ? MOBILE_ATTACK_DEFENSE_DATA.deploy : UPDATED_PC_DEPLOY
 }

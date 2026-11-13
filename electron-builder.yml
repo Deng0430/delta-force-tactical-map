@@ -10,6 +10,16 @@ files:
 extraResources:
   - from: dist
     to: dist
+    # Ship active runtime resources only; retain local historical/experimental files.
+    filter:
+      - "**/*"
+      - "!demo/**"
+      - "!maps/ascent-pc-s5-render-v1/**"
+      - "!maps/ascent-surfaces-v1/**"
+      - "!maps/flashpoint-surfaces-v1/**"
+      - "!maps/stormeye-surfaces-v1/**"
+      - "!maps/trench-surfaces-v1/**"
+      - "!maps/trench-surfaces-v2/**"
   - from: build/icon.ico
     to: app-icon-v1.ico
 asar: true

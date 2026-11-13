@@ -27,12 +27,33 @@ import winnerTakesAllOfficial from '../config/winnerTakesAllOfficial.json'
 import mobileWinnerTakesAllOfficial from '../config/mobileWinnerTakesAllOfficial.json'
 import { deployForPlatform, propsForPlatform, stagesForPlatform, type GameDataPlatform } from '../config/gameDataPlatform'
 import { makeWinnerSpawnUid } from '../config/attackDefenseSpawns'
+import { EMBER_CLIENT_REGION_NOTE, syncEmberClientRegionZones, withEmberClientRegions, withEmberPcWinnerS1Region } from '../config/emberClientRegions'
+import { withEmberStageFourMap } from '../config/emberStageFour'
+import { normalizeVehicleSpawnerInfo, syncEmberPcWinnerSpawnerInfo } from './vehicleSpawnerInfo'
+import { withTrenchPcWinnerData } from '../config/trenchPcWinnerData'
+import { trenchPcCommanderDefaults, trenchPcCommanderStageVehicles, withTrenchPcCommanderData } from '../config/trenchPcCommanderData'
+import { normalizeDeploymentCount } from './deployVehicleCounts'
+import { normalizeVehicleDeployPositions, syncEmberPcVehicleDeployPositions, syncAscentPcVehicleDeployPositions } from './vehicleDeployPositions'
+import { normalizeZiplineEndpoint } from './mapZiplines'
+import { withAscentPcZiplines } from '../config/ascentPcZiplines'
+import { withAscentPcData, withAscentPcWeaponCorrections } from '../config/ascentPcData'
+import { withAscentPcRefreshCoordinates } from '../config/ascentPcRefresh'
+import { withAscentPcWinnerDeployment } from '../config/ascentPcWinnerDeployment'
+import { ascentPcAttackDefenseDefaults, ascentPcAttackDefenseStageVehicles, withAscentPcAttackDefense } from '../config/ascentPcAttackDefense'
+import { repairFlashpointPcWinnerCooldowns, withFlashpointPcWinnerData, withFlashpointPcWinnerDeploymentLimits } from '../config/flashpointPcWinnerData'
+import { withStormeyePcWinnerData } from '../config/stormeyePcWinnerData'
+import { PC_ORDINARY_ATTACK_DEFENSE_MAP_IDS, pcOrdinaryAttackDefenseDefaults, pcOrdinaryStageVehicles, withPcOrdinaryAttackDefense } from '../config/pcOrdinaryAttackDefense'
+import { emberPcCommanderDefaults, emberPcCommanderStageVehicles, withEmberPcCommanderData, withEmberPcCommanderRetainedProps } from '../config/emberPcCommanderData'
+import { normalizeAirSupplyInfo } from './airSupply'
+import { withPcAirSupplyStations } from '../config/airSupplyStations'
+import skyportPcHotfix from '../config/skyportPcHotfixData.json'
+import { SKYPORT_PC_COMMANDER_NOTE, withSkyportPcHotfix, withSkyportPcCommanderRules, withSkyportPcStageFour, withSkyportPcS2FsvCondition, withoutSkyportPcS2FsvNote, withSkyportPcZiplineMetadata } from '../config/skyportPcHotfix'
 
 /** 正式应用模式配置的本地存储键。 */
 export const MODE_CONFIG_STORAGE_KEY = 'deltaforce-mode-configs-v1'
 export const MODE_CONFIG_SYNC_CHANNEL = 'deltaforce-mode-config-sync-v1'
 export const MODE_CONFIG_SYNC_MESSAGE = 'deltaforce-mode-config-sync'
-const MODE_STORAGE_VERSION = 41 as const
+const MODE_STORAGE_VERSION = 72 as const
 
 const SIDES: Side[] = ['attack', 'defense']
 const VERIFICATIONS: ModeConfigVerification[] = ['draft', 'confirmed']
@@ -75,13 +96,31 @@ function winnerDraftFromAttackDefense(source: ModeMapOverride): ModeMapOverride 
   }
 }
 
+function skyportCommanderDraft(source?: ModeMapOverride): ModeMapOverride {
+  const baseline = syncModeMapFromAttackDefense('skyport',
+    skyportPcHotfix.commanderDraft.stages as unknown as StageConfig[],
+    { skyport: skyportPcHotfix.commanderDraft.props as unknown as MapProp[] },
+    { skyport: skyportPcHotfix.commanderDraft.deploy as unknown as Record<string, StageDeploy> })
+  if (!source) return withSkyportPcHotfix({ ...baseline, notes: SKYPORT_PC_COMMANDER_NOTE }, 'winner-takes-all')
+  const spawns = source.spawns.map((spawn) => {
+    const original = baseline.spawns.find((item) => item.uid === spawn.uid && item.stageId === spawn.stageId && item.side === spawn.side)
+    return original ? { ...spawn, deployVehicles: structuredClone(original.deployVehicles),
+      vehicleDeploy: original.vehicleDeploy, vehicleCategories: [...original.vehicleCategories] } : structuredClone(spawn)
+  })
+  return withSkyportPcHotfix({ ...structuredClone(source), notes: SKYPORT_PC_COMMANDER_NOTE, spawns,
+    vehicleRefreshPoints: [], vehicleRefreshRules: [] }, 'winner-takes-all')
+}
+
 function defaultStore(): ModeConfigStore {
   const attackDefense = createModeProfile('攻防模式', 'attack-defense')
   attackDefense.description = '内置攻防模式数据，可分别编辑 PC 端与移动端。'
-  const pcMaps = Object.fromEntries(MAPS.map((map) => [map.id, syncModeMapFromAttackDefense(map.id, stagesForPlatform('pc')[map.id] ?? [], propsForPlatform('pc'), deployForPlatform('pc'))]))
+  const pcMaps = Object.fromEntries(MAPS.map((map) => [map.id, withAscentPcZiplines(withSkyportPcHotfix(syncModeMapFromAttackDefense(map.id, stagesForPlatform('pc')[map.id] ?? [], propsForPlatform('pc'), deployForPlatform('pc')), 'attack-defense'), 'attack-defense')]))
   const mobileMaps = Object.fromEntries(MAPS.map((map) => [map.id, syncModeMapFromAttackDefense(map.id, stagesForPlatform('mobile')[map.id] ?? [], propsForPlatform('mobile'), deployForPlatform('mobile'))]))
   attackDefense.platformMaps = { pc: pcMaps, mobile: mobileMaps }
   attackDefense.maps = pcMaps
+  pcMaps.ascent = withAscentPcData(pcMaps.ascent)
+  for (const id of PC_ORDINARY_ATTACK_DEFENSE_MAP_IDS) pcMaps[id] = pcOrdinaryAttackDefenseDefaults(id)!
+  pcMaps.ascent = ascentPcAttackDefenseDefaults()
   const winner = createModeProfile('胜者为王', 'winner-takes-all')
   winner.description = winnerTakesAllOfficial.mode.description
   const winnerPcMaps = Object.fromEntries(
@@ -90,18 +129,26 @@ function defaultStore(): ModeConfigStore {
       return [
         map.id,
         official
-          ? modeMapFromOfficial(map.id, official)
-          : winnerDraftFromAttackDefense(pcMaps[map.id]),
+          ? withAscentPcZiplines(withPcAirSupplyStations(withTrenchPcWinnerData(withEmberPcWinnerS1Region(modeMapFromOfficial(map.id, official, true)))), 'winner-takes-all')
+          : map.id === 'skyport'
+            ? withPcAirSupplyStations(skyportCommanderDraft())
+            : winnerDraftFromAttackDefense(pcMaps[map.id]),
       ]
     }),
   )
   const winnerMobileMaps = Object.fromEntries(
     MAPS.map((map) => {
       const official = (mobileWinnerTakesAllOfficial.maps as unknown as Partial<Record<string, OfficialModeMapData>>)[map.id]
-      return [map.id, official ? modeMapFromOfficial(map.id, official) : winnerDraftFromAttackDefense(mobileMaps[map.id])]
+      return [map.id, official ? modeMapFromOfficial(map.id, official, true) : winnerDraftFromAttackDefense(mobileMaps[map.id])]
     }),
   )
   winner.maps = winnerPcMaps
+  winnerPcMaps.ascent = withAscentPcData(winnerPcMaps.ascent)
+  winnerPcMaps.ascent = withAscentPcWinnerDeployment(winnerPcMaps.ascent)
+  winnerPcMaps.flashpoint = withFlashpointPcWinnerData(winnerPcMaps.flashpoint)
+  winnerPcMaps.stormeye = withStormeyePcWinnerData(winnerPcMaps.stormeye)
+  winnerPcMaps.ember = emberPcCommanderDefaults()
+  winnerPcMaps.trench = trenchPcCommanderDefaults()
   winner.platformMaps = { pc: winnerPcMaps, mobile: winnerMobileMaps }
   return {
     version: MODE_STORAGE_VERSION,
@@ -147,8 +194,9 @@ export interface RuntimeModeMapData {
   issues: ModeConfigIssue[]
 }
 
-/** 将编辑器导出的正式版地图数据还原为可继续编辑、可持久化的模式地图。 */
-function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): ModeMapOverride {
+/** 将正式版数据还原为模式地图；客户端区域覆盖仅用于内置初始化/迁移，用户导入沿用原坐标。 */
+function modeMapFromOfficial(mapId: string, official: OfficialModeMapData, useClientRegions = false): ModeMapOverride {
+  const stages = useClientRegions ? withEmberClientRegions(mapId, official.stages) : official.stages
   const refreshIds = new Set((official.vehicleRefreshPoints ?? []).map((point) => point.uid))
   for (const rule of official.vehicleRefreshRules ?? []) {
     if (rule.refreshPointUid && !refreshIds.has(rule.refreshPointUid)) throw new Error(`${mapId}：刷新规则关联的位置不存在。`)
@@ -182,7 +230,7 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
     return uid
   }
 
-  for (const stage of official.stages) {
+  for (const stage of stages) {
     if (stage.zone) addZone(`builtin_wta_${mapId}_${stage.id}_front`, stage.id, stage.zone.name, 'neutral', '#f4cf67', stage.zone.latlngs, 'frontline')
     addZone(`builtin_wta_${mapId}_${stage.id}_attack-base`, stage.id, `${stage.id} · 进攻方活动区`, 'own', '#01ff84', stage.attackBaseZone, 'attack-base')
     addZone(`builtin_wta_${mapId}_${stage.id}_defense-base`, stage.id, `${stage.id} · 防守方活动区`, 'enemy', '#e0453a', stage.defenseBaseZone, 'defense-base')
@@ -253,10 +301,10 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
     }
   }
 
-  return {
+  const result: ModeMapOverride = {
     mapId,
-    notes: '内置数据：胜者为王（2026-08-21）。',
-    stages: official.stages.map((stage) => ({ id: stage.id, label: stage.label })),
+    notes: ['内置数据：胜者为王（2026-08-21）。', useClientRegions && mapId === 'ember' ? EMBER_CLIENT_REGION_NOTE : ''].filter(Boolean).join('\n'),
+    stages: stages.map((stage) => ({ id: stage.id, label: stage.label })),
     zones,
     spawns,
     objectives,
@@ -267,6 +315,8 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
       icon: prop.icon,
       lat: prop.lat,
       lng: prop.lng,
+      ...(prop.zipline ? { zipline: { ...prop.zipline } } : {}),
+      ...(prop.airSupply ? { airSupply: { ...prop.airSupply } } : {}),
       verification: 'confirmed',
     })),
     vehicleRefreshPoints: (official.vehicleRefreshPoints ?? []).map((point) => ({ ...point, verification: 'confirmed' })),
@@ -274,10 +324,12 @@ function modeMapFromOfficial(mapId: string, official: OfficialModeMapData): Mode
       ...rule,
       trigger: { ...rule.trigger },
       vehicle: normalizeDeployVehicle(rule.vehicle) ?? { ...rule.vehicle },
+      ...(rule.clientSpawner ? { clientSpawner: normalizeVehicleSpawnerInfo(rule.clientSpawner) } : {}),
       verification: 'confirmed',
     })),
     updatedAt: Date.now(),
   }
+  return useClientRegions && mapId === 'ember' ? withEmberStageFourMap(result) : result
 }
 
 /**
@@ -395,6 +447,7 @@ export function syncModeMapFromAttackDefense(
     category: entry.category,
     cd: entry.cd,
     num: entry.num,
+    deployCount: normalizeDeploymentCount(entry.deployCount),
     allowTeammate: entry.allowTeammate,
   })
 
@@ -473,7 +526,7 @@ export function syncModeMapFromAttackDefense(
   const propKeys = new Set<string>()
   const props: ModeMapProp[] = []
   for (const prop of propsByMap[mapId] ?? []) {
-    const key = `${prop.name}:${prop.icon}:${prop.lat}:${prop.lng}`
+    const key = `${prop.stage}:${prop.name}:${prop.icon}:${prop.lat}:${prop.lng}:${prop.zipline?.lineId ?? ''}:${prop.zipline?.endpoint ?? ''}`
     if (propKeys.has(key)) continue
     propKeys.add(key)
     props.push({
@@ -483,13 +536,15 @@ export function syncModeMapFromAttackDefense(
       icon: prop.icon,
       lat: prop.lat,
       lng: prop.lng,
+      ...(prop.zipline ? { zipline: { ...prop.zipline } } : {}),
+      ...(prop.airSupply ? { airSupply: { ...prop.airSupply } } : {}),
       verification: 'confirmed',
     })
   }
 
-  return {
+  const result: ModeMapOverride = {
     mapId,
-    notes: '已从对应游戏数据端的攻防模式同步。',
+    notes: ['已从对应游戏数据端的攻防模式同步。', mapId === 'ember' ? EMBER_CLIENT_REGION_NOTE : ''].filter(Boolean).join('\n'),
     stages: stages.map((stage) => ({ id: stage.id, label: stage.label })),
     zones,
     spawns,
@@ -499,6 +554,7 @@ export function syncModeMapFromAttackDefense(
     vehicleRefreshRules: [],
     updatedAt: Date.now(),
   }
+  return mapId === 'ember' ? withEmberStageFourMap(result) : result
 }
 
 function finitePoint(value: unknown): [number, number] | null {
@@ -585,6 +641,7 @@ function normalizeDeployVehicle(value: unknown): ModeDeployVehicle | null {
     ?? (vehicle.icon === 'ucb9597' && storedIconUrl.endsWith('.png')
       ? localDeployIconUrl(vehicle.icon)
       : storedIconUrl)
+  const deployPositions = normalizeVehicleDeployPositions(vehicle.deployPositions)
   return {
     // 合并官方旧字段“轻型坦克”和正式字段 GTQ-35轻型坦克。
     name: currentCatalogVehicle?.name ?? vehicle.name,
@@ -594,8 +651,13 @@ function normalizeDeployVehicle(value: unknown): ModeDeployVehicle | null {
     badge: typeof vehicle.badge === 'string' && vehicle.badge ? vehicle.badge : vehicle.name.slice(0, 1),
     category,
     cd: Number.isFinite(vehicle.cd) ? Number(vehicle.cd) : 0,
+    ...(vehicle.cooldownKnown === false ? { cooldownKnown: false } : {}),
     num: Number.isFinite(vehicle.num) ? Number(vehicle.num) : 1,
+    deployCount: normalizeDeploymentCount(vehicle.deployCount),
+    ...(vehicle.deployCountKnown === false ? { deployCountKnown: false } : {}),
+    ...(deployPositions ? { deployPositions } : {}),
     allowTeammate: Boolean(vehicle.allowTeammate),
+    ...(vehicle.clientSpawner ? { clientSpawner: normalizeVehicleSpawnerInfo(vehicle.clientSpawner) } : {}),
   }
 }
 
@@ -626,6 +688,8 @@ function normalizeProp(value: unknown): ModeMapProp | null {
   const lat = Number(prop.lat)
   const lng = Number(prop.lng)
   if (typeof prop.uid !== 'string' || !Number.isFinite(lat) || !Number.isFinite(lng)) return null
+  const zipline = normalizeZiplineEndpoint(prop.zipline)
+  const airSupply = normalizeAirSupplyInfo(prop.airSupply)
   return {
     uid: prop.uid,
     stageId: typeof prop.stageId === 'string' && prop.stageId ? prop.stageId : '*',
@@ -633,6 +697,8 @@ function normalizeProp(value: unknown): ModeMapProp | null {
     icon: typeof prop.icon === 'string' && prop.icon ? prop.icon : 'q_gddyx',
     lat,
     lng,
+    ...(zipline ? { zipline } : {}),
+    ...(airSupply ? { airSupply } : {}),
     verification: VERIFICATIONS.includes(prop.verification as ModeConfigVerification)
       ? (prop.verification as ModeConfigVerification)
       : 'draft',
@@ -686,6 +752,7 @@ function normalizeVehicleRefreshRule(value: unknown): ModeVehicleRefreshRule | n
     quantity: Number.isFinite(rule.quantity) ? Math.max(1, Number(rule.quantity)) : 1,
     refreshPointUid: typeof rule.refreshPointUid === 'string' ? rule.refreshPointUid : '',
     note: typeof rule.note === 'string' ? rule.note : '',
+    ...(rule.clientSpawner ? { clientSpawner: normalizeVehicleSpawnerInfo(rule.clientSpawner) } : {}),
     verification: VERIFICATIONS.includes(rule.verification as ModeConfigVerification)
       ? (rule.verification as ModeConfigVerification)
       : 'draft',
@@ -705,7 +772,7 @@ function normalizeMapOverride(mapId: string, value: unknown): ModeMapOverride {
   const props = (Array.isArray(map.props)
     ? map.props.map(normalizeProp).filter((prop): prop is ModeMapProp => prop != null)
     : []).filter((prop) => {
-      const key = `${prop.stageId}:${prop.name}:${prop.icon}:${prop.lat}:${prop.lng}`
+      const key = `${prop.stageId}:${prop.name}:${prop.icon}:${prop.lat}:${prop.lng}:${prop.zipline?.lineId ?? ''}:${prop.zipline?.endpoint ?? ''}`
       if (propKeys.has(key)) return false
       propKeys.add(key)
       return true
@@ -1459,7 +1526,8 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
       if (winner) {
         const winnerMaps: Record<string, ModeMapOverride> = { ...winner.platformMaps?.[gameDataPlatform] }
         if (!winnerMaps.skyport) {
-          winnerMaps.skyport = winnerDraftFromAttackDefense(attackMaps.skyport)
+          winnerMaps.skyport = gameDataPlatform === 'pc'
+            ? skyportCommanderDraft(attackMaps.skyport) : winnerDraftFromAttackDefense(attackMaps.skyport)
           addedWinner = true
         }
         winner.platformMaps = { ...winner.platformMaps, [gameDataPlatform]: winnerMaps }
@@ -1469,6 +1537,389 @@ export function normalizeModeConfigStore(value: unknown): ModeConfigStore | null
     if (addedAttack) attackDefense.updatedAt = Date.now()
     if (winner?.platformMaps) winner.maps = winner.platformMaps.pc ?? winner.maps
     if (winner && addedWinner) winner.updatedAt = Date.now()
+  }
+  // v42 同步烬区新提取的 S1–S3 据点活动区、攻守活动区与占领区。
+  // 只更新两种内置模式的四套区域；S4、复活点、载具、用户区域及其他地图独立保留。
+  if (sourceVersion < 42) {
+    for (const profile of profiles.filter((item) => item.id === 'attack-defense' || item.id === 'winner-takes-all')) {
+      let changed = false
+      for (const platform of ['pc', 'mobile'] as const) {
+        const maps = profile.platformMaps?.[platform] ?? {}
+        const builtin = profile.id === 'attack-defense'
+          ? syncModeMapFromAttackDefense('ember', stagesForPlatform(platform).ember ?? [], propsForPlatform(platform), deployForPlatform(platform))
+          : modeMapFromOfficial('ember', (platform === 'pc' ? winnerTakesAllOfficial : mobileWinnerTakesAllOfficial).maps.ember as unknown as OfficialModeMapData, true)
+        const current = maps.ember
+        const synced = current ? syncEmberClientRegionZones(current, builtin) : builtin
+        if (synced === current) continue
+        profile.platformMaps = { ...profile.platformMaps, [platform]: { ...maps, ember: synced } }
+        changed = true
+      }
+      if (profile.platformMaps?.pc) profile.maps = profile.platformMaps.pc
+      if (changed) profile.updatedAt = Date.now()
+    }
+  }
+  // v43/v44：保留 S4 两个攻方点，其余由 S3 独立复制，并排除已炸毁的 C1 据点/占领区。
+  if (sourceVersion < 44) {
+    for (const profile of profiles.filter((item) => item.id === 'attack-defense' || item.id === 'winner-takes-all')) {
+      let changed = false
+      for (const platform of ['pc', 'mobile'] as const) {
+        const maps = profile.platformMaps?.[platform]
+        const current = maps?.ember
+        if (!current) continue
+        const builtin = profile.id === 'attack-defense'
+          ? syncModeMapFromAttackDefense('ember', stagesForPlatform(platform).ember ?? [], propsForPlatform(platform), deployForPlatform(platform))
+          : modeMapFromOfficial('ember', (platform === 'pc' ? winnerTakesAllOfficial : mobileWinnerTakesAllOfficial).maps.ember as unknown as OfficialModeMapData, true)
+        const synced = withEmberStageFourMap(current, builtin.spawns)
+        if (synced === current) continue
+        profile.platformMaps = { ...profile.platformMaps, [platform]: { ...maps, ember: synced } }
+        changed = true
+      }
+      if (profile.platformMaps?.pc) profile.maps = profile.platformMaps.pc
+      if (changed) profile.updatedAt = Date.now()
+    }
+  }
+  // v45：仅为 PC 胜者烬区补齐已核实的客户端生成表信息。
+  // 不覆盖冷却、坐标、用户自定义规则/载具，也不影响手游或攻防数据。
+  if (sourceVersion < 45 && winner) {
+    const pcMaps = winner.platformMaps?.pc
+    const current = pcMaps?.ember
+    if (current) {
+      const builtin = modeMapFromOfficial('ember', winnerTakesAllOfficial.maps.ember as unknown as OfficialModeMapData)
+      const synced = syncEmberPcWinnerSpawnerInfo(current, builtin)
+      if (synced !== current) {
+        winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ember: synced } }
+        winner.maps = winner.platformMaps.pc!
+        winner.updatedAt = Date.now()
+      }
+    }
+  }
+  // v46 将 PC 胜者烬区的 S1 据点活动区迁移到已核实的 35 点 PC 轮廓。
+  if (sourceVersion < 46 && winner?.platformMaps?.pc?.ember) {
+    const pcMaps = winner.platformMaps.pc
+    const current = pcMaps.ember
+    const updated = withEmberPcWinnerS1Region(current)
+    if (updated !== current) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ember: updated } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v47 同步 PC 胜者堑壕战的区域、据点中心和生成位置，并重绑轮突独立刷新点。
+  if (sourceVersion < 47 && winner?.platformMaps?.pc?.trench) {
+    const pcMaps = winner.platformMaps.pc
+    const current = pcMaps.trench
+    const builtin = modeMapFromOfficial('trench', winnerTakesAllOfficial.maps.trench as unknown as OfficialModeMapData)
+    const updated = withTrenchPcWinnerData(current, builtin)
+    if (updated !== current) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, trench: updated } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v48 将补丁 565 的天际港位置与设施写入已有 PC 存档；指挥官不套用普通攻防载具规则。
+  if (sourceVersion < 48) {
+    for (const modeId of ['attack-defense', 'winner-takes-all'] as const) {
+      const profile = profiles.find((item) => item.id === modeId)
+      const pcMaps = profile?.platformMaps?.pc
+      if (!profile || !pcMaps?.skyport) continue
+      const updated = withSkyportPcHotfix(pcMaps.skyport, modeId)
+      if (updated === pcMaps.skyport) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v49 补齐胜者自身表可核实的条目与共享生成器替换，不重置 v48 后的位置编辑。
+  if (sourceVersion < 49 && winner?.platformMaps?.pc?.skyport) {
+    const pcMaps = winner.platformMaps.pc
+    const updated = withSkyportPcCommanderRules(pcMaps.skyport)
+    if (updated !== pcMaps.skyport) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v50 仅补入大事件后阶段，不重置已有 PC 阶段或移动端内容。
+  if (sourceVersion < 50) {
+    for (const modeId of ['attack-defense', 'winner-takes-all'] as const) {
+      const profile = profiles.find((item) => item.id === modeId)
+      const pcMaps = profile?.platformMaps?.pc
+      if (!profile || !pcMaps?.skyport) continue
+      const updated = withSkyportPcStageFour(pcMaps.skyport, modeId)
+      if (updated === pcMaps.skyport) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v51 按用户要求为既有 S2 FSV 沿用 ORV 的 80% 条件，保留位置及其他编辑。
+  if (sourceVersion < 51) {
+    for (const modeId of ['attack-defense', 'winner-takes-all'] as const) {
+      const profile = profiles.find((item) => item.id === modeId)
+      const pcMaps = profile?.platformMaps?.pc
+      if (!profile || !pcMaps?.skyport) continue
+      const updated = withSkyportPcS2FsvCondition(pcMaps.skyport, modeId)
+      if (updated === pcMaps.skyport) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v52 移除 S2 FSV 刷新卡片的自动备注，保留条件及用户自行补充的文字。
+  if (sourceVersion < 52) {
+    for (const modeId of ['attack-defense', 'winner-takes-all'] as const) {
+      const profile = profiles.find((item) => item.id === modeId)
+      const pcMaps = profile?.platformMaps?.pc
+      if (!profile || !pcMaps?.skyport) continue
+      const updated = withoutSkyportPcS2FsvNote(pcMaps.skyport, modeId)
+      if (updated === pcMaps.skyport) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v53：只修订攀升 PC 胜者 S1 海上基地的武直，不重建复活点或其他载具。
+  // 默认旧 CD 150 -> 指挥官模板 100；已手动填写的其他 CD/次数继续保留。
+  if (sourceVersion < 53 && winner?.platformMaps?.pc?.ascent) {
+    const map = winner.platformMaps.pc.ascent
+    let changed = false
+    const spawns = map.spawns.map((spawn) => {
+      if (spawn.uid !== 'spawn_wta_pc_ascent_s1_attack_57mcir' || spawn.stageId !== 'S1' || spawn.side !== 'attack') return spawn
+      const deployVehicles = spawn.deployVehicles.map((vehicle) => {
+        if (vehicle.icon !== 'tjzsj') return vehicle
+        const cd = vehicle.cd === 150 ? 100 : vehicle.cd
+        const deployCount = normalizeDeploymentCount(vehicle.deployCount) === 1 ? 2 : vehicle.deployCount
+        if (cd === vehicle.cd && deployCount === vehicle.deployCount) return vehicle
+        changed = true
+        return { ...vehicle, cd, deployCount }
+      })
+      return { ...spawn, deployVehicles }
+    })
+    if (changed) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...winner.platformMaps.pc, ascent: { ...map, spawns, updatedAt: Date.now() } } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v54 只为现有天际港滑索补充三维端点配对信息，不重建或移动用户节点。
+  if (sourceVersion < 54) {
+    for (const modeId of ['attack-defense', 'winner-takes-all'] as const) {
+      const profile = profiles.find((item) => item.id === modeId)
+      const pcMaps = profile?.platformMaps?.pc
+      if (!profile || !pcMaps?.skyport) continue
+      const updated = withSkyportPcZiplineMetadata(pcMaps.skyport)
+      if (updated === pcMaps.skyport) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v55：只更新 PC 攀升/风暴眼的空中补给站；之后编辑或删除不再自动重置。
+  if (sourceVersion < 55) {
+    for (const profile of profiles.filter((p) => p.id === 'attack-defense' || p.id === 'winner-takes-all')) {
+      const pcMaps = profile.platformMaps?.pc
+      if (!pcMaps) continue
+      let updatedMaps = pcMaps
+      for (const mapId of ['ascent', 'stormeye']) {
+        const current = pcMaps[mapId]
+        if (!current) continue
+        const updated = withPcAirSupplyStations(current)
+        if (updated !== current) updatedMaps = { ...updatedMaps, [mapId]: updated }
+      }
+      if (updatedMaps === pcMaps) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: updatedMaps }
+      profile.maps = updatedMaps
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v56 补齐攀升滑索双端，并修正天际港未编辑端点遗漏的蓝图继承变换。
+  if (sourceVersion < 56) {
+    for (const modeId of ['attack-defense', 'winner-takes-all'] as const) {
+      const profile = profiles.find((item) => item.id === modeId)
+      const pcMaps = profile?.platformMaps?.pc
+      if (!profile || !pcMaps) continue
+      const next = { ...pcMaps }
+      if (next.skyport) next.skyport = withSkyportPcZiplineMetadata(next.skyport, true)
+      if (next.ascent) next.ascent = withAscentPcZiplines(next.ascent, modeId)
+      if (next.skyport === pcMaps.skyport && next.ascent === pcMaps.ascent) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: next }
+      profile.maps = next
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v57：补上天际港两处 PC 空中补给站，不重置设施/阶段或滑索编辑。
+  if (sourceVersion < 57) {
+    for (const profile of profiles.filter((p) => p.id === 'attack-defense' || p.id === 'winner-takes-all')) {
+      const pcMaps = profile.platformMaps?.pc
+      if (!pcMaps?.skyport) continue
+      const updated = withPcAirSupplyStations(pcMaps.skyport)
+      if (updated === pcMaps.skyport) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, skyport: updated } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v58: PC攀升共用关卡的区域/道具和S4尖塔坍塌后的备用区域。
+  // 仅执行一次，之后编辑器的修改不会再被资源快照动态覆盖。
+  if (sourceVersion < 58) {
+    for (const profile of profiles.filter((p) => p.id === 'attack-defense' || p.id === 'winner-takes-all')) {
+      const pcMaps = profile.platformMaps?.pc
+      if (!pcMaps?.ascent) continue
+      const ascent = withAscentPcData(pcMaps.ascent)
+      if (ascent === pcMaps.ascent) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, ascent } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v59：补齐烬区 PC 胜者的四个载具生成位，保留复活点和用户已有部署坐标。
+  if (sourceVersion < 59 && winner?.platformMaps?.pc?.ember) {
+    const pcMaps = winner.platformMaps.pc
+    const builtin = modeMapFromOfficial('ember', winnerTakesAllOfficial.maps.ember as unknown as OfficialModeMapData)
+    const ember = syncEmberPcVehicleDeployPositions(pcMaps.ember, builtin)
+    if (ember !== pcMaps.ember) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ember } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v60：只补齐 PC 胜者攀升已核对的载具生成位，不移动复活点。
+  if (sourceVersion < 60 && winner?.platformMaps?.pc?.ascent) {
+    const pcMaps = winner.platformMaps.pc
+    const builtin = modeMapFromOfficial('ascent', winnerTakesAllOfficial.maps.ascent as unknown as OfficialModeMapData)
+    const ascent = syncAscentPcVehicleDeployPositions(pcMaps.ascent, builtin)
+    if (ascent !== pcMaps.ascent) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ascent } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v61：只修正两处LD3000图标，并移除误标的基地自动设施；保留已有区域与位置编辑。
+  if (sourceVersion < 61) {
+    for (const profile of profiles.filter((p) => p.id === 'attack-defense' || p.id === 'winner-takes-all')) {
+      const pcMaps = profile.platformMaps?.pc
+      if (!pcMaps?.ascent) continue
+      const ascent = withAscentPcWeaponCorrections(pcMaps.ascent)
+      if (ascent === pcMaps.ascent) continue
+      profile.platformMaps = { ...profile.platformMaps, pc: { ...pcMaps, ascent } }
+      profile.maps = profile.platformMaps.pc!
+      profile.updatedAt = Date.now()
+    }
+  }
+  // v62：PC 胜者攀升的条件刷新与开局引导船坐标，补上 S4 的 100 兵力 ORV。
+  if (sourceVersion < 62 && winner?.platformMaps?.pc?.ascent) {
+    const pcMaps = winner.platformMaps.pc
+    const ascent = withAscentPcRefreshCoordinates(pcMaps.ascent)
+    if (ascent !== pcMaps.ascent) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ascent } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v63：临界点仅同步PC胜者；不把Camp空条件或未对应ID猜成地图刷新规则。
+  if (sourceVersion < 63 && winner?.platformMaps?.pc?.flashpoint) {
+    const pcMaps = winner.platformMaps.pc
+    const flashpoint = withFlashpointPcWinnerData(pcMaps.flashpoint)
+    if (flashpoint !== pcMaps.flashpoint) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, flashpoint } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v64：撤回临界点 v63 批量覆盖/隐藏CD的回归；不重建地图，不触碰刷新规则。
+  if (sourceVersion < 64 && winner?.platformMaps?.pc?.flashpoint) {
+    const pcMaps = winner.platformMaps.pc
+    const flashpoint = repairFlashpointPcWinnerCooldowns(pcMaps.flashpoint)
+    if (flashpoint !== pcMaps.flashpoint) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, flashpoint } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v65：风暴眼仅同步PC胜者；条件按原生阶段键去重，不影响其他模式/数据端。
+  if (sourceVersion < 65 && winner?.platformMaps?.pc?.stormeye) {
+    const pcMaps = winner.platformMaps.pc
+    const stormeye = withStormeyePcWinnerData(pcMaps.stormeye)
+    if (stormeye !== pcMaps.stormeye) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, stormeye } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v66：攀升PC胜者部署全面采用MapID601资源，未绑定条目保留来源，不构造入口。
+  if (sourceVersion < 66 && winner?.platformMaps?.pc?.ascent) {
+    const pcMaps = winner.platformMaps.pc
+    const ascent = withAscentPcWinnerDeployment(pcMaps.ascent)
+    winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ascent } }
+    winner.maps = winner.platformMaps.pc!
+    winner.updatedAt = Date.now()
+  }
+  // v67: only PC ordinary attack/defense Ascent uses MapID54. Never migrate commander/mobile.
+  if (sourceVersion < 67 && attackDefense?.platformMaps?.pc?.ascent) {
+    const pcMaps = attackDefense.platformMaps.pc
+    const ascent = withAscentPcAttackDefense(pcMaps.ascent, attackDefense.id, 'pc')
+    if (ascent !== pcMaps.ascent) {
+      attackDefense.platformMaps = { ...attackDefense.platformMaps, pc: { ...pcMaps, ascent } }
+      attackDefense.maps = attackDefense.platformMaps.pc!
+      attackDefense.updatedAt = Date.now()
+    }
+  }
+  // v68: only PC ordinary AD uses MapIDs 75/33/302/107; preserve edits, commander and mobile.
+  if (sourceVersion < 68 && attackDefense?.platformMaps?.pc) {
+    const pcMaps = { ...attackDefense.platformMaps.pc }
+    let changed = false
+    for (const id of PC_ORDINARY_ATTACK_DEFENSE_MAP_IDS) {
+      if (!pcMaps[id]) continue
+      const updated = withPcOrdinaryAttackDefense(pcMaps[id], attackDefense.id, 'pc')
+      if (updated === pcMaps[id]) continue
+      pcMaps[id] = updated
+      changed = true
+    }
+    if (changed) {
+      attackDefense.platformMaps = { ...attackDefense.platformMaps, pc: pcMaps }
+      attackDefense.maps = pcMaps
+      attackDefense.updatedAt = Date.now()
+    }
+  }
+  // v69: PC Ember commander MapID602 only; ordinary AD/mobile never use these templates or positions.
+  if (sourceVersion < 69 && winner?.platformMaps?.pc?.ember) {
+    const pcMaps = winner.platformMaps.pc
+    const ember = withEmberPcCommanderData(pcMaps.ember, winner.id, 'pc')
+    if (ember !== pcMaps.ember) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ember } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v70: only already-linked PC winner Flashpoint vehicle quotas; no geometry/CD/mobile changes.
+  if (sourceVersion < 70 && winner?.platformMaps?.pc?.flashpoint) {
+    const pcMaps = winner.platformMaps.pc
+    const flashpoint = withFlashpointPcWinnerDeploymentLimits(pcMaps.flashpoint)
+    if (flashpoint !== pcMaps.flashpoint) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, flashpoint } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v71: restore only ammo markers dropped by v69; older user deletions remain respected.
+  if (sourceVersion >= 69 && sourceVersion < 71 && winner?.platformMaps?.pc?.ember) {
+    const pcMaps = winner.platformMaps.pc
+    const ember = withEmberPcCommanderRetainedProps(pcMaps.ember, winner.id, 'pc')
+    if (ember !== pcMaps.ember) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, ember } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
+  }
+  // v72: complete PC winner Trench MapID605 baseline only; preserve other modes/platforms.
+  if (sourceVersion < 72 && winner?.platformMaps?.pc?.trench) {
+    const pcMaps = winner.platformMaps.pc
+    const trench = withTrenchPcCommanderData(pcMaps.trench, winner.id, 'pc')
+    if (trench !== pcMaps.trench) {
+      winner.platformMaps = { ...winner.platformMaps, pc: { ...pcMaps, trench } }
+      winner.maps = winner.platformMaps.pc!
+      winner.updatedAt = Date.now()
+    }
   }
   return { version: MODE_STORAGE_VERSION, activeModeId, profiles }
 }
@@ -1689,8 +2140,11 @@ function buildRuntimeModeMap(
   mapId: string,
   config: ModeMapOverride,
   gameDataPlatform: GameDataPlatform,
+  modeId: string,
 ): BuiltOfficialModeMap {
-  const baseStages = stagesForPlatform(gameDataPlatform)[mapId] ?? []
+  const baseStages = mapId === 'skyport' && gameDataPlatform === 'pc' && modeId === 'winner-takes-all'
+    ? skyportPcHotfix.commanderDraft.stages as unknown as StageConfig[]
+    : stagesForPlatform(gameDataPlatform)[mapId] ?? []
   const validZone = (zone: ModeZone) => zone.points.length >= 3
     && zone.points.every(([lat, lng]) => Number.isFinite(lat) && Number.isFinite(lng))
   const usableZones = config.zones.filter(validZone)
@@ -1737,8 +2191,14 @@ function buildRuntimeModeMap(
       defenseSpawns: defenseSpawns.map((spawn) => [spawn.lat, spawn.lng]),
       attackSpawnNames: attackSpawns.map((spawn) => spawn.name),
       defenseSpawnNames: defenseSpawns.map((spawn) => spawn.name),
-      attackVehicles: base?.attackVehicles ?? [],
-      defenseVehicles: base?.defenseVehicles ?? [],
+      attackVehicles: mapId === 'ascent' && gameDataPlatform === 'pc' && modeId === 'attack-defense'
+        ? ascentPcAttackDefenseStageVehicles(definition.id, 'attack') : mapId === 'ember' && gameDataPlatform === 'pc' && modeId === 'winner-takes-all'
+        ? emberPcCommanderStageVehicles(definition.id, 'attack') : mapId === 'trench' && gameDataPlatform === 'pc' && modeId === 'winner-takes-all'
+        ? trenchPcCommanderStageVehicles(definition.id, 'attack') : pcOrdinaryStageVehicles(mapId, gameDataPlatform, modeId, definition.id, 'attack') ?? base?.attackVehicles ?? [],
+      defenseVehicles: mapId === 'ascent' && gameDataPlatform === 'pc' && modeId === 'attack-defense'
+        ? ascentPcAttackDefenseStageVehicles(definition.id, 'defense') : mapId === 'ember' && gameDataPlatform === 'pc' && modeId === 'winner-takes-all'
+        ? emberPcCommanderStageVehicles(definition.id, 'defense') : mapId === 'trench' && gameDataPlatform === 'pc' && modeId === 'winner-takes-all'
+        ? trenchPcCommanderStageVehicles(definition.id, 'defense') : pcOrdinaryStageVehicles(mapId, gameDataPlatform, modeId, definition.id, 'defense') ?? base?.defenseVehicles ?? [],
     }
   })
 
@@ -1747,7 +2207,7 @@ function buildRuntimeModeMap(
     const stageSpawns = config.spawns.filter((spawn) => spawn.stageId === stage.id)
     const entries = (side: Side): DeployVehicleEntry[] => stageSpawns
       .filter((spawn) => spawn.side === side && spawn.vehicleDeploy)
-      .flatMap((spawn) => spawn.deployVehicles.map((vehicle) => ({ ...vehicle, spawnUid: spawn.uid, note: spawn.name })))
+      .flatMap((spawn) => spawn.deployVehicles.map((vehicle) => ({ ...structuredClone(vehicle), deployCount: normalizeDeploymentCount(vehicle.deployCount), spawnUid: spawn.uid, note: spawn.name })))
     deploy[stage.id] = { attack: entries('attack'), defense: entries('defense') }
   }
 
@@ -1768,6 +2228,8 @@ function buildRuntimeModeMap(
       lat: prop.lat,
       lng: prop.lng,
       stage: prop.stageId === '*' ? '' : prop.stageId,
+      ...(prop.zipline ? { zipline: { ...prop.zipline } } : {}),
+      ...(prop.airSupply ? { airSupply: { ...prop.airSupply } } : {}),
     })),
     deploy,
     vehicleRefreshPoints: config.vehicleRefreshPoints.map(({ verification: _verification, ...point }) => point),
@@ -1783,7 +2245,7 @@ export function buildRuntimeModeData(
   const profileMaps = modeMapsForPlatform(profile, gameDataPlatform)
   const config = profileMaps[mapId] ?? emptyModeMapOverride(mapId)
   const issues = validateModeMapConfig(mapId, config)
-  return { map: buildRuntimeModeMap(mapId, config, gameDataPlatform), issues }
+  return { map: buildRuntimeModeMap(mapId, config, gameDataPlatform, profile.id), issues }
 }
 
 export function buildOfficialModeData(
@@ -1798,7 +2260,7 @@ export function buildOfficialModeData(
     const config = profileMaps[map.id] ?? emptyModeMapOverride(map.id)
     const issues = validateModeMapConfig(map.id, config)
     if (issues.length > 0) throw new Error(formatModeConfigIssues(map.name, issues))
-    maps[map.id] = buildRuntimeModeMap(map.id, config, gameDataPlatform)
+    maps[map.id] = buildRuntimeModeMap(map.id, config, gameDataPlatform, profile.id)
   }
 
   return {

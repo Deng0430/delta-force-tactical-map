@@ -17,7 +17,10 @@ import type {
 } from '../types'
 import { escapeHtml } from '../utils/geo'
 import { POINT_ICON_BASE } from '../config/points'
+import { mapPropThemeOf } from '../config/mapPropTheme'
 import { platform } from '../platform'
+import { buildMapPropZiplineDisplay, ZIPLINE_VERTICAL_BADGE_HTML, ziplineEndpointHtml } from '../utils/mapZiplines'
+import { AIR_SUPPLY_BADGE_HTML, airSupplyHeightLabel } from '../utils/airSupply'
 
 interface ModeConfigLayerProps {
   config: ModeMapOverride
@@ -98,25 +101,15 @@ function objectiveIcon(point: ModeObjectivePoint, selected: boolean): L.DivIcon 
   })
 }
 
-const PROP_THEME: Record<string, { color: string; size: number }> = {
-  载具补给站: { color: '#2f6fed', size: 28 },
-  固定防空炮: { color: '#e0453a', size: 28 },
-  密集阵: { color: '#32b8c6', size: 28 },
-  火神炮: { color: '#e0453a', size: 28 },
-  固定机枪: { color: '#f08c2a', size: 26 },
-  岸防炮: { color: '#d63f3f', size: 28 },
-  滑索: { color: '#2ec4b6', size: 24 },
-  电梯: { color: '#8b98ab', size: 24 },
-  固定弹药箱: { color: '#f4cf67', size: 24 },
-}
-
-function propIcon(prop: ModeMapProp, selected: boolean): L.DivIcon {
-  const theme = PROP_THEME[prop.name] ?? { color: '#8b98ab', size: 26 }
+function propIcon(prop: ModeMapProp, selected: boolean, endpoint = false): L.DivIcon {
+  const theme = mapPropThemeOf(prop.name)
+  const iconUrl = `${POINT_ICON_BASE}/${encodeURIComponent(prop.icon).replace(/'/g, '%27')}.png`
   return L.divIcon({
     className: `mode-config-prop-wrap${selected ? ' selected' : ''}`,
-    html: `<div class="prop-marker" style="--pc:${theme.color}">
-      <span class="prop-bg"></span>
-      <img src="${POINT_ICON_BASE}/${escapeHtml(prop.icon)}.png" draggable="false" />
+    html: endpoint ? ziplineEndpointHtml(prop.zipline!.endpoint, theme.color) : `<div class="prop-marker" style="--pc:${theme.color};--prop-visual-size:${theme.size}px;--prop-icon:url('${iconUrl}')">
+      <span class="prop-glyph" aria-hidden="true"></span>
+      ${prop.zipline?.orientation === 'vertical' ? ZIPLINE_VERTICAL_BADGE_HTML : ''}
+      ${prop.name === '空中载具补给站' ? AIR_SUPPLY_BADGE_HTML : ''}
     </div>`,
     iconSize: [theme.size, theme.size],
     iconAnchor: [theme.size / 2, theme.size / 2],
@@ -478,6 +471,7 @@ export default function ModeConfigLayer({
   const stageSpawns = config.spawns.filter((spawn) => spawn.stageId === stageId)
   const stageObjectives = config.objectives.filter((point) => point.stageId === stageId)
   const stageProps = config.props.filter((prop) => prop.stageId === '*' || prop.stageId === stageId)
+  const propDisplay = buildMapPropZiplineDisplay(stageProps, !editing)
   const selecting = editing && tool === 'select'
   const selectedEditableZone = selecting
     && selectedZone?.verification === 'draft'
@@ -1042,12 +1036,16 @@ export default function ModeConfigLayer({
         />
       )) : null}
 
-      {propsVisible ? stageProps.map((prop) => (
+      {propsVisible ? propDisplay.connections.map((line) => <Polyline key={`zipline-${line.id}`} positions={line.latlngs}
+        pathOptions={{ color: mapPropThemeOf('滑索').color, weight: 1.8, opacity: .8, dashArray: '4 4', interactive: false }} interactive={false} />) : null}
+      {propsVisible ? propDisplay.midpoints.map(({ id, prop }) => <Marker key={`zipline-mid-${id}`}
+        position={[prop.lat, prop.lng]} icon={propIcon(prop, false)} interactive={false} zIndexOffset={521} />) : null}
+      {propsVisible ? [...propDisplay.markers, ...propDisplay.endpoints].map((prop) => (
         <Marker
           key={prop.uid}
           ref={(layer) => registerPointLayer('prop', prop.uid, layer)}
           position={[prop.lat, prop.lng]}
-          icon={propIcon(prop, isSelected('prop', prop.uid))}
+          icon={propIcon(prop, isSelected('prop', prop.uid), propDisplay.endpoints.includes(prop))}
           draggable={platform.kind !== 'android' && selecting && isSelected('prop', prop.uid) && prop.verification === 'draft'}
           interactive={selecting && tool === 'select'}
           bubblingMouseEvents={false}
@@ -1067,7 +1065,7 @@ export default function ModeConfigLayer({
             },
           }}
         >
-          <Tooltip sticky>{prop.name} · {verificationText[prop.verification]}</Tooltip>
+          <Tooltip sticky>{prop.name}{prop.zipline ? ` · ${prop.zipline.orientation === 'vertical' ? '垂直' : prop.zipline.endpoint === 'green' ? 'A端' : 'B端'}` : ''} · {verificationText[prop.verification]}{prop.name === '空中载具补给站' ? <><br />{airSupplyHeightLabel(prop.airSupply)}</> : null}</Tooltip>
         </Marker>
       )) : null}
 

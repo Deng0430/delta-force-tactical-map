@@ -1,0 +1,2416 @@
+{
+  "date": "2026-11-13",
+  "platform": "pc",
+  "MapID": 601,
+  "sourceTableSha256": "861c091cd3bd6f50f1f7ab6b7e7092e2c5c8d5fcb68134bbf0253130e054d282",
+  "sourceSceneSha256": "5fa129f187f5592bbe3225cb08ed29a3bdfd9f3d9da1c9e7bf64bf39cc743a51",
+  "deployments": [
+    {
+      "stageId": "S1",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s1_attack_a8acem",
+      "hub": "北边滩头",
+      "vehicle": {
+        "name": "M1A4主战坦克",
+        "icon": "m1a4zztk",
+        "iconUrl": "/icons/vehicles/legend/主战坦克.png",
+        "badge": "坦",
+        "category": "tank",
+        "cd": 150.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "北边滩头",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_a8acem",
+        "deployPositions": [
+          [
+            -91.97124,
+            67.46838
+          ]
+        ],
+        "deployCount": 3,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101001,
+          "sourceVehicleName": "M1A4主战坦克",
+          "spawnerIds": [
+            "Tank_S1_Attack1"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 150.0,
+          "templateSelfVehicleCd": 150.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 3
+        }
+      },
+      "legacyVehicle": {
+        "name": "M1A4主战坦克",
+        "icon": "m1a4zztk",
+        "iconUrl": "/icons/vehicles/legend/主战坦克.png",
+        "badge": "坦",
+        "category": "tank",
+        "cd": 120,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "北边滩头",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_a8acem",
+        "deployPositions": [
+          [
+            -91.97124,
+            67.46838
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1101001,
+          "spawner_id": "Tank_S1_Attack1",
+          "actor": "Tank_S1_Attack1_0",
+          "hub_actor": "S1_Attack_Left_Hub_0",
+          "world_xyz_ue_cm": [
+            170760.6875,
+            -142953.390625,
+            -22196.138671875
+          ],
+          "position": [
+            -91.97124,
+            67.46838
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:0:1101001"
+    },
+    {
+      "stageId": "S1",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+      "hub": "海上基地",
+      "vehicle": {
+        "name": "突击直升机",
+        "icon": "tjzsj",
+        "iconUrl": "/icons/vehicles/legend/nav_tjzsj.png",
+        "legendKey": "nav_tjzsj",
+        "badge": "突",
+        "category": "helo",
+        "cd": 100.0,
+        "num": 1,
+        "deployCount": 2,
+        "allowTeammate": false,
+        "note": "海上基地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+        "deployPositions": [
+          [
+            -86.76872,
+            24.48785
+          ]
+        ],
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1301002,
+          "sourceVehicleName": "AH-1035D“长弓猎人”突击直升机",
+          "spawnerIds": [
+            "Heli_S1_Attack1"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 100.0,
+          "templateSelfVehicleCd": 100.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 2
+        }
+      },
+      "legacyVehicle": {
+        "name": "突击直升机",
+        "icon": "tjzsj",
+        "iconUrl": "/icons/vehicles/legend/nav_tjzsj.png",
+        "legendKey": "nav_tjzsj",
+        "badge": "突",
+        "category": "helo",
+        "cd": 100,
+        "num": 1,
+        "deployCount": 2,
+        "allowTeammate": false,
+        "note": "海上基地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+        "deployPositions": [
+          [
+            -86.76872,
+            24.48785
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1301002,
+          "spawner_id": "Heli_S1_Attack1",
+          "actor": "Heli_S1_Attack1_6",
+          "hub_actor": "S1_Attack_Sea_Hub_9",
+          "world_xyz_ue_cm": [
+            166696.21875,
+            -109374.8515625,
+            -11863.97265625
+          ],
+          "position": [
+            -86.76872,
+            24.48785
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:0:1301002"
+    },
+    {
+      "stageId": "S1",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+      "hub": "海上基地",
+      "vehicle": {
+        "name": "UCB-95/97攻击艇",
+        "icon": "ucb9597",
+        "iconUrl": "/icons/vehicles/legend/UCB-95-97攻击艇-透明.png",
+        "badge": "攻",
+        "category": "water",
+        "cd": 150.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "海上基地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+        "deployPositions": [
+          [
+            -125.49868,
+            17.07059
+          ]
+        ],
+        "deployCount": 3,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1201003,
+          "sourceVehicleName": "冲锋艇",
+          "spawnerIds": [
+            "AgainstBoat_S1_Attack"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 150.0,
+          "templateSelfVehicleCd": 150.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 3
+        }
+      },
+      "legacyVehicle": {
+        "name": "UCB-95/97攻击艇",
+        "icon": "ucb9597",
+        "iconUrl": "/icons/vehicles/legend/UCB-95-97攻击艇-透明.png",
+        "badge": "攻",
+        "category": "water",
+        "cd": 90,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "海上基地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+        "deployPositions": [
+          [
+            -125.49868,
+            17.07059
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1201003,
+          "spawner_id": "AgainstBoat_S1_Attack",
+          "actor": "AgainstBoat_S1_Attack_12",
+          "hub_actor": "S1_Attack_Sea_Hub_9",
+          "world_xyz_ue_cm": [
+            196954.0,
+            -103580.1171875,
+            -23305.0
+          ],
+          "position": [
+            -125.49868,
+            17.07059
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:0:1201003"
+    },
+    {
+      "stageId": "S1",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+      "hub": "海上基地",
+      "vehicle": {
+        "name": "两栖装甲运输车",
+        "icon": "sxzjc",
+        "iconUrl": "/icons/vehicles/legend/两栖车.png",
+        "legendKey": "nav_sxzjc",
+        "badge": "载",
+        "category": "apc",
+        "cd": 90.0,
+        "num": 1,
+        "allowTeammate": true,
+        "note": "海上基地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+        "deployPositions": [
+          [
+            -129.10734,
+            20.13439
+          ]
+        ],
+        "deployCount": 3,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101006,
+          "sourceVehicleName": "AAV7",
+          "spawnerIds": [
+            "GTI_AAV7"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 90.0,
+          "templateSelfVehicleCd": 90.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 3
+        }
+      },
+      "legacyVehicle": {
+        "name": "两栖装甲运输车",
+        "icon": "sxzjc",
+        "iconUrl": "/icons/vehicles/legend/两栖车.png",
+        "legendKey": "nav_sxzjc",
+        "badge": "载",
+        "category": "apc",
+        "cd": 90,
+        "num": 1,
+        "allowTeammate": true,
+        "note": "海上基地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_attack_57mcir",
+        "deployPositions": [
+          [
+            -129.10734,
+            20.13439
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1101006,
+          "spawner_id": "GTI_AAV7",
+          "actor": "GTI_AAV7",
+          "hub_actor": "S1_Attack_Sea_Hub_9",
+          "world_xyz_ue_cm": [
+            199773.265625,
+            -105973.7109375,
+            -23305.0
+          ],
+          "position": [
+            -129.10734,
+            20.13439
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:0:1101006"
+    },
+    {
+      "stageId": "S1",
+      "side": "defense",
+      "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+      "hub": "临时营地",
+      "vehicle": {
+        "name": "轻型战术车",
+        "icon": "losvjpc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_losvjpc.png",
+        "badge": "轻",
+        "category": "recon",
+        "cd": 40.0,
+        "num": 1,
+        "allowTeammate": true,
+        "note": "临时营地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+        "deployPositions": [
+          [
+            -120.76596,
+            116.23944
+          ]
+        ],
+        "deployCount": 1,
+        "deployCountKnown": false,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1103012,
+          "sourceVehicleName": "LOSV越野车",
+          "spawnerIds": [
+            "Jeep_S1_Defend"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": false,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 40.0,
+          "templateSelfVehicleCd": 40.0,
+          "positionStatus": "pc-level-verified"
+        }
+      },
+      "legacyVehicle": {
+        "name": "轻型战术车",
+        "icon": "losvjpc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_losvjpc.png",
+        "badge": "轻",
+        "category": "recon",
+        "cd": 45,
+        "num": 1,
+        "allowTeammate": true,
+        "note": "临时营地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+        "deployPositions": [
+          [
+            -120.76596,
+            116.23944
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1103012,
+          "spawner_id": "Jeep_S1_Defend",
+          "actor": "Jeep_S1_Defend_20",
+          "hub_actor": "S1_Defend_Hub_Right_6",
+          "world_xyz_ue_cm": [
+            193256.5625,
+            -181055.78125,
+            -21553.18359375
+          ],
+          "position": [
+            -120.76596,
+            116.23944
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:1:1103012"
+    },
+    {
+      "stageId": "S1",
+      "side": "defense",
+      "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+      "hub": "临时营地",
+      "vehicle": {
+        "name": "LAV AA防空车",
+        "icon": "aakfc",
+        "iconUrl": "/icons/vehicles/legend/nav_fkc.png",
+        "legendKey": "nav_fkc",
+        "badge": "防",
+        "category": "ifv",
+        "cd": 90.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "临时营地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+        "deployPositions": [
+          [
+            -122.13442,
+            117.72586
+          ]
+        ],
+        "deployCount": 4,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101002,
+          "sourceVehicleName": "LAV_AA防空车",
+          "spawnerIds": [
+            "AntiAirTank_S1_Defend"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 90.0,
+          "templateSelfVehicleCd": 90.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 4
+        }
+      },
+      "legacyVehicle": {
+        "name": "LAV AA防空车",
+        "icon": "aakfc",
+        "iconUrl": "/icons/vehicles/legend/nav_fkc.png",
+        "legendKey": "nav_fkc",
+        "badge": "防",
+        "category": "ifv",
+        "cd": 90,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "临时营地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+        "deployPositions": [
+          [
+            -122.13442,
+            117.72586
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1101002,
+          "spawner_id": "AntiAirTank_S1_Defend",
+          "actor": "AntiAirTank_S1_Defend_5",
+          "hub_actor": "S1_Defend_Hub_Right_6",
+          "world_xyz_ue_cm": [
+            194325.671875,
+            -182217.046875,
+            -21535.85546875
+          ],
+          "position": [
+            -122.13442,
+            117.72586
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:1:1101002"
+    },
+    {
+      "stageId": "S1",
+      "side": "defense",
+      "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+      "hub": "临时营地",
+      "vehicle": {
+        "name": "M1A4主战坦克",
+        "icon": "m1a4zztk",
+        "iconUrl": "/icons/vehicles/legend/主战坦克.png",
+        "badge": "坦",
+        "category": "tank",
+        "cd": 150.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "临时营地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+        "deployPositions": [
+          [
+            -131.40092,
+            120.96952
+          ]
+        ],
+        "deployCount": 3,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101001,
+          "sourceVehicleName": "M1A4主战坦克",
+          "spawnerIds": [
+            "Tank_S1_Defend1"
+          ],
+          "sectorIndices": [
+            0
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 150.0,
+          "templateSelfVehicleCd": 150.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 3
+        }
+      },
+      "legacyVehicle": {
+        "name": "M1A4主战坦克",
+        "icon": "m1a4zztk",
+        "iconUrl": "/icons/vehicles/legend/主战坦克.png",
+        "badge": "坦",
+        "category": "tank",
+        "cd": 120,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "临时营地",
+        "spawnUid": "spawn_wta_pc_ascent_s1_defense_gcu98o",
+        "deployPositions": [
+          [
+            -131.40092,
+            120.96952
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1101001,
+          "spawner_id": "Tank_S1_Defend1",
+          "actor": "Tank_S1_Defend1_1",
+          "hub_actor": "S1_Defend_Hub_Right_6",
+          "world_xyz_ue_cm": [
+            201565.125,
+            -184751.15625,
+            -21353.88671875
+          ],
+          "position": [
+            -131.40092,
+            120.96952
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:0:1:1101001"
+    },
+    {
+      "stageId": "S2",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+      "hub": "北边废墟",
+      "vehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "北边废墟",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+        "deployPositions": [
+          [
+            -113.11132,
+            80.22784
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1103007,
+          "sourceVehicleName": "ATV全地形车",
+          "spawnerIds": [
+            "ATV_S2_Attack"
+          ],
+          "sectorIndices": [
+            1
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 15.0,
+          "templateSelfVehicleCd": 15.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "北边废墟",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+        "deployPositions": [
+          [
+            -113.11132,
+            80.22784
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1103007,
+          "spawner_id": "ATV_S2_Attack",
+          "actor": "ATV_S2_Attack_15",
+          "hub_actor": "S2_Attack_Hub_Left_1",
+          "world_xyz_ue_cm": [
+            187276.375,
+            -152921.71875,
+            -22168.544921875
+          ],
+          "position": [
+            -113.11132,
+            80.22784
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:1:0:1103007"
+    },
+    {
+      "stageId": "S2",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s2_attack_1odq54w",
+      "hub": "南边高坡",
+      "vehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "南边高坡",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_1odq54w",
+        "deployPositions": [
+          [
+            -123.58636,
+            86.24164
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1103007,
+          "sourceVehicleName": "ATV全地形车",
+          "spawnerIds": [
+            "ATV_S2_Attack2"
+          ],
+          "sectorIndices": [
+            1
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 15.0,
+          "templateSelfVehicleCd": 15.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "南边高坡",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_1odq54w",
+        "deployPositions": [
+          [
+            -123.58636,
+            86.24164
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1103007,
+          "spawner_id": "ATV_S2_Attack2",
+          "actor": "ATV_S2_Attack2",
+          "hub_actor": "S2_Attack_Hub_Right_8",
+          "world_xyz_ue_cm": [
+            195460.0,
+            -157620.0,
+            -22110.0
+          ],
+          "position": [
+            -123.58636,
+            86.24164
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:1:0:1103007"
+    },
+    {
+      "stageId": "S2",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2",
+      "hub": "S2 · 进攻方复活点 3",
+      "vehicle": {
+        "name": "轻型战术车",
+        "icon": "losvjpc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_losvjpc.png",
+        "badge": "轻",
+        "category": "recon",
+        "cd": 40.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "S2 · 进攻方复活点 3",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2",
+        "deployPositions": [
+          [
+            -142.12224,
+            90.4234
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1103012,
+          "sourceVehicleName": "LOSV越野车",
+          "spawnerIds": [
+            "Wheeltank_S2_Attack"
+          ],
+          "sectorIndices": [
+            1
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 40.0,
+          "templateSelfVehicleCd": 40.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": {
+        "name": "轻型战术车",
+        "icon": "losvjpc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_losvjpc.png",
+        "badge": "轻",
+        "category": "recon",
+        "cd": 15,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "S2 · 进攻方复活点 3",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2",
+        "deployPositions": [
+          [
+            -142.12224,
+            90.4234
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1103012,
+          "spawner_id": "Wheeltank_S2_Attack",
+          "actor": "wheeltank_S2_Attack",
+          "hub_actor": "S2_Attack_Hub_Right2",
+          "world_xyz_ue_cm": [
+            209941.15625,
+            -160887.0,
+            -21400.0
+          ],
+          "position": [
+            -142.12224,
+            90.4234
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:1:0:1103012"
+    },
+    {
+      "stageId": "S2",
+      "side": "defense",
+      "spawnUid": "spawn_wta_pc_ascent_s2_defense_nn4bk3",
+      "hub": "隧道入口",
+      "vehicle": {
+        "name": "GTQ-35轻型坦克",
+        "icon": "qxtk",
+        "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+        "badge": "轻",
+        "category": "tank",
+        "cd": 150.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "隧道入口",
+        "spawnUid": "spawn_wta_pc_ascent_s2_defense_nn4bk3",
+        "deployPositions": [
+          [
+            -162.46176,
+            129.12536
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101005,
+          "sourceVehicleName": "GTQ-35",
+          "spawnerIds": [
+            "Tank_S2_Defend"
+          ],
+          "sectorIndices": [
+            1
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 150.0,
+          "templateSelfVehicleCd": 150.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": {
+        "name": "GTQ-35轻型坦克",
+        "icon": "qxtk",
+        "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+        "badge": "轻",
+        "category": "tank",
+        "cd": 90,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "隧道入口",
+        "spawnUid": "spawn_wta_pc_ascent_s2_defense_nn4bk3",
+        "deployPositions": [
+          [
+            -162.46176,
+            129.12536
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1101005,
+          "spawner_id": "Tank_S2_Defend",
+          "actor": "Tank_S2_Defend_11",
+          "hub_actor": "S2_Defend_Hub_2",
+          "world_xyz_ue_cm": [
+            225831.40625,
+            -191122.90625,
+            -21467.171875
+          ],
+          "position": [
+            -162.46176,
+            129.12536
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:1:1:1101005"
+    },
+    {
+      "stageId": "S3",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s3_attack_1fl1jkk",
+      "hub": "隧道平台入口",
+      "vehicle": {
+        "name": "LAV G1步战车",
+        "icon": "g1bzc",
+        "iconUrl": "/icons/vehicles/legend/步战车.png",
+        "badge": "步",
+        "category": "ifv",
+        "cd": 150.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "隧道平台入口",
+        "spawnUid": "spawn_wta_pc_ascent_s3_attack_1fl1jkk",
+        "deployPositions": [
+          [
+            -128.42474,
+            183.531
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101003,
+          "sourceVehicleName": "LAV_G1步战车",
+          "spawnerIds": [
+            "IFV_S3_Attack"
+          ],
+          "sectorIndices": [
+            2
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 150.0,
+          "templateSelfVehicleCd": 150.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": {
+        "name": "LAV G1步战车",
+        "icon": "g1bzc",
+        "iconUrl": "/icons/vehicles/legend/步战车.png",
+        "badge": "步",
+        "category": "ifv",
+        "cd": 120,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "隧道平台入口",
+        "spawnUid": "spawn_wta_pc_ascent_s3_attack_1fl1jkk",
+        "deployPositions": [
+          [
+            -128.42474,
+            183.531
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1101003,
+          "spawner_id": "IFV_S3_Attack",
+          "actor": "IFV_S3_Attack_23",
+          "hub_actor": "S3_Attack_Hub_4",
+          "world_xyz_ue_cm": [
+            199239.984375,
+            -233627.3125,
+            1729.3370361328125
+          ],
+          "position": [
+            -128.42474,
+            183.531
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:2:0:1101003"
+    },
+    {
+      "stageId": "S4",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s4_attack_1xdd3ey",
+      "hub": "洞穴出口",
+      "vehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15.0,
+        "num": 2,
+        "allowTeammate": false,
+        "note": "洞穴出口",
+        "spawnUid": "spawn_wta_pc_ascent_s4_attack_1xdd3ey",
+        "deployPositions": [
+          [
+            -154.30636,
+            207.58564
+          ],
+          [
+            -144.21698,
+            199.78612
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1103007,
+          "sourceVehicleName": "ATV全地形车",
+          "spawnerIds": [
+            "ATV_S4_Attack",
+            "ATV_S4_Attack2"
+          ],
+          "sectorIndices": [
+            3
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 15.0,
+          "templateSelfVehicleCd": 15.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15,
+        "num": 2,
+        "allowTeammate": false,
+        "note": "洞穴出口",
+        "spawnUid": "spawn_wta_pc_ascent_s4_attack_1xdd3ey",
+        "deployPositions": [
+          [
+            -154.30636,
+            207.58564
+          ],
+          [
+            -144.21698,
+            199.78612
+          ]
+        ]
+      },
+      "sourceActors": [
+        {
+          "VehicleID": 1103007,
+          "spawner_id": "ATV_S4_Attack",
+          "actor": "ATV_S4_Attack",
+          "hub_actor": "S4_Attack_Cave_Hub_3",
+          "world_xyz_ue_cm": [
+            219460.0,
+            -252420.0,
+            3690.0
+          ],
+          "position": [
+            -154.30636,
+            207.58564
+          ]
+        },
+        {
+          "VehicleID": 1103007,
+          "spawner_id": "ATV_S4_Attack2",
+          "actor": "ATV_S4_Attack2",
+          "hub_actor": "S4_Attack_Cave_Hub_3",
+          "world_xyz_ue_cm": [
+            211577.671875,
+            -246326.625,
+            1731.7215576171875
+          ],
+          "position": [
+            -144.21698,
+            199.78612
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:3:0:1103007"
+    },
+    {
+      "stageId": "S2",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+      "hub": "北边废墟",
+      "vehicle": {
+        "name": "GTQ-35轻型坦克",
+        "icon": "qxtk",
+        "iconUrl": "/icons/vehicles/legend/轻型坦克.png",
+        "badge": "轻",
+        "category": "tank",
+        "cd": 150.0,
+        "num": 1,
+        "allowTeammate": false,
+        "note": "北边废墟",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_ha6do8",
+        "deployPositions": [
+          [
+            -112.38314,
+            78.83458
+          ]
+        ],
+        "deployCount": 1,
+        "clientSpawner": {
+          "platform": "pc",
+          "mapId": 601,
+          "tablePath": "../../../DeltaForce/Content/R13N/Common/PC/DataTables/BattleField/BreakthroughVehicleSpawnerTable.uasset",
+          "rowName": "指挥官攀升攻防",
+          "section": "standard",
+          "template": "Template5",
+          "vehicleId": 1101005,
+          "sourceVehicleName": "GTQ-35",
+          "spawnerIds": [
+            "Tank_S1_Attack1"
+          ],
+          "sectorIndices": [
+            1
+          ],
+          "conditionKeys": [],
+          "singleUse": true,
+          "dynamicallyBalanced": false,
+          "cooldownStatus": "pc-template-verified",
+          "templateVehicleCd": 150.0,
+          "templateSelfVehicleCd": 150.0,
+          "positionStatus": "pc-level-verified",
+          "singleUseLimit": 1
+        }
+      },
+      "legacyVehicle": null,
+      "sourceActors": [
+        {
+          "VehicleID": 1101005,
+          "spawner_id": "Tank_S1_Attack1",
+          "actor": "Tank_S1_Attack1",
+          "hub_actor": "S2_Attack_Hub_Left_1",
+          "world_xyz_ue_cm": [
+            186707.484375,
+            -151833.234375,
+            -22081.078125
+          ],
+          "position": [
+            -112.38314,
+            78.83458
+          ]
+        }
+      ],
+      "sourceQuotaGroup": "601:1:0:1101005"
+    }
+  ],
+  "unbound": [
+    {
+      "stageId": "S1",
+      "side": "attack",
+      "VehicleID": 1103012,
+      "raw": {
+        "VehicleName": "LOSV越野车",
+        "bIsSingleUse": true,
+        "MaxNumberForSingleUse": 3,
+        "SpawnersData": [
+          {
+            "SpawnerID": "Jeep_S1_Defend",
+            "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+            "bIsDynamicallyBalancedVehicle": false,
+            "SpawnerActiveConditionInfoMap": [],
+            "bIsUseSelfGovernedInfo": false,
+            "SelfInfo": {
+              "VehicleName": "",
+              "bIsCampVehicle": false,
+              "bPartInGlobalVehicleNumLimit": true,
+              "VehicleCD": 5.0,
+              "SelfVehicleCD": 5.0
+            }
+          }
+        ]
+      },
+      "reason": "源ID Jeep_S1_Defend 只关联到守方入口，攻方入口未确认。"
+    },
+    {
+      "stageId": "S1",
+      "side": "attack",
+      "VehicleID": 1103007,
+      "raw": {
+        "VehicleName": "ATV全地形车",
+        "bIsSingleUse": false,
+        "MaxNumberForSingleUse": 1,
+        "SpawnersData": [
+          {
+            "SpawnerID": "Replaceable_Vehicle",
+            "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+            "bIsDynamicallyBalancedVehicle": false,
+            "SpawnerActiveConditionInfoMap": [],
+            "bIsUseSelfGovernedInfo": false,
+            "SelfInfo": {
+              "VehicleName": "",
+              "bIsCampVehicle": false,
+              "bPartInGlobalVehicleNumLimit": true,
+              "VehicleCD": 5.0,
+              "SelfVehicleCD": 5.0
+            }
+          }
+        ]
+      },
+      "reason": "Replaceable_Vehicle 有坐标，但没有同阶段攻方 Hub 的显式引用。"
+    },
+    {
+      "stageId": "S2",
+      "side": "defense",
+      "VehicleID": 1101002,
+      "raw": {
+        "VehicleName": "LAV_AA防空车",
+        "bIsSingleUse": false,
+        "MaxNumberForSingleUse": 1,
+        "SpawnersData": [
+          {
+            "SpawnerID": "AntiAirTank_S1_Defend",
+            "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+            "bIsDynamicallyBalancedVehicle": false,
+            "SpawnerActiveConditionInfoMap": [],
+            "bIsUseSelfGovernedInfo": false,
+            "SelfInfo": {
+              "VehicleName": "",
+              "bIsCampVehicle": false,
+              "bPartInGlobalVehicleNumLimit": true,
+              "VehicleCD": 5.0,
+              "SelfVehicleCD": 5.0
+            }
+          }
+        ]
+      },
+      "reason": "引用 S1 防空生成器，缺少 S2 入口关联。"
+    },
+    {
+      "stageId": "S2",
+      "side": "defense",
+      "VehicleID": 1103012,
+      "raw": {
+        "VehicleName": "ATV全地形车",
+        "bIsSingleUse": true,
+        "MaxNumberForSingleUse": 1,
+        "SpawnersData": [
+          {
+            "SpawnerID": "FSV_S2_Defend",
+            "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+            "bIsDynamicallyBalancedVehicle": false,
+            "SpawnerActiveConditionInfoMap": [],
+            "bIsUseSelfGovernedInfo": false,
+            "SelfInfo": {
+              "VehicleName": "",
+              "bIsCampVehicle": false,
+              "bPartInGlobalVehicleNumLimit": true,
+              "VehicleCD": 5.0,
+              "SelfVehicleCD": 5.0
+            }
+          },
+          {
+            "SpawnerID": "None",
+            "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+            "bIsDynamicallyBalancedVehicle": false,
+            "SpawnerActiveConditionInfoMap": [],
+            "bIsUseSelfGovernedInfo": false,
+            "SelfInfo": {
+              "VehicleName": "",
+              "bIsCampVehicle": false,
+              "bPartInGlobalVehicleNumLimit": true,
+              "VehicleCD": 5.0,
+              "SelfVehicleCD": 5.0
+            }
+          }
+        ]
+      },
+      "reason": "VehicleID 为 LOSV，名称写 ATV；FSV_S2_Defend 未找到生成器，另有 None 占位。"
+    }
+  ],
+  "removedLegacy": [
+    {
+      "stageId": "S2",
+      "side": "attack",
+      "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2",
+      "vehicle": {
+        "name": "ATV全地形车",
+        "icon": "atvqdxc",
+        "iconUrl": "/icons/vehicles/deploy/deploy_atvqdxc.png",
+        "badge": "全",
+        "category": "recon",
+        "cd": 15,
+        "num": 2,
+        "allowTeammate": false,
+        "note": "S2 · 进攻方复活点 3",
+        "spawnUid": "spawn_wta_pc_ascent_s2_attack_18b63a2"
+      }
+    }
+  ],
+  "rawStandardRows": [
+    {
+      "SpawnersOfCamp": [
+        {
+          "key": 0,
+          "value": {
+            "SpawnersOfVehicle": [
+              {
+                "key": 1101001,
+                "value": {
+                  "VehicleName": "M1A4主战坦克",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 3,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Tank_S1_Attack1",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1101002,
+                "value": {
+                  "VehicleName": "LAV_AA防空车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 3,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101003,
+                "value": {
+                  "VehicleName": "LAV_G1步战车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101004,
+                "value": {
+                  "VehicleName": "FSV轮式突击炮",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1102001,
+                "value": {
+                  "VehicleName": "ORV突击车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103012,
+                "value": {
+                  "VehicleName": "LOSV越野车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 3,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Jeep_S1_Defend",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1103007,
+                "value": {
+                  "VehicleName": "ATV全地形车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Replaceable_Vehicle",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1201003,
+                "value": {
+                  "VehicleName": "冲锋艇",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 3,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "AgainstBoat_S1_Attack",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1301002,
+                "value": {
+                  "VehicleName": "AH-1035D“长弓猎人”突击直升机",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 2,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Heli_S1_Attack1",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1301005,
+                "value": {
+                  "VehicleName": "MH-33D侦察直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301006,
+                "value": {
+                  "VehicleName": "UH60",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301007,
+                "value": {
+                  "VehicleName": "F35",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101005,
+                "value": {
+                  "VehicleName": "GTQ_35轻型坦克",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101006,
+                "value": {
+                  "VehicleName": "AAV7",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 3,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "GTI_AAV7",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "key": 1,
+          "value": {
+            "SpawnersOfVehicle": [
+              {
+                "key": 1101001,
+                "value": {
+                  "VehicleName": "M1A4主战坦克",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 3,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Tank_S1_Defend1",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1101002,
+                "value": {
+                  "VehicleName": "LAV_AA防空车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 4,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "AntiAirTank_S1_Defend",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1101003,
+                "value": {
+                  "VehicleName": "LAV_G1步战车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101004,
+                "value": {
+                  "VehicleName": "FSV轮式突击炮",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 2,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1102001,
+                "value": {
+                  "VehicleName": "ORV突击车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103012,
+                "value": {
+                  "VehicleName": "LOSV越野车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Jeep_S1_Defend",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 110307,
+                "value": {
+                  "VehicleName": "ATV全地形车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1201001,
+                "value": {
+                  "VehicleName": "冲锋艇",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301002,
+                "value": {
+                  "VehicleName": "AH-1035D“长弓猎人”突击直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301005,
+                "value": {
+                  "VehicleName": "MH-33D侦察直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301006,
+                "value": {
+                  "VehicleName": "UH60",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301007,
+                "value": {
+                  "VehicleName": "F35",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101005,
+                "value": {
+                  "VehicleName": "GTQ_35轻型坦克",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "SpawnersOfCamp": [
+        {
+          "key": 0,
+          "value": {
+            "SpawnersOfVehicle": [
+              {
+                "key": 1101001,
+                "value": {
+                  "VehicleName": "M1A4主战坦克",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101002,
+                "value": {
+                  "VehicleName": "LAV_AA防空车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101003,
+                "value": {
+                  "VehicleName": "LAV_G1步战车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101004,
+                "value": {
+                  "VehicleName": "FSV轮式突击炮",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1102001,
+                "value": {
+                  "VehicleName": "ORV突击车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103012,
+                "value": {
+                  "VehicleName": "LOSV越野车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Wheeltank_S2_Attack",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1103007,
+                "value": {
+                  "VehicleName": "ATV全地形车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "ATV_S2_Attack",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    },
+                    {
+                      "SpawnerID": "ATV_S2_Attack2",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1201001,
+                "value": {
+                  "VehicleName": "冲锋艇",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301002,
+                "value": {
+                  "VehicleName": "AH-1035D“长弓猎人”突击直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301005,
+                "value": {
+                  "VehicleName": "MH-33D侦察直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301006,
+                "value": {
+                  "VehicleName": "UH60",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301007,
+                "value": {
+                  "VehicleName": "F35",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101005,
+                "value": {
+                  "VehicleName": "GTQ-35",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Tank_S1_Attack1",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "key": 1,
+          "value": {
+            "SpawnersOfVehicle": [
+              {
+                "key": 1101001,
+                "value": {
+                  "VehicleName": "M1A4主战坦克",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101002,
+                "value": {
+                  "VehicleName": "LAV_AA防空车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "AntiAirTank_S1_Defend",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1101003,
+                "value": {
+                  "VehicleName": "LAV_G1步战车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101004,
+                "value": {
+                  "VehicleName": "FSV轮式突击炮",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1102001,
+                "value": {
+                  "VehicleName": "ORV突击车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103012,
+                "value": {
+                  "VehicleName": "ATV全地形车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "FSV_S2_Defend",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    },
+                    {
+                      "SpawnerID": "None",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1201001,
+                "value": {
+                  "VehicleName": "冲锋艇",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301002,
+                "value": {
+                  "VehicleName": "AH-1035D“长弓猎人”突击直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301005,
+                "value": {
+                  "VehicleName": "MH-33D侦察直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301006,
+                "value": {
+                  "VehicleName": "UH60",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301007,
+                "value": {
+                  "VehicleName": "F35",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101005,
+                "value": {
+                  "VehicleName": "GTQ-35",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "Tank_S2_Defend",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "SpawnersOfCamp": [
+        {
+          "key": 0,
+          "value": {
+            "SpawnersOfVehicle": [
+              {
+                "key": 1101001,
+                "value": {
+                  "VehicleName": "M1A4主战坦克",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101002,
+                "value": {
+                  "VehicleName": "LAV_AA防空车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101003,
+                "value": {
+                  "VehicleName": "LAV_G1步战车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "IFV_S3_Attack",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1101004,
+                "value": {
+                  "VehicleName": "FSV轮式突击炮",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1102001,
+                "value": {
+                  "VehicleName": "ORV突击车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103012,
+                "value": {
+                  "VehicleName": "LOSV越野车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103007,
+                "value": {
+                  "VehicleName": "ATV全地形车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1201001,
+                "value": {
+                  "VehicleName": "冲锋艇",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301002,
+                "value": {
+                  "VehicleName": "AH-1035D“长弓猎人”突击直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301005,
+                "value": {
+                  "VehicleName": "MH-33D侦察直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301006,
+                "value": {
+                  "VehicleName": "UH60",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301007,
+                "value": {
+                  "VehicleName": "F35",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101005,
+                "value": {
+                  "VehicleName": "GTQ-35轻型坦克",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "SpawnersOfCamp": [
+        {
+          "key": 0,
+          "value": {
+            "SpawnersOfVehicle": [
+              {
+                "key": 1101001,
+                "value": {
+                  "VehicleName": "M1A4主战坦克",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101002,
+                "value": {
+                  "VehicleName": "LAV_AA防空车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101003,
+                "value": {
+                  "VehicleName": "LAV_G1步战车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101004,
+                "value": {
+                  "VehicleName": "FSV轮式突击炮",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1102001,
+                "value": {
+                  "VehicleName": "ORV突击车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103012,
+                "value": {
+                  "VehicleName": "LOSV越野车",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1103007,
+                "value": {
+                  "VehicleName": "ATV全地形车",
+                  "bIsSingleUse": true,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": [
+                    {
+                      "SpawnerID": "ATV_S4_Attack",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    },
+                    {
+                      "SpawnerID": "ATV_S4_Attack2",
+                      "VehicleUpgradeTemplate": "EVehicleUpgradeTemplate::None",
+                      "bIsDynamicallyBalancedVehicle": false,
+                      "SpawnerActiveConditionInfoMap": [],
+                      "bIsUseSelfGovernedInfo": false,
+                      "SelfInfo": {
+                        "VehicleName": "",
+                        "bIsCampVehicle": false,
+                        "bPartInGlobalVehicleNumLimit": true,
+                        "VehicleCD": 5.0,
+                        "SelfVehicleCD": 5.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": 1201001,
+                "value": {
+                  "VehicleName": "冲锋艇",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301002,
+                "value": {
+                  "VehicleName": "AH-1035D“长弓猎人”突击直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301005,
+                "value": {
+                  "VehicleName": "MH-33D侦察直升机",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301006,
+                "value": {
+                  "VehicleName": "UH60",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1301007,
+                "value": {
+                  "VehicleName": "F35",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              },
+              {
+                "key": 1101005,
+                "value": {
+                  "VehicleName": "GTQ-35轻型坦克",
+                  "bIsSingleUse": false,
+                  "MaxNumberForSingleUse": 1,
+                  "SpawnersData": []
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "note": "PC胜者攀升部署按MapID601资源配置：车型、生成位、次数开关及上限、模板CD；入口未确认的4项仅保留来源记录。"
+}

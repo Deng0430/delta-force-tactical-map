@@ -22,6 +22,7 @@ globalThis.localStorage = {
   getItem: (key) => storage.get(key) ?? null,
   setItem: (key, value) => { writes++; storage.set(key, value) },
 }
+const currentStorageVersion = loadModeConfigStore().version
 test.after(() => {
   if (originalStorage === undefined) delete globalThis.localStorage
   else globalThis.localStorage = originalStorage
@@ -153,9 +154,9 @@ test('PC 与手游攻防路由分别使用独立阶段、道具和部署对象',
   } finally { pcDeploy.S1.attack[0].cd = previous }
 })
 
-test('新用户四份配置齐全，胜者为王深复制对应端攻防而不是动态共用', () => {
+test('新用户四份配置隔离，PC 胜者共用热更且保持独立模板和规则身份', () => {
   const store = freshStore()
-  assert.equal(store.version, 41)
+  assert.equal(store.version, currentStorageVersion)
   const maps = modes.flatMap((mode) => platforms.map((platform) => mapOf(store, mode, platform)))
   assert.equal(new Set(maps).size, 4)
   assert.equal(new Set(maps.map((map) => map.spawns)).size, 4)
@@ -163,9 +164,22 @@ test('新用户四份配置齐全，胜者为王深复制对应端攻防而不�
   for (const platform of platforms) {
     const attack = mapOf(store, 'attack-defense', platform)
     const winner = mapOf(store, 'winner-takes-all', platform)
-    assert.deepEqual(dataOf(winner), dataOf(attack))
-    assert.ok(winner.notes.includes('临时底稿'))
-    assert.equal(winner.vehicleRefreshRules.length, 0)
+    if (platform === 'mobile') assert.deepEqual(dataOf(winner), dataOf(attack))
+    else {
+      assert.deepEqual(winner.spawns.map(({ uid, lat, lng }) => ({ uid, lat, lng })), attack.spawns.map(({ uid, lat, lng }) => ({ uid, lat, lng })))
+      assert.deepEqual(winner.objectives, attack.objectives)
+      // Air stations are inserted independently by each mode; their stable UIDs
+      // may differ while location, height, stage and all other data stay equal.
+      const comparableProps = (props) => props.map((prop) => prop.name === '空中载具补给站'
+        ? { ...prop, uid: 'air-supply' } : prop)
+      assert.deepEqual(comparableProps(winner.props), comparableProps(attack.props))
+      assert.equal(attack.vehicleRefreshRules.length, 3)
+      assert.ok(attack.spawns.some((spawn) => spawn.deployVehicles.some((vehicle) => vehicle.icon === 'g1bzc')))
+      assert.ok(winner.spawns.some((spawn) => spawn.deployVehicles.some((vehicle) => vehicle.icon === 'g1bzc')))
+      assert.equal(winner.vehicleRefreshRules.length, 3)
+    }
+    assert.ok(winner.notes.includes(platform === 'pc' ? 'MapID=616' : '临时底稿'))
+    assert.equal(winner.vehicleRefreshRules.length, platform === 'pc' ? 3 : 0)
     assert.notEqual(winner.spawns[0].deployVehicles, attack.spawns[0].deployVehicles)
   }
   mapOf(store, 'attack-defense', 'pc').spawns[0].deployVehicles[0].cd = 555
@@ -173,7 +187,9 @@ test('新用户四份配置齐全，胜者为王深复制对应端攻防而不�
   for (const mode of modes) assert.equal(profileOf(store, mode).maps, profileOf(store, mode).platformMaps.pc)
 })
 
-test('旧 v40 存档补齐四份天际港，不改动其他地图、活动模式或自定义档案', () => {
+test('旧 v40 存档补齐四份天际港，不改动其他地图、活动模式或自定义档案', (t) => {
+  const now = Date.now()
+  t.mock.method(Date, 'now', () => now)
   const old = oldStore()
   old.activeModeId = 'my-mode'
   old.profiles.push({ ...clone(profileOf(old, 'winner-takes-all')), id: 'my-mode', name: '自定义' })
@@ -181,12 +197,12 @@ test('旧 v40 存档补齐四份天际港，不改动其他地图、活动模式
   const original = clone(old)
   const baseline = normalizeModeConfigStore({ ...old, version: 41 })
   const migrated = normalizeModeConfigStore(old)
-  assert.equal(migrated.version, 41)
+  assert.equal(migrated.version, currentStorageVersion)
   assert.equal(migrated.activeModeId, 'my-mode')
   assert.deepEqual(old, original)
   assert.deepEqual(profileOf(migrated, 'my-mode'), profileOf(baseline, 'my-mode'))
   for (const mode of modes) for (const platform of platforms) {
-    assert.equal(mapOf(migrated, mode, platform).stages.length, 3)
+    assert.equal(mapOf(migrated, mode, platform).stages.length, platform === 'pc' ? 4 : 3)
     const before = profileOf(baseline, mode).platformMaps[platform]
     const after = profileOf(migrated, mode).platformMaps[platform]
     for (const id of Object.keys(before).filter((id) => id !== 'skyport')) assert.deepEqual(after[id], before[id], `${mode}/${platform}/${id}`)
@@ -207,13 +223,17 @@ test('迁移保留已有天际港编辑，只为缺失模式从同端已有攻�
   }
   const migrated = normalizeModeConfigStore(old)
   for (const platform of platforms) {
-    assert.equal(mapOf(migrated, 'attack-defense', platform).notes, `${platform} 已编辑`)
-    assert.deepEqual(dataOf(mapOf(migrated, 'winner-takes-all', platform)), dataOf(mapOf(migrated, 'attack-defense', platform)))
+    assert.ok(mapOf(migrated, 'attack-defense', platform).notes.startsWith(`${platform} 已编辑`))
+    if (platform === 'mobile') assert.deepEqual(dataOf(mapOf(migrated, 'winner-takes-all', platform)), dataOf(mapOf(migrated, 'attack-defense', platform)))
+    else {
+      assert.deepEqual(mapOf(migrated, 'winner-takes-all', platform).spawns.map(({ uid, lat, lng }) => ({ uid, lat, lng })), mapOf(migrated, 'attack-defense', platform).spawns.map(({ uid, lat, lng }) => ({ uid, lat, lng })))
+      assert.equal(mapOf(migrated, 'winner-takes-all', platform).vehicleRefreshRules.length, 3)
+    }
   }
   mapOf(migrated, 'winner-takes-all', 'pc').notes = '胜者独立编辑'
   const reloaded = normalizeModeConfigStore(migrated)
   assert.equal(mapOf(reloaded, 'winner-takes-all', 'pc').notes, '胜者独立编辑')
-  assert.equal(mapOf(reloaded, 'attack-defense', 'pc').notes, 'pc 已编辑')
+  assert.ok(mapOf(reloaded, 'attack-defense', 'pc').notes.startsWith('pc 已编辑'))
 })
 
 test('旧存档迁移立即写回，后续启动保留独立编辑且不重复初始化', () => {
@@ -222,7 +242,7 @@ test('旧存档迁移立即写回，后续启动保留独立编辑且不重复�
   const before = writes
   const migrated = loadModeConfigStore()
   assert.equal(writes, before + 1)
-  assert.equal(JSON.parse(storage.get(MODE_CONFIG_STORAGE_KEY)).version, 41)
+  assert.equal(JSON.parse(storage.get(MODE_CONFIG_STORAGE_KEY)).version, currentStorageVersion)
   mapOf(migrated, 'winner-takes-all', 'mobile').notes = '手游胜者手动编辑'
   storage.set(MODE_CONFIG_STORAGE_KEY, JSON.stringify(migrated))
   const reloaded = loadModeConfigStore()

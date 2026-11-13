@@ -1,0 +1,330 @@
+{
+  "date": "2026-11-13",
+  "platform": "pc",
+  "MapID": 601,
+  "boatSource": "GuideVehicle",
+  "sourceTableSha256": "861c091cd3bd6f50f1f7ab6b7e7092e2c5c8d5fcb68134bbf0253130e054d282",
+  "sourceSceneSha256": "5fa129f187f5592bbe3225cb08ed29a3bdfd9f3d9da1c9e7bf64bf39cc743a51",
+  "updates": [
+    {
+      "ruleUid": "vehicle_refresh_rule_mstr2ka9_m",
+      "objective": "A",
+      "side": "attack",
+      "icon": "lstjp",
+      "trigger": {
+        "type": "tickets",
+        "value": 50
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_msu2ffnd_1",
+        "name": "A点载具刷新位置 1",
+        "lat": -92.0017607781982,
+        "lng": 67.62679118107059
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_pc_ascent_s1_fsv",
+        "name": "A点 FSV 刷新位置",
+        "lat": -88.73196,
+        "lng": 66.44004
+      },
+      "sourceActor": "Camp_ORV_S1_Attack",
+      "sourceSpawnerId": "Wheeltank_S2_Attack"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mstr2ka9_l",
+      "objective": "A",
+      "side": "attack",
+      "icon": "orvtjc",
+      "trigger": {
+        "type": "tickets",
+        "value": 135
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_msu2ffnd_1",
+        "name": "A点载具刷新位置 1",
+        "lat": -92.0017607781982,
+        "lng": 67.62679118107059
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_msu2ffnd_1",
+        "name": "A点载具刷新位置 1",
+        "lat": -90.88468,
+        "lng": 66.6654
+      },
+      "sourceActor": "Camp_ORV_S1_Attack2",
+      "sourceSpawnerId": "Camp_ORV_S1_Attack2"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mstr2ka9_n",
+      "objective": "B",
+      "side": "attack",
+      "icon": "orvtjc",
+      "trigger": {
+        "type": "tickets",
+        "value": 115
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_msu38cg3_3",
+        "name": "B点载具刷新位置 3",
+        "lat": -122.49235161970157,
+        "lng": 84.25424953033088
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_msu38cg3_3",
+        "name": "B点载具刷新位置 3",
+        "lat": -122.6741,
+        "lng": 84.41586
+      },
+      "sourceActor": "Camp_ORV_S2_Attack_1",
+      "sourceSpawnerId": "Camp_ORV_S2_Attack"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mstr4hzj_o",
+      "objective": "C",
+      "side": "attack",
+      "icon": "orvtjc",
+      "trigger": {
+        "type": "tickets",
+        "value": 115
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_msu2xox6_1",
+        "name": "C点载具刷新位置 2",
+        "lat": -129.43074576488033,
+        "lng": 182.9363747708659
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_msu2xox6_1",
+        "name": "C点载具刷新位置 2",
+        "lat": -130.76684,
+        "lng": 182.0986
+      },
+      "sourceActor": "Camp_ORV_S3_Attack_3",
+      "sourceSpawnerId": "Camp_ORV_S3_Attack"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_1",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5fghag_s",
+        "name": "A点载具刷新位置 11",
+        "lat": -79.55952868679054,
+        "lng": 27.99911056341912
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5fghag_s",
+        "name": "A点载具刷新位置 11",
+        "lat": -77.45412,
+        "lng": 30.67739
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline3",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_2",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5fgdkw_q",
+        "name": "A点载具刷新位置 10",
+        "lat": -75.24892702578548,
+        "lng": 30.872974061121326
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5fgdkw_q",
+        "name": "A点载具刷新位置 10",
+        "lat": -76.11466,
+        "lng": 32.88099
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline7",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_3",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5fg8vl_o",
+        "name": "A点载具刷新位置 9",
+        "lat": -76.6857942461205,
+        "lng": 34.68396696024817
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5fg8vl_o",
+        "name": "A点载具刷新位置 9",
+        "lat": -77.01106,
+        "lng": 35.16284
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline4_3",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_4",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5fg65b_m",
+        "name": "A点载具刷新位置 8",
+        "lat": -78.43502390565878,
+        "lng": 40.24426807536766
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5fg65b_m",
+        "name": "A点载具刷新位置 8",
+        "lat": -79.30786,
+        "lng": 38.35303
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline6_5",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_5",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5fg2gu_k",
+        "name": "A点载具刷新位置 7",
+        "lat": -81.43370332201013,
+        "lng": 34.68396696024817
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5fg2gu_k",
+        "name": "A点载具刷新位置 7",
+        "lat": -80.34494,
+        "lng": 33.6014
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline5_4",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_6",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5ffzom_i",
+        "name": "A点载具刷新位置 6",
+        "lat": -82.62068059098254,
+        "lng": 39.49456455422795
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5ffzom_i",
+        "name": "A点载具刷新位置 6",
+        "lat": -81.99956,
+        "lng": 36.79877
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline2_1",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_7",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5fftmy_g",
+        "name": "A点载具刷新位置 5",
+        "lat": -86.8063372763063,
+        "lng": 35.43367048138787
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5fftmy_g",
+        "name": "A点载具刷新位置 5",
+        "lat": -85.09054,
+        "lng": 34.12895
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline_0",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    },
+    {
+      "ruleUid": "vehicle_refresh_rule_mt5ff7ou_8",
+      "objective": "A",
+      "side": "attack",
+      "icon": "cfz",
+      "trigger": {
+        "type": "map-event",
+        "value": "无"
+      },
+      "legacyPoint": {
+        "uid": "vehicle_refresh_point_mt5ffpzm_e",
+        "name": "A点载具刷新位置 4",
+        "lat": -87.80589708175675,
+        "lng": 39.994366901654416
+      },
+      "point": {
+        "uid": "vehicle_refresh_point_mt5ffpzm_e",
+        "name": "A点载具刷新位置 4",
+        "lat": -86.06684,
+        "lng": 37.28557
+      },
+      "sourceActor": "BP_AutoVehicleSpawnerWithSpline8_7",
+      "coordinateSource": "GuideVehicle; selected by user; legacy UID retained by minimum-distance assignment"
+    }
+  ],
+  "newPoint": {
+    "uid": "vehicle_refresh_point_pc_ascent_s4_orv",
+    "name": "D点 ORV 刷新位置",
+    "lat": -151.62918,
+    "lng": 210.02646
+  },
+  "newRule": {
+    "uid": "vehicle_refresh_rule_pc_ascent_s4_orv_100",
+    "objective": "D",
+    "side": "attack",
+    "action": "refresh",
+    "trigger": {
+      "type": "tickets",
+      "value": 100
+    },
+    "vehicle": {
+      "name": "突击车",
+      "icon": "orvtjc",
+      "iconUrl": "/icons/vehicles/legend/nav_orvtjc.png",
+      "legendKey": "nav_orvtjc",
+      "badge": "突",
+      "category": "recon",
+      "cd": 80,
+      "num": 1,
+      "allowTeammate": true,
+      "cooldownKnown": false
+    },
+    "quantity": 1,
+    "refreshPointUid": "vehicle_refresh_point_pc_ascent_s4_orv",
+    "note": ""
+  },
+  "newRuleSourceActor": "Camp_ORV_S4_Attack2"
+}

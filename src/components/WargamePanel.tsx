@@ -1,3 +1,4 @@
+import { objectiveStateKey, readStageObjectiveValue, writeStageObjectiveValue } from '../utils/objectiveStates'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import type { BuildingUnit, BuildingUnitKind, FieldSupportDefinition, ModeVehicleRefreshRule, OperatorConnection, OperatorTeam, OperatorUnit, Side, TeamMarker, VehicleItem, WargameState } from '../types'
@@ -71,6 +72,7 @@ interface WargamePanelProps {
   onCreateRound: (copy: boolean) => void
   onDeleteRound: () => void
   objectiveNames: string[]
+  objectiveStageId: string
   vehicleRefreshRules: Omit<ModeVehicleRefreshRule, 'verification'>[]
   fieldSupports: import('../types').FieldSupportInstance[]
   onAddFieldSupport: (definition: FieldSupportDefinition, side: Side) => void
@@ -336,6 +338,7 @@ export default function WargamePanel({
   onCreateRound,
   onDeleteRound,
   objectiveNames,
+  objectiveStageId,
   vehicleRefreshRules,
   fieldSupports,
   onAddFieldSupport,
@@ -465,7 +468,7 @@ export default function WargamePanel({
     <div className="wargame-panel">
       {/* 控制条 */}
       <div className="wg-controls">
-        <label className="wg-round">阶段<select value={stageLabel.split(' · ')[0]} onChange={(event) => onStageChange(event.target.value)}>{stageOptions.map((stage) => <option key={stage.id} value={stage.id}>{stage.id}</option>)}</select></label>
+        <label className="wg-round">阶段<select value={objectiveStageId} onChange={(event) => onStageChange(event.target.value)}>{stageOptions.map((stage) => <option key={stage.id} value={stage.id}>{stage.id}</option>)}</select></label>
         <div className="wg-round">
           回合 <select value={wargame.round} onChange={(event) => onRoundChange(Math.max(1, Number(event.target.value)))}>{roundOptions.map((round) => <option key={round} value={round}>{round}</option>)}</select>
           <button
@@ -528,12 +531,25 @@ export default function WargamePanel({
             <label><span>比赛时间</span><input type="text" inputMode="numeric" value={matchTimeDraft} placeholder="00:00" onChange={(event) => setMatchTimeDraft(event.target.value)} onBlur={() => { const seconds = matchTimeDraft.trim() ? parseClockSeconds(matchTimeDraft) : null; updateBattleContext({ matchTimeSeconds: seconds }); setMatchTimeDraft(formatClockSeconds(seconds)) }} /></label>
           </div>
           {objectiveNames.length > 0 ? <div className="wg-objective-state-summary">{objectiveNames.map((name) => {
-            const state = wargame.battleContext.objectiveStates[name]
+            const state = readStageObjectiveValue(wargame.battleContext.objectiveStates, objectiveStageId, name, objectiveStageId)
             const owner = state?.owner ?? 'neutral'
             const label = owner === 'neutral' ? '中立' : owner === view ? '我方' : '敌方'
             return <span key={name} className={owner === 'neutral' ? 'neutral' : owner === view ? 'own' : 'enemy'}><b>{name}</b>{label}{state?.capturingSide ? ` · ${state.capturingSide === view ? '我方' : '敌方'}占领 ${Math.round(state.progress)}%` : ''}</span>
           })}</div> : null}
-          {refreshCountdownObjectives.map((objective) => <label className="wg-countdown-field" key={objective}><span>{objective}剩余倒计时</span><input type="text" inputMode="numeric" value={countdownDrafts[objective] ?? ''} placeholder="00:00" onChange={(event) => setCountdownDrafts((current) => ({ ...current, [objective]: event.target.value }))} onBlur={() => { const draft = countdownDrafts[objective] ?? ''; const seconds = draft.trim() ? parseClockSeconds(draft) : null; updateBattleContext({ objectiveCountdowns: { ...wargame.battleContext.objectiveCountdowns, [objective]: seconds } }); setCountdownDrafts((current) => ({ ...current, [objective]: formatClockSeconds(seconds) })) }} /></label>)}
+          {refreshCountdownObjectives.map((objective) => {
+            const key = objectiveStateKey(objectiveStageId, objective)
+            const value = countdownDrafts[key] ?? formatClockSeconds(readStageObjectiveValue(wargame.battleContext.objectiveCountdowns, objectiveStageId, objective, objectiveStageId) ?? null)
+            return <label className="wg-countdown-field" key={key}>
+              <span>{objective}剩余倒计时</span>
+              <input type="text" inputMode="numeric" value={value} placeholder="00:00"
+                onChange={(event) => setCountdownDrafts((current) => ({ ...current, [key]: event.target.value }))}
+                onBlur={() => {
+                  const seconds = value.trim() ? parseClockSeconds(value) : null
+                  updateBattleContext({ objectiveCountdowns: writeStageObjectiveValue(wargame.battleContext.objectiveCountdowns, objectiveStageId, objective, seconds) })
+                  setCountdownDrafts((current) => ({ ...current, [key]: formatClockSeconds(seconds) }))
+                }} />
+            </label>
+          })}
           {refreshEvents.length > 0 ? <div className="wg-event-grid">{refreshEvents.map((eventName) => {
             const active = wargame.battleContext.mapEvents.includes(eventName)
             return <button type="button" key={eventName} className={active ? 'active' : ''} onClick={() => updateBattleContext({ mapEvents: active ? wargame.battleContext.mapEvents.filter((item) => item !== eventName) : [...wargame.battleContext.mapEvents, eventName] })}><i className={`fa-solid ${active ? 'fa-circle-check' : 'fa-circle'}`} />{eventName}</button>
@@ -699,7 +715,7 @@ export default function WargamePanel({
             <button type="button" className={`veh-own-opt enemy ${!customOwn ? 'active' : ''}`} onClick={() => onCustomOwnChange(false)}><span className="own-dot enemy" />敌方</button>
           </div>
           <div className="wg-support-list">
-            {FIELD_SUPPORTS.map((support) => <button type="button" key={support.id} className={`support-${support.id}${support.id === 'vehicle-airdrop' ? ' vehicle-airdrop' : ''}`} disabled={!wargame.enabled} onClick={() => onAddFieldSupport(support, customOwn ? view : (view === 'attack' ? 'defense' : 'attack'))}>
+            {FIELD_SUPPORTS.map((support) => <button type="button" key={support.id} className={`support-${support.id}${support.id === 'vehicle-airdrop' ? ' vehicle-airdrop' : ''}`} title={support.details ? [support.name, ...support.details, support.detailNote].filter(Boolean).join('\n') : support.description} disabled={!wargame.enabled} onClick={() => onAddFieldSupport(support, customOwn ? view : (view === 'attack' ? 'defense' : 'attack'))}>
               <img src={support.iconUrl} alt="" draggable={false} /><span><b>{support.name}</b><small>{support.description}</small></span><em>部署</em>
             </button>)}
           </div>

@@ -1,0 +1,3938 @@
+{
+  "format": "pc-infantry-spawn-candidates-v1",
+  "mapId": "skyport",
+  "platform": "pc",
+  "modeIds": [
+    "attack-defense",
+    "winner-takes-all"
+  ],
+  "stateMappingVerified": false,
+  "sourceScope": "Shared PC level candidate groups; effective per-mode selection is unverified.",
+  "sources": [
+    {
+      "file": "source/PC提取资源/人员部署与复活_2026-11-13/天际港/据点候选组与基地关联.json",
+      "sha256": "84ca2438d7c0c4a40bc932c4aaeb58abb11b3903dafacbd45aa0aa8888dd51d7"
+    },
+    {
+      "file": "source/PC提取资源/人员部署与复活_2026-11-13/天际港/步兵候选出生区.json",
+      "sha256": "1be05422fe798ee38357a88d0a5c2155959d7005ab0a15597d999228df503267"
+    },
+    {
+      "file": "source/PC提取资源/天际港/热更新提取_2026-11-12_1836/区域与据点/PC关卡提取.json",
+      "sha256": "123404f402704c5d3bcb3f3a1bbd7dd4dcca92c08ba27708f8a5e6616f6f63e6"
+    },
+    {
+      "file": "src/config/skyportPcHotfixData.json",
+      "sha256": "c53692b36b7e9cafcf6db40d65d701251f42314fde9e503d53e477d6a37d7dc6"
+    },
+    {
+      "file": "source/PC提取资源/天际港/热更新提取_2026-11-12_1836/区域与据点/底图坐标配置.json",
+      "sha256": "30ef5f005909b45ce9c1b3cba6864fd8ac84cf1613b4f05fc7f26c654af1b114"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "Objective_PointA0",
+      "sourceStageId": "S1",
+      "stageId": "S1",
+      "icon": "q_jd_a1",
+      "marker": [
+        -126.75756,
+        160.86792
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S0_Attack_In1",
+            "Spawn_S0_Attack_In2",
+            "Spawn_S0_Attack_In3",
+            "Spawn_S0_Attack_In4"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S0_Attack_Out1",
+            "Spawn_S0_Attack_Out2",
+            "Spawn_S0_Attack_Out3"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S0_Defend_In1",
+            "Spawn_S0_Defend_In2",
+            "Spawn_S0_Defend_In3"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S0_Defend_Out1",
+            "Spawn_S0_Defend_Out2",
+            "Spawn_S0_Defend_Out3"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    },
+    {
+      "id": "Objective_PointA1_1",
+      "sourceStageId": "S1",
+      "stageId": "S1",
+      "icon": "q_jd_a2",
+      "marker": [
+        -118.23653,
+        148.10987
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S1A1_Attack_In1",
+            "Spawn_S1A1_Attack_In2",
+            "Spawn_S1A1_Attack_In3",
+            "Spawn_S1A1_Attack_In4"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S1A_Attack_Out1_1"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S1A1_Defend_In1",
+            "Spawn_S1A1_Defend_In2",
+            "Spawn_S1A1_Defend_In3",
+            "Spawn_S1A_Defend_In4"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S1A1_Defend_Out1",
+            "Spawn_S1A1_Defend_Out4",
+            "Spawn_S1A1_Defend_Out6",
+            "Spawn_S1A_Defend_Out4",
+            "Spawn_S1A_Defend_Out5"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    },
+    {
+      "id": "Objective_PointB1",
+      "sourceStageId": "S2",
+      "stageId": "S2",
+      "icon": "q_jd_b1",
+      "marker": [
+        -130.83884,
+        122.47493
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Attack_In1",
+            "Spawn_S2B1_Attack_In2",
+            "Spawn_S2B1_Attack_In3_22",
+            "Spawn_S2B1_Attack_In4_24",
+            "Spawn_S2B1_Attack_In5_26"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Attack_Out1",
+            "Spawn_S2B1_Attack_Out2_29",
+            "Spawn_S2B1_Attack_Out3_31",
+            "Spawn_S2B1_Attack_Out4_33",
+            "Spawn_S2B1_Attack_Out5_35"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Defend_In1",
+            "Spawn_S2B1_Defend_In2",
+            "Spawn_S2B1_Defend_In3_39",
+            "Spawn_S2B1_Defend_In4",
+            "Spawn_S2B1_Defend_In5_42"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Defend_Out1",
+            "Spawn_S2B1_Defend_Out2",
+            "Spawn_S2B1_Defend_Out3_46",
+            "Spawn_S2B1_Defend_Out4_48",
+            "Spawn_S2B1_Defend_Out5_50"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    },
+    {
+      "id": "Objective_PointB2",
+      "sourceStageId": "S2",
+      "stageId": "S2",
+      "icon": "q_jd_b2",
+      "marker": [
+        -120.41409,
+        109.59688
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Attack_In1",
+            "Spawn_S2B2_Attack_In2",
+            "Spawn_S2B2_Attack_In3",
+            "Spawn_S2B2_Attack_In4",
+            "Spawn_S2B2_Attack_In5"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Attack_Out1",
+            "Spawn_S2B2_Attack_Out2",
+            "Spawn_S2B2_Attack_Out3",
+            "Spawn_S2B2_Attack_Out4",
+            "Spawn_S2B2_Attack_Out5"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Defend_In1",
+            "Spawn_S2B2_Defend_In2",
+            "Spawn_S2B2_Defend_In3",
+            "Spawn_S2B2_Defend_In4",
+            "Spawn_S2B2_Defend_In5"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Defend_Out1",
+            "Spawn_S2B2_Defend_Out2",
+            "Spawn_S2B2_Defend_Out3",
+            "Spawn_S2B2_Defend_Out4",
+            "Spawn_S2B2_Defend_Out5"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    },
+    {
+      "id": "Objective_PointC1",
+      "sourceStageId": "S3",
+      "stageId": "S3",
+      "icon": "q_jd_c1",
+      "marker": [
+        -94.59125,
+        123.16668
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S3C1_Attack_In",
+            "Spawn_S3C1_Attack_In2",
+            "Spawn_S2B1_Attack_In3",
+            "Spawn_S2B1_Attack_In4",
+            "Spawn_S2B1_Attack_In5",
+            "Spawn_S2B1_Attack_In6",
+            "Spawn_S2B1_Attack_In7",
+            "Spawn_S2B1_Attack_In8"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Attack_Out",
+            "Spawn_S2B1_Attack_Out2",
+            "Spawn_S2B1_Attack_Out3",
+            "Spawn_S2B1_Attack_Out4",
+            "Spawn_S2B1_Attack_Out5"
+          ],
+          "unresolvedAreaIds": [
+            "Spawn_S2B1_Attack_Out6"
+          ]
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Defend_In",
+            "Spawn_S2B1_Defend_In3",
+            "Spawn_S2B1_Defend_In5",
+            "Spawn_S2B1_Defend_In7",
+            "Spawn_S2B1_Defend_In8"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B1_Defend_Out3",
+            "Spawn_S2B1_Defend_Out4",
+            "Spawn_S2B1_Defend_Out5",
+            "Spawn_S2B1_Defend_Out6",
+            "Spawn_S2B1_Defend_Out7",
+            "Spawn_S2B1_Defend_Out8"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    },
+    {
+      "id": "Objective_PointC2",
+      "sourceStageId": "S3",
+      "stageId": "S3",
+      "icon": "q_jd_c2",
+      "marker": [
+        -81.9118,
+        101.1159
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Attack_In13",
+            "Spawn_S2B2_Attack_In11",
+            "Spawn_S2B2_Attack_In14",
+            "Spawn_S2B2_Attack_In10",
+            "Spawn_S2B2_Attack_In9"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Attack_Out14",
+            "Spawn_S2B2_Attack_Out13",
+            "Spawn_S2B2_Attack_Out12",
+            "Spawn_S2B2_Attack_Out8",
+            "Spawn_S2B2_Attack_Out10"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Defend_In9",
+            "Spawn_S2B2_Defend_In16",
+            "Spawn_S2B2_Defend_In13",
+            "Spawn_S2B2_Defend_In11",
+            "Spawn_S2B2_Defend_In15"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S2B2_Defend_Out11",
+            "Spawn_S2B2_Defend_Out10",
+            "Spawn_S2B2_Defend_Out14",
+            "Spawn_S3C2_Defend_Out4",
+            "Spawn_S3C2_Defend_Out5"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    },
+    {
+      "id": "Objective_PointC3",
+      "sourceStageId": "S3",
+      "stageId": "S4",
+      "icon": "q_jd_c3",
+      "marker": [
+        -82.77532,
+        102.83321
+      ],
+      "groups": [
+        {
+          "side": "attack",
+          "kind": "inner",
+          "sourceField": "Camp0InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S3C3_Attack_In1",
+            "Spawn_S3C3_Attack_In2"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "attack",
+          "kind": "outer",
+          "sourceField": "Camp0OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S3C3_Attack_Out1",
+            "Spawn_S3C3_Attack_Out2_6",
+            "Spawn_S3C3_Attack_Out3_8"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "inner",
+          "sourceField": "Camp1InnerSpawnAreas",
+          "areaIds": [
+            "Spawn_S3C3_Defend_In1",
+            "Spawn_S3C3_Defend_In2",
+            "Spawn_S3C3_Defend_In3",
+            "Spawn_S3C3_Defend_In4",
+            "Spawn_S3C3_Defend_In5"
+          ],
+          "unresolvedAreaIds": []
+        },
+        {
+          "side": "defense",
+          "kind": "outer",
+          "sourceField": "Camp1OuterSpawnAreas",
+          "areaIds": [
+            "Spawn_S3C3_Defend_Out1",
+            "Spawn_S3C3_Defend_Out2",
+            "Spawn_S3C3_Defend_Out3",
+            "Spawn_S3C3_Defend_Out4",
+            "Spawn_S3C3_Defend_Out5"
+          ],
+          "unresolvedAreaIds": []
+        }
+      ]
+    }
+  ],
+  "bases": [
+    {
+      "modeId": "attack-defense",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+      "side": "attack",
+      "marker": [
+        -177.952,
+        209.915
+      ],
+      "sourceHubActor": "S0_Attack_Hub_Mid",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [],
+      "areaIds": [
+        "BaseSpawn_S0_Attack_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+      "side": "attack",
+      "marker": [
+        -183.429,
+        182.264
+      ],
+      "sourceHubActor": "S0_Attack_Hub_Up",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [],
+      "areaIds": [
+        "BaseSpawn_S0_Attack_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+      "side": "defense",
+      "marker": [
+        -130.467,
+        117.397
+      ],
+      "sourceHubActor": "S1_Defend_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S1_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S1_Defend_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+      "side": "defense",
+      "marker": [
+        -110.476,
+        114.955
+      ],
+      "sourceHubActor": "S1_Defend_Hub_UP",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S1_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S1_Defend_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+      "side": "attack",
+      "marker": [
+        -131.01196,
+        141.21781
+      ],
+      "sourceHubActor": "S2_Attack_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Attack_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+      "side": "attack",
+      "marker": [
+        -116.64527,
+        140.25375
+      ],
+      "sourceHubActor": "S2_Attack_Hub_Up_2",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Attack_Up_5"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+      "side": "defense",
+      "marker": [
+        -99.33238,
+        115.23086
+      ],
+      "sourceHubActor": "S2_Defend_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Defend_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+      "side": "defense",
+      "marker": [
+        -99.20229,
+        92.94385
+      ],
+      "sourceHubActor": "S2_Defend_Hub_Top",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Defend_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S2",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s2_attack_hub_mid_4",
+      "side": "attack",
+      "marker": [
+        -124.58957,
+        140.25375
+      ],
+      "sourceHubActor": "S2_Attack_Hub_Mid_4",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Attack_MID"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+      "side": "attack",
+      "marker": [
+        -111.64493,
+        116.41187
+      ],
+      "sourceHubActor": "S3_Attack_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+      "side": "attack",
+      "marker": [
+        -111.57493,
+        134.80803
+      ],
+      "sourceHubActor": "S3_Attack_Hub_Mid",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_MID"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+      "side": "attack",
+      "marker": [
+        -99.34298,
+        148.02029
+      ],
+      "sourceHubActor": "S3_Attack_Hub_Up",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+      "side": "defense",
+      "marker": [
+        -63.20583,
+        110.90233
+      ],
+      "sourceHubActor": "S3_Defend_Hub_MID",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_MID"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+      "side": "defense",
+      "marker": [
+        -64.85998,
+        92.72493
+      ],
+      "sourceHubActor": "S3_Defend_Hub_UP",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S3",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_down",
+      "side": "defense",
+      "marker": [
+        -75.37808,
+        83.866365
+      ],
+      "sourceHubActor": "S3_Defend_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+      "side": "attack",
+      "marker": [
+        -95.11628,
+        124.55847
+      ],
+      "sourceHubActor": "S3_Attack_Hub_AfterBigevent",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_AfterBigevent"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent2",
+      "side": "attack",
+      "marker": [
+        -99.49529,
+        109.51899
+      ],
+      "sourceHubActor": "S3_Attack_Hub_AfterBigevent2",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_AfterBigevent2"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent",
+      "side": "defense",
+      "marker": [
+        -72.29892,
+        106.57563
+      ],
+      "sourceHubActor": "S3_Defend_Hub_AfterBigevent",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_AfterBigevent"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "attack-defense",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2",
+      "side": "defense",
+      "marker": [
+        -74.80296,
+        96.15995
+      ],
+      "sourceHubActor": "S3_Defend_Hub_AfterBigevent2",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_AfterBigevent2"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_attack_ytnfab",
+      "side": "attack",
+      "marker": [
+        -177.952,
+        209.915
+      ],
+      "sourceHubActor": "S0_Attack_Hub_Mid",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [],
+      "areaIds": [
+        "BaseSpawn_S0_Attack_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_attack_6jug1a",
+      "side": "attack",
+      "marker": [
+        -183.429,
+        182.264
+      ],
+      "sourceHubActor": "S0_Attack_Hub_Up",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [],
+      "areaIds": [
+        "BaseSpawn_S0_Attack_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_defense_ssgumn",
+      "side": "defense",
+      "marker": [
+        -130.467,
+        117.397
+      ],
+      "sourceHubActor": "S1_Defend_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S1_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S1_Defend_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S1",
+      "spawnUid": "spawn_ad_pc_skyport_s1_defense_13rneug",
+      "side": "defense",
+      "marker": [
+        -110.476,
+        114.955
+      ],
+      "sourceHubActor": "S1_Defend_Hub_UP",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S1_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S1_Defend_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_attack_104zqqq",
+      "side": "attack",
+      "marker": [
+        -131.01196,
+        141.21781
+      ],
+      "sourceHubActor": "S2_Attack_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Attack_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_attack_i8ti2y",
+      "side": "attack",
+      "marker": [
+        -116.64527,
+        140.25375
+      ],
+      "sourceHubActor": "S2_Attack_Hub_Up_2",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Attack_Up_5"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_defense_1hf3ly1",
+      "side": "defense",
+      "marker": [
+        -99.33238,
+        115.23086
+      ],
+      "sourceHubActor": "S2_Defend_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Defend_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S2",
+      "spawnUid": "spawn_ad_pc_skyport_s2_defense_179bujk",
+      "side": "defense",
+      "marker": [
+        -99.20229,
+        92.94385
+      ],
+      "sourceHubActor": "S2_Defend_Hub_Top",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Defend_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S2",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s2_attack_hub_mid_4",
+      "side": "attack",
+      "marker": [
+        -124.58957,
+        140.25375
+      ],
+      "sourceHubActor": "S2_Attack_Hub_Mid_4",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S2_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S2_Attack_MID"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_attack_97pmt3",
+      "side": "attack",
+      "marker": [
+        -111.64493,
+        116.41187
+      ],
+      "sourceHubActor": "S3_Attack_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_attack_ty75ls",
+      "side": "attack",
+      "marker": [
+        -111.57493,
+        134.80803
+      ],
+      "sourceHubActor": "S3_Attack_Hub_Mid",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_MID"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_attack_19ax5ru",
+      "side": "attack",
+      "marker": [
+        -99.34298,
+        148.02029
+      ],
+      "sourceHubActor": "S3_Attack_Hub_Up",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_defense_198tcf4",
+      "side": "defense",
+      "marker": [
+        -63.20583,
+        110.90233
+      ],
+      "sourceHubActor": "S3_Defend_Hub_MID",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_MID"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S3",
+      "spawnUid": "spawn_ad_pc_skyport_s3_defense_8u8mqf",
+      "side": "defense",
+      "marker": [
+        -64.85998,
+        92.72493
+      ],
+      "sourceHubActor": "S3_Defend_Hub_UP",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_UP"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S3",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_down",
+      "side": "defense",
+      "marker": [
+        -75.37808,
+        83.866365
+      ],
+      "sourceHubActor": "S3_Defend_Hub_Down",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_DOWN"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent",
+      "side": "attack",
+      "marker": [
+        -95.11628,
+        124.55847
+      ],
+      "sourceHubActor": "S3_Attack_Hub_AfterBigevent",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_AfterBigevent"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_attack_hub_afterbigevent2",
+      "side": "attack",
+      "marker": [
+        -99.49529,
+        109.51899
+      ],
+      "sourceHubActor": "S3_Attack_Hub_AfterBigevent2",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Attack"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Attack_AfterBigevent2"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent",
+      "side": "defense",
+      "marker": [
+        -72.29892,
+        106.57563
+      ],
+      "sourceHubActor": "S3_Defend_Hub_AfterBigevent",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_AfterBigevent"
+      ],
+      "unresolvedAreaIds": []
+    },
+    {
+      "modeId": "winner-takes-all",
+      "stageId": "S4",
+      "spawnUid": "spawn_pc_skyport_hotfix565_s3_defend_hub_afterbigevent2",
+      "side": "defense",
+      "marker": [
+        -74.80296,
+        96.15995
+      ],
+      "sourceHubActor": "S3_Defend_Hub_AfterBigevent2",
+      "sourceField": "SpawnAreas",
+      "sourceCampActors": [
+        "Base_S3_Defend"
+      ],
+      "areaIds": [
+        "BaseSpawn_S3_Defend_AfterBigevent2"
+      ],
+      "unresolvedAreaIds": []
+    }
+  ],
+  "areas": [
+    {
+      "id": "BaseSpawn_S0_Attack_DOWN",
+      "points": [
+        [
+          -195.173529,
+          208.248909
+        ],
+        [
+          -195.237409,
+          209.060305
+        ],
+        [
+          -195.978275,
+          209.101728
+        ],
+        [
+          -196.119567,
+          208.471603
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S0_Attack_UP",
+      "points": [
+        [
+          -194.1396,
+          206.155686
+        ],
+        [
+          -193.739129,
+          207.001843
+        ],
+        [
+          -194.816173,
+          207.463244
+        ],
+        [
+          -195.146258,
+          206.654004
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S1_Defend_DOWN",
+      "points": [
+        [
+          -128.98287,
+          127.228595
+        ],
+        [
+          -129.51294,
+          127.355825
+        ],
+        [
+          -129.84932,
+          126.428135
+        ],
+        [
+          -129.010605,
+          126.343585
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S1_Defend_UP",
+      "points": [
+        [
+          -117.418366,
+          127.886258
+        ],
+        [
+          -118.183669,
+          127.867853
+        ],
+        [
+          -118.073681,
+          126.947823
+        ],
+        [
+          -117.321794,
+          126.954799
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S2_Attack_DOWN",
+      "points": [
+        [
+          -131.24103,
+          138.425348
+        ],
+        [
+          -130.47854,
+          138.312921
+        ],
+        [
+          -130.437116,
+          139.053786
+        ],
+        [
+          -131.08814,
+          139.102488
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S2_Attack_MID",
+      "points": [
+        [
+          -123.575895,
+          137.900877
+        ],
+        [
+          -122.643279,
+          137.819725
+        ],
+        [
+          -122.593739,
+          138.561215
+        ],
+        [
+          -123.472579,
+          138.589395
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S2_Attack_Up_5",
+      "points": [
+        [
+          -116.588675,
+          136.363368
+        ],
+        [
+          -115.826185,
+          136.250941
+        ],
+        [
+          -115.784761,
+          136.991806
+        ],
+        [
+          -116.435785,
+          137.040508
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S2_Defend_DOWN",
+      "points": [
+        [
+          -101.790197,
+          115.943841
+        ],
+        [
+          -101.823457,
+          115.399731
+        ],
+        [
+          -100.854928,
+          115.265561
+        ],
+        [
+          -100.953697,
+          115.980821
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S2_Defend_UP",
+      "points": [
+        [
+          -109.560917,
+          93.652084
+        ],
+        [
+          -110.135343,
+          93.146057
+        ],
+        [
+          -109.459703,
+          92.511973
+        ],
+        [
+          -108.888208,
+          93.00062
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Attack_AfterBigevent",
+      "points": [
+        [
+          -94.006877,
+          124.939257
+        ],
+        [
+          -93.442947,
+          125.3195
+        ],
+        [
+          -93.825298,
+          125.831664
+        ],
+        [
+          -94.321131,
+          125.462645
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Attack_AfterBigevent2",
+      "points": [
+        [
+          -101.889568,
+          109.699933
+        ],
+        [
+          -101.213095,
+          109.770543
+        ],
+        [
+          -101.309893,
+          110.402313
+        ],
+        [
+          -101.920983,
+          110.309608
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Attack_DOWN",
+      "points": [
+        [
+          -112.681714,
+          117.320445
+        ],
+        [
+          -112.388659,
+          118.060185
+        ],
+        [
+          -113.164684,
+          118.451748
+        ],
+        [
+          -113.465931,
+          117.769555
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Attack_MID",
+      "points": [
+        [
+          -113.842002,
+          132.407813
+        ],
+        [
+          -113.131442,
+          132.552123
+        ],
+        [
+          -113.211532,
+          133.298033
+        ],
+        [
+          -113.877672,
+          133.191203
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Attack_UP",
+      "points": [
+        [
+          -99.563447,
+          147.853957
+        ],
+        [
+          -98.999517,
+          148.2342
+        ],
+        [
+          -99.381868,
+          148.746364
+        ],
+        [
+          -99.877701,
+          148.377345
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Defend_AfterBigevent",
+      "points": [
+        [
+          -77.898934,
+          106.222427
+        ],
+        [
+          -78.152479,
+          105.591304
+        ],
+        [
+          -77.54865,
+          105.381796
+        ],
+        [
+          -77.345181,
+          105.965428
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Defend_AfterBigevent2",
+      "points": [
+        [
+          -71.558262,
+          97.224848
+        ],
+        [
+          -72.086905,
+          96.796901
+        ],
+        [
+          -71.661371,
+          96.320011
+        ],
+        [
+          -71.199587,
+          96.730841
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Defend_DOWN",
+      "points": [
+        [
+          -76.13665,
+          83.839591
+        ],
+        [
+          -76.152307,
+          83.324216
+        ],
+        [
+          -75.396505,
+          83.301816
+        ],
+        [
+          -75.381863,
+          83.810992
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Defend_MID",
+      "points": [
+        [
+          -63.194702,
+          112.634465
+        ],
+        [
+          -62.809966,
+          112.291194
+        ],
+        [
+          -62.306988,
+          112.855773
+        ],
+        [
+          -62.687627,
+          113.194282
+        ]
+      ]
+    },
+    {
+      "id": "BaseSpawn_S3_Defend_UP",
+      "points": [
+        [
+          -62.867419,
+          94.337441
+        ],
+        [
+          -63.274403,
+          94.021007
+        ],
+        [
+          -62.888248,
+          93.525403
+        ],
+        [
+          -62.486707,
+          93.838833
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_In1",
+      "points": [
+        [
+          -129.40972,
+          161.08499
+        ],
+        [
+          -129.12812,
+          161.165641
+        ],
+        [
+          -129.40972,
+          161.21299
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_In2",
+      "points": [
+        [
+          -128.50348,
+          160.6196
+        ],
+        [
+          -128.22188,
+          160.700251
+        ],
+        [
+          -128.50348,
+          160.7476
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_In3",
+      "points": [
+        [
+          -129.5902,
+          160.52872
+        ],
+        [
+          -129.3086,
+          160.609371
+        ],
+        [
+          -129.5902,
+          160.65672
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_In4",
+      "points": [
+        [
+          -128.25644,
+          158.33608
+        ],
+        [
+          -127.97484,
+          158.416731
+        ],
+        [
+          -128.25644,
+          158.46408
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_Out1",
+      "points": [
+        [
+          -124.37977,
+          168.75703
+        ],
+        [
+          -124.659124,
+          168.668914
+        ],
+        [
+          -124.376364,
+          168.629075
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_Out2",
+      "points": [
+        [
+          -124.52357,
+          169.13927
+        ],
+        [
+          -124.802924,
+          169.051154
+        ],
+        [
+          -124.520164,
+          169.011315
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Attack_Out3",
+      "points": [
+        [
+          -125.37616,
+          168.84317
+        ],
+        [
+          -125.655514,
+          168.755054
+        ],
+        [
+          -125.372754,
+          168.715215
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Defend_In1",
+      "points": [
+        [
+          -126.739515,
+          158.28519
+        ],
+        [
+          -126.792792,
+          158.573226
+        ],
+        [
+          -126.866925,
+          158.297464
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Defend_In2",
+      "points": [
+        [
+          -126.786435,
+          158.89266
+        ],
+        [
+          -126.839712,
+          159.180696
+        ],
+        [
+          -126.913845,
+          158.904934
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Defend_In3",
+      "points": [
+        [
+          -127.155835,
+          158.32148
+        ],
+        [
+          -127.209112,
+          158.609516
+        ],
+        [
+          -127.283245,
+          158.333754
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Defend_Out1",
+      "points": [
+        [
+          -128.86093,
+          149.53379
+        ],
+        [
+          -128.904383,
+          149.823471
+        ],
+        [
+          -128.987849,
+          149.550389
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Defend_Out2",
+      "points": [
+        [
+          -128.255055,
+          149.34461
+        ],
+        [
+          -128.298508,
+          149.634291
+        ],
+        [
+          -128.381974,
+          149.361209
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S0_Defend_Out3",
+      "points": [
+        [
+          -129.230925,
+          149.36513
+        ],
+        [
+          -129.274378,
+          149.654811
+        ],
+        [
+          -129.357844,
+          149.381729
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Attack_In1",
+      "points": [
+        [
+          -122.88456,
+          150.118539
+        ],
+        [
+          -122.918603,
+          150.864953
+        ],
+        [
+          -123.327278,
+          150.828576
+        ],
+        [
+          -123.291847,
+          150.109669
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Attack_In2",
+      "points": [
+        [
+          -123.625917,
+          144.927013
+        ],
+        [
+          -123.701634,
+          145.295315
+        ],
+        [
+          -123.985649,
+          145.338044
+        ],
+        [
+          -123.96804,
+          144.87058
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Attack_In3",
+      "points": [
+        [
+          -125.550031,
+          148.554427
+        ],
+        [
+          -126.036022,
+          149.25859
+        ],
+        [
+          -126.449618,
+          148.921179
+        ],
+        [
+          -125.955716,
+          148.283308
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Attack_In4",
+      "points": [
+        [
+          -119.423986,
+          149.250657
+        ],
+        [
+          -119.909977,
+          149.95482
+        ],
+        [
+          -120.323573,
+          149.617409
+        ],
+        [
+          -119.834892,
+          148.99447
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Defend_In1",
+      "points": [
+        [
+          -124.534146,
+          150.483623
+        ],
+        [
+          -124.286296,
+          149.828366
+        ],
+        [
+          -123.870077,
+          149.983252
+        ],
+        [
+          -124.074403,
+          150.66793
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Defend_In2",
+      "points": [
+        [
+          -121.922828,
+          146.412504
+        ],
+        [
+          -121.873797,
+          145.788715
+        ],
+        [
+          -121.384187,
+          145.810015
+        ],
+        [
+          -121.428658,
+          146.456745
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Defend_In3",
+      "points": [
+        [
+          -122.508758,
+          150.250572
+        ],
+        [
+          -122.192082,
+          149.82358
+        ],
+        [
+          -121.818295,
+          150.094801
+        ],
+        [
+          -122.099815,
+          150.540648
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Defend_Out1",
+      "points": [
+        [
+          -127.238662,
+          134.003106
+        ],
+        [
+          -127.744879,
+          133.927524
+        ],
+        [
+          -127.600248,
+          133.205364
+        ],
+        [
+          -127.130841,
+          133.244828
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Defend_Out4",
+      "points": [
+        [
+          -123.312691,
+          131.7412
+        ],
+        [
+          -123.942822,
+          131.799059
+        ],
+        [
+          -123.96716,
+          130.999358
+        ],
+        [
+          -123.40058,
+          130.929008
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A1_Defend_Out6",
+      "points": [
+        [
+          -117.576624,
+          133.395427
+        ],
+        [
+          -118.206186,
+          133.331689
+        ],
+        [
+          -118.072332,
+          132.542423
+        ],
+        [
+          -117.502741,
+          132.581737
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A_Attack_Out1_1",
+      "points": [
+        [
+          -121.09989,
+          159.49077
+        ],
+        [
+          -120.81829,
+          159.571421
+        ],
+        [
+          -121.09989,
+          159.61877
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A_Defend_In4",
+      "points": [
+        [
+          -117.82148,
+          149.36451
+        ],
+        [
+          -117.53988,
+          149.445161
+        ],
+        [
+          -117.82148,
+          149.49251
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A_Defend_Out4",
+      "points": [
+        [
+          -129.955035,
+          138.55417
+        ],
+        [
+          -129.876339,
+          138.272017
+        ],
+        [
+          -129.827038,
+          138.553282
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S1A_Defend_Out5",
+      "points": [
+        [
+          -129.07941,
+          138.05419
+        ],
+        [
+          -128.79781,
+          138.134841
+        ],
+        [
+          -129.07941,
+          138.18219
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In1",
+      "points": [
+        [
+          -131.797035,
+          124.31071
+        ],
+        [
+          -132.078635,
+          124.23006
+        ],
+        [
+          -131.797035,
+          124.18271
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In2",
+      "points": [
+        [
+          -132.09942,
+          123.99035
+        ],
+        [
+          -132.38102,
+          123.9097
+        ],
+        [
+          -132.09942,
+          123.86235
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In3",
+      "points": [
+        [
+          -94.971601,
+          125.243209
+        ],
+        [
+          -95.353991,
+          125.463059
+        ],
+        [
+          -95.576111,
+          125.050569
+        ],
+        [
+          -95.177791,
+          124.847339
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In3_22",
+      "points": [
+        [
+          -131.799945,
+          123.78967
+        ],
+        [
+          -132.081545,
+          123.70902
+        ],
+        [
+          -131.799945,
+          123.66167
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In4",
+      "points": [
+        [
+          -96.685024,
+          122.13895
+        ],
+        [
+          -96.692147,
+          121.410993
+        ],
+        [
+          -96.274578,
+          121.430964
+        ],
+        [
+          -96.269492,
+          122.128331
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In4_24",
+      "points": [
+        [
+          -132.74424,
+          123.0825
+        ],
+        [
+          -133.02584,
+          123.00185
+        ],
+        [
+          -132.74424,
+          122.9545
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In5",
+      "points": [
+        [
+          -96.940715,
+          125.758616
+        ],
+        [
+          -96.966893,
+          126.486136
+        ],
+        [
+          -97.383113,
+          126.447087
+        ],
+        [
+          -97.356305,
+          125.750217
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In5_26",
+      "points": [
+        [
+          -132.29766,
+          122.69857
+        ],
+        [
+          -132.57926,
+          122.61792
+        ],
+        [
+          -132.29766,
+          122.57057
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In6",
+      "points": [
+        [
+          -94.08238,
+          127.970548
+        ],
+        [
+          -94.545724,
+          128.532264
+        ],
+        [
+          -94.851876,
+          128.249073
+        ],
+        [
+          -94.393893,
+          127.711363
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In7",
+      "points": [
+        [
+          -93.295523,
+          122.052514
+        ],
+        [
+          -92.894147,
+          122.606635
+        ],
+        [
+          -93.269793,
+          122.791437
+        ],
+        [
+          -93.651822,
+          122.261446
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_In8",
+      "points": [
+        [
+          -95.336697,
+          127.422358
+        ],
+        [
+          -95.425435,
+          128.108466
+        ],
+        [
+          -95.862078,
+          128.041367
+        ],
+        [
+          -95.780665,
+          127.368801
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out",
+      "points": [
+        [
+          -100.466586,
+          112.538261
+        ],
+        [
+          -101.066689,
+          112.534293
+        ],
+        [
+          -101.030917,
+          111.530696
+        ],
+        [
+          -100.429395,
+          111.555382
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out1",
+      "points": [
+        [
+          -125.26324,
+          131.37844
+        ],
+        [
+          -125.554567,
+          131.347915
+        ],
+        [
+          -125.285467,
+          131.252385
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out2",
+      "points": [
+        [
+          -101.405712,
+          110.73681
+        ],
+        [
+          -101.768878,
+          110.759552
+        ],
+        [
+          -101.806676,
+          110.136361
+        ],
+        [
+          -101.45463,
+          110.112765
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out2_29",
+      "points": [
+        [
+          -132.306055,
+          135.58459
+        ],
+        [
+          -132.598934,
+          135.579571
+        ],
+        [
+          -132.339184,
+          135.460952
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out3",
+      "points": [
+        [
+          -95.862575,
+          137.788814
+        ],
+        [
+          -95.408765,
+          137.838135
+        ],
+        [
+          -95.436848,
+          138.45205
+        ],
+        [
+          -95.910827,
+          138.401592
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out3_31",
+      "points": [
+        [
+          -125.36484,
+          131.1416
+        ],
+        [
+          -125.656167,
+          131.111075
+        ],
+        [
+          -125.387067,
+          131.015545
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out4",
+      "points": [
+        [
+          -101.364699,
+          126.849204
+        ],
+        [
+          -101.034655,
+          126.830695
+        ],
+        [
+          -101.011861,
+          127.22737
+        ],
+        [
+          -101.342987,
+          127.150746
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out4_33",
+      "points": [
+        [
+          -134.53419,
+          135.83177
+        ],
+        [
+          -134.825517,
+          135.801244
+        ],
+        [
+          -134.556417,
+          135.705715
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out5",
+      "points": [
+        [
+          -99.894439,
+          133.50697
+        ],
+        [
+          -99.87822,
+          134.10211
+        ],
+        [
+          -100.97238,
+          134.094938
+        ],
+        [
+          -100.964559,
+          133.495258
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Attack_Out5_35",
+      "points": [
+        [
+          -134.618575,
+          135.32669
+        ],
+        [
+          -134.911454,
+          135.321671
+        ],
+        [
+          -134.651704,
+          135.203052
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In",
+      "points": [
+        [
+          -94.057669,
+          127.579681
+        ],
+        [
+          -93.590394,
+          127.108373
+        ],
+        [
+          -93.279584,
+          127.343574
+        ],
+        [
+          -93.722807,
+          127.858659
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In1",
+      "points": [
+        [
+          -133.263105,
+          121.25151
+        ],
+        [
+          -132.971778,
+          121.282034
+        ],
+        [
+          -133.240877,
+          121.377565
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In2",
+      "points": [
+        [
+          -131.65679,
+          123.86611
+        ],
+        [
+          -131.365463,
+          123.896634
+        ],
+        [
+          -131.634562,
+          123.992165
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In3",
+      "points": [
+        [
+          -94.317254,
+          126.187178
+        ],
+        [
+          -94.173555,
+          125.995456
+        ],
+        [
+          -93.868093,
+          126.161961
+        ],
+        [
+          -94.028373,
+          126.389855
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In3_39",
+      "points": [
+        [
+          -131.16476,
+          123.55962
+        ],
+        [
+          -130.873433,
+          123.590144
+        ],
+        [
+          -131.142532,
+          123.685675
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In4",
+      "points": [
+        [
+          -131.732565,
+          121.01813
+        ],
+        [
+          -131.441238,
+          121.048654
+        ],
+        [
+          -131.710337,
+          121.144185
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In5",
+      "points": [
+        [
+          -95.1384,
+          124.810597
+        ],
+        [
+          -94.902234,
+          124.46409
+        ],
+        [
+          -94.623253,
+          124.642124
+        ],
+        [
+          -94.833153,
+          124.99715
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In5_42",
+      "points": [
+        [
+          -131.90173,
+          122.86034
+        ],
+        [
+          -131.610403,
+          122.890864
+        ],
+        [
+          -131.879502,
+          122.986395
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In7",
+      "points": [
+        [
+          -91.347275,
+          122.374011
+        ],
+        [
+          -91.046675,
+          122.098243
+        ],
+        [
+          -90.880493,
+          122.273715
+        ],
+        [
+          -91.18508,
+          122.547481
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_In8",
+      "points": [
+        [
+          -95.360685,
+          120.875194
+        ],
+        [
+          -95.282617,
+          120.255574
+        ],
+        [
+          -94.952341,
+          120.298833
+        ],
+        [
+          -95.052853,
+          120.945436
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out1",
+      "points": [
+        [
+          -139.257375,
+          108.73626
+        ],
+        [
+          -138.964496,
+          108.741279
+        ],
+        [
+          -139.224246,
+          108.859899
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out2",
+      "points": [
+        [
+          -138.87157,
+          108.45684
+        ],
+        [
+          -138.578691,
+          108.461859
+        ],
+        [
+          -138.838441,
+          108.580479
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out3",
+      "points": [
+        [
+          -86.018696,
+          114.905944
+        ],
+        [
+          -85.699556,
+          114.620401
+        ],
+        [
+          -85.181042,
+          115.110602
+        ],
+        [
+          -85.477686,
+          115.432944
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out3_46",
+      "points": [
+        [
+          -139.28409,
+          106.22348
+        ],
+        [
+          -138.991211,
+          106.228499
+        ],
+        [
+          -139.250961,
+          106.347119
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out4",
+      "points": [
+        [
+          -94.658,
+          111.818287
+        ],
+        [
+          -94.96837,
+          111.619307
+        ],
+        [
+          -94.647049,
+          111.137177
+        ],
+        [
+          -94.328689,
+          111.326528
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out4_48",
+      "points": [
+        [
+          -136.511455,
+          104.68377
+        ],
+        [
+          -136.218576,
+          104.688789
+        ],
+        [
+          -136.478326,
+          104.807409
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out5",
+      "points": [
+        [
+          -87.093103,
+          117.027837
+        ],
+        [
+          -87.233219,
+          116.686829
+        ],
+        [
+          -86.693469,
+          116.476184
+        ],
+        [
+          -86.541289,
+          116.813887
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out5_50",
+      "points": [
+        [
+          -135.25681,
+          103.87278
+        ],
+        [
+          -134.963931,
+          103.877799
+        ],
+        [
+          -135.223681,
+          103.996419
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out6",
+      "points": [
+        [
+          -89.447419,
+          111.106201
+        ],
+        [
+          -89.815689,
+          111.08907
+        ],
+        [
+          -89.778488,
+          110.51087
+        ],
+        [
+          -89.408108,
+          110.515671
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out7",
+      "points": [
+        [
+          -95.027951,
+          110.217199
+        ],
+        [
+          -95.395361,
+          110.174739
+        ],
+        [
+          -95.282421,
+          109.615719
+        ],
+        [
+          -94.950971,
+          109.625119
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B1_Defend_Out8",
+      "points": [
+        [
+          -87.787025,
+          115.498881
+        ],
+        [
+          -88.123965,
+          115.225131
+        ],
+        [
+          -87.651704,
+          114.659462
+        ],
+        [
+          -87.333165,
+          114.909222
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In1",
+      "points": [
+        [
+          -122.91442,
+          109.25239
+        ],
+        [
+          -122.63282,
+          109.333041
+        ],
+        [
+          -122.91442,
+          109.38039
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In10",
+      "points": [
+        [
+          -83.714494,
+          101.399481
+        ],
+        [
+          -83.363013,
+          100.803496
+        ],
+        [
+          -82.990035,
+          101.040228
+        ],
+        [
+          -83.329361,
+          101.626759
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In11",
+      "points": [
+        [
+          -86.673667,
+          102.116123
+        ],
+        [
+          -86.361207,
+          101.804795
+        ],
+        [
+          -86.039896,
+          102.145741
+        ],
+        [
+          -86.372045,
+          102.445139
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In13",
+      "points": [
+        [
+          -85.897105,
+          104.679044
+        ],
+        [
+          -85.870924,
+          103.951524
+        ],
+        [
+          -85.454704,
+          103.990574
+        ],
+        [
+          -85.481515,
+          104.687444
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In14",
+      "points": [
+        [
+          -83.836531,
+          106.82238
+        ],
+        [
+          -83.477758,
+          106.188745
+        ],
+        [
+          -83.127085,
+          106.414476
+        ],
+        [
+          -83.484746,
+          107.023539
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In2",
+      "points": [
+        [
+          -122.84786,
+          108.95927
+        ],
+        [
+          -122.56626,
+          109.039921
+        ],
+        [
+          -122.84786,
+          109.08727
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In3",
+      "points": [
+        [
+          -120.59914,
+          110.2217
+        ],
+        [
+          -120.31754,
+          110.302351
+        ],
+        [
+          -120.59914,
+          110.3497
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In4",
+      "points": [
+        [
+          -120.27018,
+          109.9145
+        ],
+        [
+          -119.98858,
+          109.995151
+        ],
+        [
+          -120.27018,
+          110.0425
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In5",
+      "points": [
+        [
+          -120.45578,
+          110.82842
+        ],
+        [
+          -120.17418,
+          110.909071
+        ],
+        [
+          -120.45578,
+          110.95642
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_In9",
+      "points": [
+        [
+          -81.832354,
+          105.617922
+        ],
+        [
+          -81.206464,
+          105.612933
+        ],
+        [
+          -81.191485,
+          105.984843
+        ],
+        [
+          -81.818765,
+          105.967592
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out1",
+      "points": [
+        [
+          -115.77447,
+          122.49759
+        ],
+        [
+          -116.061246,
+          122.437904
+        ],
+        [
+          -115.7839,
+          122.369938
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out10",
+      "points": [
+        [
+          -95.815736,
+          111.294601
+        ],
+        [
+          -95.682507,
+          111.910881
+        ],
+        [
+          -96.273056,
+          112.080981
+        ],
+        [
+          -96.41167,
+          111.445226
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out12",
+      "points": [
+        [
+          -99.923528,
+          100.0312
+        ],
+        [
+          -99.548382,
+          100.493499
+        ],
+        [
+          -100.420833,
+          101.153854
+        ],
+        [
+          -100.779669,
+          100.673319
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out13",
+      "points": [
+        [
+          -99.011605,
+          98.215582
+        ],
+        [
+          -98.516607,
+          98.546387
+        ],
+        [
+          -99.155485,
+          99.435865
+        ],
+        [
+          -99.633625,
+          99.084628
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out14",
+      "points": [
+        [
+          -94.125427,
+          92.93272
+        ],
+        [
+          -93.658924,
+          93.302624
+        ],
+        [
+          -94.367337,
+          94.136524
+        ],
+        [
+          -94.821876,
+          93.74528
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out2",
+      "points": [
+        [
+          -125.87599,
+          122.0674
+        ],
+        [
+          -125.967689,
+          121.789201
+        ],
+        [
+          -125.770155,
+          121.995407
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out3",
+      "points": [
+        [
+          -117.10456,
+          122.10166
+        ],
+        [
+          -117.3808,
+          122.00422
+        ],
+        [
+          -117.096862,
+          121.973892
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out4",
+      "points": [
+        [
+          -115.81455,
+          121.73219
+        ],
+        [
+          -116.09079,
+          121.63475
+        ],
+        [
+          -115.806852,
+          121.604422
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out5",
+      "points": [
+        [
+          -125.445615,
+          122.01411
+        ],
+        [
+          -125.721855,
+          121.91667
+        ],
+        [
+          -125.437917,
+          121.886342
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Attack_Out8",
+      "points": [
+        [
+          -95.037905,
+          111.56126
+        ],
+        [
+          -94.479845,
+          111.87761
+        ],
+        [
+          -94.810855,
+          112.42439
+        ],
+        [
+          -95.360055,
+          112.08926
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In1",
+      "points": [
+        [
+          -121.33264,
+          108.45848
+        ],
+        [
+          -121.05104,
+          108.539131
+        ],
+        [
+          -121.33264,
+          108.58648
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In11",
+      "points": [
+        [
+          -86.008574,
+          103.500491
+        ],
+        [
+          -85.959364,
+          103.266001
+        ],
+        [
+          -85.612154,
+          103.287812
+        ],
+        [
+          -85.661104,
+          103.562092
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In13",
+      "points": [
+        [
+          -82.903266,
+          106.607698
+        ],
+        [
+          -82.56283,
+          106.362861
+        ],
+        [
+          -82.361565,
+          106.625576
+        ],
+        [
+          -82.680234,
+          106.887399
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In15",
+      "points": [
+        [
+          -85.14551,
+          104.257605
+        ],
+        [
+          -84.989619,
+          103.880635
+        ],
+        [
+          -84.76485,
+          103.969436
+        ],
+        [
+          -84.9252,
+          104.346275
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In16",
+      "points": [
+        [
+          -86.750392,
+          105.766793
+        ],
+        [
+          -86.609363,
+          105.157981
+        ],
+        [
+          -86.271755,
+          105.239818
+        ],
+        [
+          -86.437795,
+          105.872908
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In2",
+      "points": [
+        [
+          -120.3112,
+          108.61976
+        ],
+        [
+          -120.0296,
+          108.700411
+        ],
+        [
+          -120.3112,
+          108.74776
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In3",
+      "points": [
+        [
+          -122.90216,
+          109.7938
+        ],
+        [
+          -122.62056,
+          109.874451
+        ],
+        [
+          -122.90216,
+          109.9218
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In4",
+      "points": [
+        [
+          -122.92454,
+          108.58264
+        ],
+        [
+          -122.64294,
+          108.663291
+        ],
+        [
+          -122.92454,
+          108.71064
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In5",
+      "points": [
+        [
+          -121.54359,
+          108.52888
+        ],
+        [
+          -121.26199,
+          108.609531
+        ],
+        [
+          -121.54359,
+          108.65688
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_In9",
+      "points": [
+        [
+          -85.984602,
+          107.094672
+        ],
+        [
+          -85.760291,
+          106.470043
+        ],
+        [
+          -85.379201,
+          106.551853
+        ],
+        [
+          -85.563212,
+          107.205993
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out1",
+      "points": [
+        [
+          -114.87389,
+          102.56865
+        ],
+        [
+          -114.954541,
+          102.85025
+        ],
+        [
+          -115.00189,
+          102.56865
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out10",
+      "points": [
+        [
+          -83.386561,
+          117.112846
+        ],
+        [
+          -82.96861,
+          117.230251
+        ],
+        [
+          -83.177348,
+          117.936962
+        ],
+        [
+          -83.568885,
+          117.834265
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out11",
+      "points": [
+        [
+          -71.010917,
+          98.475861
+        ],
+        [
+          -71.291756,
+          98.152572
+        ],
+        [
+          -70.794013,
+          97.641294
+        ],
+        [
+          -70.47605,
+          97.942627
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out14",
+      "points": [
+        [
+          -74.484023,
+          109.024814
+        ],
+        [
+          -74.371071,
+          108.673875
+        ],
+        [
+          -73.82278,
+          108.861161
+        ],
+        [
+          -73.924385,
+          109.217364
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out2",
+      "points": [
+        [
+          -108.90011,
+          112.15244
+        ],
+        [
+          -108.736233,
+          112.395231
+        ],
+        [
+          -108.982387,
+          112.250494
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out3",
+      "points": [
+        [
+          -115.13244,
+          103.43489
+        ],
+        [
+          -114.844882,
+          103.490691
+        ],
+        [
+          -115.121284,
+          103.562403
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out4",
+      "points": [
+        [
+          -108.70109,
+          111.8938
+        ],
+        [
+          -108.537213,
+          112.136591
+        ],
+        [
+          -108.783367,
+          111.991854
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S2B2_Defend_Out5",
+      "points": [
+        [
+          -114.59729,
+          103.47507
+        ],
+        [
+          -114.309732,
+          103.530871
+        ],
+        [
+          -114.586134,
+          103.602583
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C1_Attack_In",
+      "points": [
+        [
+          -91.941452,
+          125.548866
+        ],
+        [
+          -92.556967,
+          125.662462
+        ],
+        [
+          -92.636299,
+          125.298803
+        ],
+        [
+          -92.015553,
+          125.206868
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C1_Attack_In2",
+      "points": [
+        [
+          -92.696156,
+          125.58935
+        ],
+        [
+          -92.523267,
+          126.25931
+        ],
+        [
+          -92.954397,
+          126.35565
+        ],
+        [
+          -93.129196,
+          125.700969
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C2_Defend_Out4",
+      "points": [
+        [
+          -84.857,
+          116.79095
+        ],
+        [
+          -85.051928,
+          116.572303
+        ],
+        [
+          -84.788602,
+          116.682757
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C2_Defend_Out5",
+      "points": [
+        [
+          -86.54895,
+          116.10009
+        ],
+        [
+          -86.824845,
+          116.198503
+        ],
+        [
+          -86.623486,
+          115.99603
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Attack_In1",
+      "points": [
+        [
+          -84.52741,
+          103.05577
+        ],
+        [
+          -84.323863,
+          103.266416
+        ],
+        [
+          -84.59141,
+          103.166621
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Attack_In2",
+      "points": [
+        [
+          -83.19937,
+          104.24953
+        ],
+        [
+          -83.057278,
+          104.50568
+        ],
+        [
+          -83.28988,
+          104.34004
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Attack_Out1",
+      "points": [
+        [
+          -85.0436,
+          106.23942
+        ],
+        [
+          -85.247147,
+          106.028774
+        ],
+        [
+          -84.9796,
+          106.128569
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Attack_Out2_6",
+      "points": [
+        [
+          -85.48351,
+          107.49012
+        ],
+        [
+          -85.504035,
+          107.197918
+        ],
+        [
+          -85.363229,
+          107.446342
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Attack_Out3_8",
+      "points": [
+        [
+          -84.28104,
+          106.66429
+        ],
+        [
+          -83.99944,
+          106.744941
+        ],
+        [
+          -84.28104,
+          106.79229
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_In1",
+      "points": [
+        [
+          -83.52566,
+          102.18916
+        ],
+        [
+          -83.322113,
+          102.399806
+        ],
+        [
+          -83.58966,
+          102.300011
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_In2",
+      "points": [
+        [
+          -84.02626,
+          102.64859
+        ],
+        [
+          -83.789227,
+          102.82069
+        ],
+        [
+          -84.070039,
+          102.768871
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_In3",
+      "points": [
+        [
+          -83.63069,
+          104.35305
+        ],
+        [
+          -83.393657,
+          104.52515
+        ],
+        [
+          -83.674469,
+          104.473331
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_In4",
+      "points": [
+        [
+          -82.09349,
+          103.1031
+        ],
+        [
+          -81.856457,
+          103.2752
+        ],
+        [
+          -82.137269,
+          103.223381
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_In5",
+      "points": [
+        [
+          -83.97491,
+          104.46217
+        ],
+        [
+          -83.737877,
+          104.63427
+        ],
+        [
+          -84.018689,
+          104.582451
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_Out1",
+      "points": [
+        [
+          -82.7269,
+          109.09099
+        ],
+        [
+          -82.937545,
+          109.294538
+        ],
+        [
+          -82.837751,
+          109.02699
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_Out2",
+      "points": [
+        [
+          -85.63013,
+          105.74722
+        ],
+        [
+          -85.794007,
+          105.504429
+        ],
+        [
+          -85.547853,
+          105.649166
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_Out3",
+      "points": [
+        [
+          -85.17199,
+          107.65306
+        ],
+        [
+          -85.335867,
+          107.410269
+        ],
+        [
+          -85.089713,
+          107.555006
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_Out4",
+      "points": [
+        [
+          -82.90564,
+          109.42483
+        ],
+        [
+          -83.189838,
+          109.495785
+        ],
+        [
+          -82.96964,
+          109.313979
+        ]
+      ]
+    },
+    {
+      "id": "Spawn_S3C3_Defend_Out5",
+      "points": [
+        [
+          -82.04425,
+          108.06436
+        ],
+        [
+          -81.973295,
+          108.348558
+        ],
+        [
+          -82.155101,
+          108.12836
+        ]
+      ]
+    }
+  ]
+}

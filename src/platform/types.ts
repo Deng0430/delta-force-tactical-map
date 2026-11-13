@@ -15,4 +15,5 @@ export interface PlatformAdapter {
   isFullscreen(): boolean
   toggleFullscreen(): Promise<void>
   downloadText(filename: string, text: string, mime?: string): Promise<void>
+  downloadBlob(filename: string, blob: Blob): Promise<void>
 }

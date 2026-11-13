@@ -29,9 +29,21 @@
 - 内置各地图的胜者为王基础数据；天际港暂以对应端攻防数据的独立深复制作为底稿，待进一步适配。
 - 正式版和编辑器支持复制、粘贴、撤回、恢复、多选和快捷删除。
 
+## 0.2.0 更新内容
+
+当前版本为 `0.2.0`，提供 Windows x64 安装包与 Android APK。下载及[完整更新说明](https://github.com/Deng0430/delta-force-tactical-map/releases/tag/v0.2.0)见 GitHub Releases。
+
+- 新增米制测距与六张地图的静态模型高度参考，可查看水平距离、空间距离及高差。
+- 新增据点、基地的步兵部署候选区参考，更新多张地图的 PC 攻防及胜者为王数据，保持手游数据独立。
+- 完善载具部署次数、生成位置和条件说明，以及阵地支援的伤害圈、范围与参数展示。
+- 更新本地压缩底图、载具图标、滑索和空中补给站表现。
+- 新增当前画面 PNG 导出与 Android 系统分享，完善 HTML 战术板及阶段状态隔离。
+
+测距不代表通行距离或无遮挡；候选区不是固定落地点。部分事件规则、冷却及部署次数仍待核实。
+
 ## 0.1.6-beta.2 更新内容
 
-当前最新发布版本为 `0.1.6-beta.2`，在 GitHub Releases 中按普通发布提供。
+`0.1.6-beta.2` 在 GitHub Releases 中按普通发布提供。
 
 - 新增“天际港”地图，固化 PC／手游攻防的三个阶段、七个据点、防线、占领区、攻守活动区、复活点、地图道具和部署载具，补充对应图例及“火神炮”入口。
 - 天际港胜者为王暂以对应端攻防数据的独立深复制作为底稿，四份配置互不影响；尚不代表胜者专属适配完成。
@@ -40,7 +52,7 @@
 
 ## 0.1.6-beta.1 更新内容
 
-本版本为预发布测试版，稳定版仍为 `0.1.5`。
+`0.1.6-beta.1` 为历史预发布测试版。
 
 - 正式地图与模式配置器新增 WASD 连续平移，按住 Shift 可快速移动；补全 Shift＋滚轮旋转地图的快捷键说明。
 - 路线新增同级快捷入口：行动指令、线条样式、创建分支和删除。创建分支时高亮可选节点，常用操作更容易找到。
@@ -123,7 +135,7 @@ npm run build:win
 Windows 发布安装包使用英文文件名：
 
 ```text
-release/deltaforce-tactical-map-0.1.6-beta.2-setup.exe
+release/deltaforce-tactical-map-0.2.0-setup.exe
 ```
 
 ### Android
@@ -133,7 +145,7 @@ Android 版本固定横屏运行，支持沉浸式全屏、挖孔屏和圆角屏
 Android 应用界面保持中文，发布 APK 使用英文文件名：
 
 ```text
-release/deltaforce-tactical-map-0.1.6-beta.2-android-release.apk
+release/deltaforce-tactical-map-0.2.0-android-debug.apk
 ```
 
 Android 构建需要 Java 21、Android Studio 和 Android SDK 36：

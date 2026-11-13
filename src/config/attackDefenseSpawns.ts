@@ -1,6 +1,7 @@
 import type { Side, StageConfig, StageSpawnPoint } from '../types'
 import type { DeployVehicleEntry, StageDeploy } from './deployVehicles'
 import type { GameDataPlatform } from './gameDataPlatform'
+import { normalizeDeploymentCount } from '../utils/deployVehicleCounts'
 
 type DeployByMap = Record<string, Record<string, StageDeploy>>
 
@@ -122,7 +123,8 @@ export function normalizeAttackDefenseData(
       const normalizedStage: StageDeploy = { attack: [], defense: [] }
       for (const side of ['attack', 'defense'] as const) {
         normalizedStage[side] = (sourceDeploy[side] ?? []).map((vehicle): DeployVehicleEntry => {
-          if (vehicle.spawnUid && stage.spawns.some((spawn) => spawn.uid === vehicle.spawnUid)) return { ...vehicle }
+          const normalized = { ...vehicle, deployCount: normalizeDeploymentCount(vehicle.deployCount) }
+          if (vehicle.spawnUid && stage.spawns.some((spawn) => spawn.uid === vehicle.spawnUid)) return normalized
           let match = stage.spawns.find((spawn) => spawn.side === side && namesMatch(spawn.name, vehicle.note))
           if (!match) {
             const candidates = mapStages.flatMap((candidateStage) => candidateStage.spawns)
@@ -144,7 +146,7 @@ export function normalizeAttackDefenseData(
               }
             }
           }
-          return match ? { ...vehicle, spawnUid: match.uid } : { ...vehicle }
+          return match ? { ...normalized, spawnUid: match.uid } : normalized
         })
       }
       deploy[mapId][stage.id] = normalizedStage

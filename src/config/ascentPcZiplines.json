@@ -1,0 +1,330 @@
+{
+  "mapId": "ascent",
+  "platform": "pc",
+  "gameMapIds": [
+    54,
+    601
+  ],
+  "source": {
+    "file": "source/PC提取资源/攀升/滑索提取_2026-11-12/攀升滑索双端.json",
+    "sha256": "5a62f913c4598e3b97592709cbaa2819d2785aa781735551ad4d40f192e4818f",
+    "verticalFlag": "Default__BP_Interactor_DFMZipline_Type2_C.bIsVerticalZipline=true",
+    "inheritedTransformsRecovered": true
+  },
+  "props": [
+    {
+      "uid": "ascent_pc_zipline_ec91b8d024da5d2b_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -132.08156420663036,
+      "lng": 167.74960578987395,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_ec91b8d024da5d2b",
+        "endpoint": "green",
+        "orientation": "span",
+        "elevationMeters": -121.87162109375
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_ec91b8d024da5d2b_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -127.93774273144953,
+      "lng": 183.03688155965148,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_ec91b8d024da5d2b",
+        "endpoint": "red",
+        "orientation": "span",
+        "elevationMeters": 19.5401953125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_58b9b4e7c0410783_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -120.75572147934803,
+      "lng": 140.19652774731958,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_58b9b4e7c0410783",
+        "endpoint": "green",
+        "orientation": "span",
+        "elevationMeters": -201.96890625
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_58b9b4e7c0410783_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -129.37488609025286,
+      "lng": 181.67979589344483,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_58b9b4e7c0410783",
+        "endpoint": "red",
+        "orientation": "span",
+        "elevationMeters": 19.445625
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_ececbc4d2080d10c_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -151.37882350369463,
+      "lng": 131.31902599617425,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_ececbc4d2080d10c",
+        "endpoint": "green",
+        "orientation": "span",
+        "elevationMeters": -206.319140625
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_ececbc4d2080d10c_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -137.56707783740018,
+      "lng": 176.66493421341016,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_ececbc4d2080d10c",
+        "endpoint": "red",
+        "orientation": "span",
+        "elevationMeters": 19.566328125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_81adcf992959def4_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -137.45528385889833,
+      "lng": 129.80818457666965,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_81adcf992959def4",
+        "endpoint": "green",
+        "orientation": "span",
+        "elevationMeters": -201.2295703125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_81adcf992959def4_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -131.67305149530912,
+      "lng": 178.7596699831285,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_81adcf992959def4",
+        "endpoint": "red",
+        "orientation": "span",
+        "elevationMeters": 19.566328125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_f16ab77588951d45_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -166.64634000661067,
+      "lng": 193.61685999851363,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_f16ab77588951d45",
+        "endpoint": "green",
+        "orientation": "vertical",
+        "elevationMeters": 59.2394580078125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_f16ab77588951d45_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -166.679,
+      "lng": 193.68832,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_f16ab77588951d45",
+        "endpoint": "red",
+        "orientation": "vertical",
+        "elevationMeters": 41.965830078125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_6b14c03cb64cafb2_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -176.5220999938315,
+      "lng": 194.95273999593735,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_6b14c03cb64cafb2",
+        "endpoint": "green",
+        "orientation": "vertical",
+        "elevationMeters": 69.3335498046875
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_6b14c03cb64cafb2_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -176.56266,
+      "lng": 194.89176,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_6b14c03cb64cafb2",
+        "endpoint": "red",
+        "orientation": "vertical",
+        "elevationMeters": 56.6601904296875
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_47b46be39b9b748e_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -163.07414000294344,
+      "lng": 188.5351599838432,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_47b46be39b9b748e",
+        "endpoint": "green",
+        "orientation": "vertical",
+        "elevationMeters": 24.55864501953125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_47b46be39b9b748e_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -163.0475,
+      "lng": 188.12054,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_47b46be39b9b748e",
+        "endpoint": "red",
+        "orientation": "vertical",
+        "elevationMeters": 14.2800439453125
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_d5647ac072070598_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -156.4480200374516,
+      "lng": 187.55653995320245,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_d5647ac072070598",
+        "endpoint": "green",
+        "orientation": "vertical",
+        "elevationMeters": 41.771748046875
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_d5647ac072070598_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -157.0091,
+      "lng": 187.47572,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_d5647ac072070598",
+        "endpoint": "red",
+        "orientation": "vertical",
+        "elevationMeters": 14.24769775390625
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_4f46b31d6d2fd2b9_green",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -149.54099997958008,
+      "lng": 185.42608003275933,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_4f46b31d6d2fd2b9",
+        "endpoint": "green",
+        "orientation": "vertical",
+        "elevationMeters": 47.354683837890626
+      }
+    },
+    {
+      "uid": "ascent_pc_zipline_4f46b31d6d2fd2b9_red",
+      "name": "滑索",
+      "icon": "q_hs",
+      "lat": -149.4586,
+      "lng": 184.8425,
+      "stage": "",
+      "zipline": {
+        "lineId": "ascent_pc_zipline_4f46b31d6d2fd2b9",
+        "endpoint": "red",
+        "orientation": "vertical",
+        "elevationMeters": 12.91027587890625
+      }
+    }
+  ],
+  "legacyByMode": {
+    "attack-defense": [
+      {
+        "uid": "sync_ascent_prop-42",
+        "lat": -120.8,
+        "lng": 140.189,
+        "endpointUid": "ascent_pc_zipline_58b9b4e7c0410783_green",
+        "markerDifferenceMeters": 0.35088949217650445
+      },
+      {
+        "uid": "sync_ascent_prop-43",
+        "lat": -137.359,
+        "lng": 129.749,
+        "endpointUid": "ascent_pc_zipline_81adcf992959def4_green",
+        "markerDifferenceMeters": 0.8829644365907324
+      },
+      {
+        "uid": "sync_ascent_prop-44",
+        "lat": -151.414,
+        "lng": 131.272,
+        "endpointUid": "ascent_pc_zipline_ececbc4d2080d10c_green",
+        "markerDifferenceMeters": 0.45880267071544023
+      },
+      {
+        "uid": "sync_ascent_prop-45",
+        "lat": -132.15,
+        "lng": 167.688,
+        "endpointUid": "ascent_pc_zipline_ec91b8d024da5d2b_green",
+        "markerDifferenceMeters": 0.7193752019357836
+      }
+    ],
+    "winner-takes-all": [
+      {
+        "uid": "builtin_wta_ascent_prop-42",
+        "lat": -120.8,
+        "lng": 140.189,
+        "endpointUid": "ascent_pc_zipline_58b9b4e7c0410783_green",
+        "markerDifferenceMeters": 0.35088949217650445
+      },
+      {
+        "uid": "builtin_wta_ascent_prop-43",
+        "lat": -137.359,
+        "lng": 129.749,
+        "endpointUid": "ascent_pc_zipline_81adcf992959def4_green",
+        "markerDifferenceMeters": 0.8829644365907324
+      },
+      {
+        "uid": "builtin_wta_ascent_prop-44",
+        "lat": -151.414,
+        "lng": 131.272,
+        "endpointUid": "ascent_pc_zipline_ececbc4d2080d10c_green",
+        "markerDifferenceMeters": 0.45880267071544023
+      },
+      {
+        "uid": "builtin_wta_ascent_prop-45",
+        "lat": -132.15,
+        "lng": 167.688,
+        "endpointUid": "ascent_pc_zipline_ec91b8d024da5d2b_green",
+        "markerDifferenceMeters": 0.7193752019357836
+      }
+    ]
+  }
+}

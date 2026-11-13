@@ -1,0 +1,3 @@
+# Frozen height tiles record their exact UTF-8 byte sizes in manifests.
+# Keep JSON assets LF on every platform, including core.autocrlf=true checkouts.
+/public/maps/**/*.json text eol=lf

@@ -8,6 +8,7 @@ import { Checkbox } from './icons'
 /** 画笔工具（图标化，Font Awesome） */
 const DRAW_TOOLS: { mode: ToolMode; icon: string; label: string }[] = [
   { mode: 'pan', icon: 'fa-solid fa-mouse-pointer', label: '查看（拖动地图）' },
+  { mode: 'measure', icon: 'fa-solid fa-ruler-combined', label: '测距（两点距离）' },
   { mode: 'pen', icon: 'fa-solid fa-paintbrush', label: '画笔（自由绘制）' },
   { mode: 'line', icon: 'fa-solid fa-minus', label: '直线（两点连线）' },
   { mode: 'arrow', icon: 'fa-solid fa-arrow-right-long', label: '箭头' },
@@ -56,6 +57,7 @@ const QUICK_COLORS = ['#ff4d4f', '#ffd54a', '#3f8cff', '#52c41a']
 /** 绘制工具悬浮说明（鼠标悬停工具按钮时显示；第十六轮：图形选择/编辑能力常驻，点击已有图形即可选中） */
 const TOOL_HINTS: Partial<Record<ToolMode, string>> = {
   pan: '拖动地图查看；点击图形选中编辑',
+  measure: '依次点击起点和终点测量距离；Esc 或右键退出（仅已标定地图）',
   pen: '按住拖拽自由绘制；点击图形选中编辑',
   line: '拖拽两点画直线；点击图形选中编辑',
   arrow: '拖拽画箭头；点击图形选中编辑箭头样式',
@@ -218,6 +220,11 @@ export default function DrawBar({
   }, [styleFor])
 
   const handleTool = (t: ToolMode) => {
+    if (t === 'measure' && tool === 'measure') {
+      onTool('pan')
+      setStyleFor(null)
+      return
+    }
     onTool(t)
     if ((t === 'rect' || t === 'circle') && tool !== t) {
       onDrawChange({ ...draw, dash: 'solid' })

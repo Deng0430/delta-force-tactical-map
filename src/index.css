@@ -66,6 +66,8 @@ body {
   display: none !important;
 }
 
+.app.cinematic-map-only .map-metric-scale { display: none; }
+
 .app.cinematic-map-only .main {
   height: 100vh;
 }
@@ -4010,6 +4012,12 @@ input[type='range']:focus-visible {
 .field-support-marker { position: relative; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--support-color); border-radius: 50%; background: rgba(8,13,15,.92); box-shadow: 0 0 7px color-mix(in srgb, var(--support-color) 65%, transparent); cursor: move; }
 .field-support-marker img { position: relative; z-index: 1; width: 27px; height: 27px; object-fit: contain; filter: drop-shadow(0 1px 2px #000); pointer-events: none; }
 .field-support-marker.vehicle-airdrop img { width: 32px; height: 32px; }
+.leaflet-tooltip.field-support-details { width: 240px; max-width: min(var(--support-tooltip-max-width, 240px), calc(100vw - 32px)); box-sizing: border-box; padding: 8px 12px; white-space: normal; }
+.leaflet-tooltip.field-support-brief { width: max-content; max-width: min(var(--support-tooltip-max-width, 240px), calc(100vw - 32px)); box-sizing: border-box; }
+.field-support-tooltip { display: flex; flex-direction: column; gap: 4px; width: 100%; white-space: normal; overflow-wrap: break-word; line-height: 1.55; }
+.field-support-tooltip strong { font-weight: 700; }
+.field-support-details-mobile .field-support-tooltip { max-height: min(240px, 60vh); overflow-y: auto; overscroll-behavior: contain; }
+.field-support-tooltip .field-support-detail-note { color: var(--tx-3); white-space: normal; line-height: 1.55; }
 .field-support-glow { position: absolute; inset: 3px; border-radius: 50%; background: color-mix(in srgb, var(--support-color) 26%, transparent); }
 .app.cinematic-focus-support-entry .wg-support-entry,
 .app.cinematic-focus-smoke .wg-support-list .support-smoke-cover { border-color: var(--green); box-shadow: 0 0 0 1px rgba(1,255,132,.6), 0 0 18px rgba(1,255,132,.34); animation: cinematic-action-focus .75s ease-in-out infinite alternate; }
@@ -4490,6 +4498,91 @@ input[type='range']:focus-visible {
 .map-wrap .leaflet-top.leaflet-left {
   left: var(--left-panel-w, 0px);
   transition: left 0.2s ease;
+}
+
+/* 仅已标定底图显示米制比例尺；保持屏幕水平，不进入地图旋转图层。 */
+.map-wrap .leaflet-bottom.leaflet-right {
+  right: calc(var(--right-panel-w, 0px) + var(--safe-right, 0px));
+  /* 为常驻的“推演备注”入口保留空间。 */
+  bottom: calc(50px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)));
+  transition: right 0.2s ease;
+}
+
+.mode-workbench .leaflet-bottom.leaflet-right {
+  right: var(--metric-scale-right, 0px);
+  bottom: max(4px, var(--safe-bottom, env(safe-area-inset-bottom, 0px)));
+}
+
+.leaflet-control.map-metric-scale {
+  padding: 7px 10px 8px;
+  border: 1px solid var(--line-0);
+  border-radius: 2px;
+  background: rgba(14, 17, 18, 0.9);
+  color: var(--tx-0);
+  font: 11px/1.4 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: none;
+}
+
+.map-metric-scale-ruler { position: relative; padding-top: 18px; }
+.map-metric-scale-zero { position: absolute; left: 0; top: 0; color: var(--tx-1); }
+.map-metric-scale-value { position: absolute; right: 0; top: 0; white-space: nowrap; }
+.map-metric-scale-bar { height: 6px; border: solid var(--green); border-width: 0 2px 2px; }
+
+.map-wrap .leaflet-top.leaflet-right {
+  right: calc(var(--right-panel-w, 0px) + var(--safe-right, 0px) + 44px);
+  transition: right 0.2s ease;
+}
+
+.leaflet-control.map-measure-control {
+  width: 270px;
+  max-width: calc(100vw - 80px);
+  max-height: calc(100dvh - var(--toolbar-height, 58px) - 28px);
+  overflow-y: auto;
+  padding: 11px 12px;
+  border: 1px solid var(--line-0);
+  border-radius: 2px;
+  background: rgba(16, 24, 28, .97);
+  color: var(--tx-0);
+  font: 11px/1.5 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  box-shadow: none;
+}
+
+.map-measure-heading { display: flex; align-items: center; gap: 7px; color: var(--tx-1); }
+.map-measure-heading i { color: var(--green); }
+.map-measure-readout { display: block; margin-top: 6px; color: var(--green); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.map-measure-readout-label { display: block; margin-top: 9px; color: var(--tx-2); font-size: 10px; }
+.map-measure-readout-label + .map-measure-readout { margin-top: 1px; }
+.map-measure-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px; color: var(--tx-1); font-size: 11px; font-variant-numeric: tabular-nums; }
+.map-measure-height-fields { min-width: 0; margin: 10px 0 6px; padding: 8px 0 0; border: 0; border-top: 1px solid var(--line-1); }
+.map-measure-height-fields legend { padding: 0 6px 0 0; color: var(--tx-2); font-size: 10px; }
+.map-measure-height-row + .map-measure-height-row { margin-top: 7px; }
+.map-measure-height-row > label:first-child { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: center; gap: 5px; color: var(--tx-1); }
+.map-measure-height-row select { width: 100%; min-width: 0; height: 29px; padding: 0 5px; border: 1px solid var(--line-1); border-radius: 2px; background: var(--bg-3); color: var(--tx-0); font: inherit; }
+.map-measure-height-row select:disabled { color: var(--tx-3); }
+.map-measure-height-row select:focus-visible, .map-measure-manual-height input:focus-visible { outline: 1px solid var(--green); outline-offset: 1px; }
+.map-measure-manual-height { display: flex; align-items: center; gap: 6px; margin: 5px 0 0 35px; color: var(--tx-2); }
+.map-measure-manual-height input { min-width: 0; width: 75px; height: 27px; padding: 0 5px; border: 1px solid var(--line-1); border-radius: 2px; background: var(--bg-3); color: var(--tx-0); font: inherit; }
+.map-measure-height-note { display: block; color: var(--tx-3); font-size: 10px; line-height: 1.5; }
+.map-measure-metrics[hidden], .map-measure-height-fields[hidden], .map-measure-height-note[hidden], .map-measure-manual-height[hidden] { display: none; }
+.map-measure-control p.map-measure-hint { margin: 6px 0 10px; color: var(--tx-2); font-size: 11px; line-height: 1.5; }
+.map-measure-actions { display: flex; justify-content: flex-end; gap: 6px; }
+.map-measure-actions button { min-height: 28px; padding: 0 9px; border: 1px solid var(--line-1); border-radius: 2px; background: var(--bg-btn); color: var(--tx-1); font: inherit; cursor: pointer; }
+.map-measure-actions button:hover { border-color: var(--green); color: var(--green); }
+.map-measure-actions button:disabled { opacity: .4; cursor: default; }
+.map-measure-actions button:focus-visible { outline: 1px solid var(--green); outline-offset: 2px; }
+.leaflet-tooltip.map-measure-tooltip { border: 1px solid var(--line-0); border-radius: 2px; background: var(--bg-1); color: var(--green); font-size: 12px; font-weight: 700; box-shadow: none; }
+.tactical-map.map-measure-active { cursor: crosshair; }
+.tactical-map.map-measure-active .leaflet-draw-pane,
+.tactical-map.map-measure-active .leaflet-draw-pane *,
+.tactical-map.map-measure-active .leaflet-draw-marker-pane,
+.tactical-map.map-measure-active .leaflet-draw-marker-pane * { pointer-events: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .map-wrap .leaflet-bottom.leaflet-right { transition: none; }
+  .map-wrap .leaflet-top.leaflet-right { transition: none; }
 }
 
 /* 绘制工具光标 */
@@ -5610,6 +5703,10 @@ input[type='range']:focus-visible {
   grid-column: 2 / -1;
 }
 
+.mode-config-deploy-settings label.deploy-count {
+  grid-column: 2 / -1;
+}
+
 .mode-config-coords {
   margin-top: 6px;
   color: var(--tx-4);
@@ -5780,7 +5877,7 @@ input[type='range']:focus-visible {
 .mode-config-prop-wrap.selected .prop-marker {
   outline: 3px solid rgba(1, 255, 132, 0.92);
   outline-offset: 3px;
-  border-radius: 50%;
+  border-radius: 2px;
 }
 
 @media (max-width: 720px) {
@@ -5875,10 +5972,10 @@ input[type='range']:focus-visible {
   height: 80%;
 }
 
-/* 这两张原始图例留白较多，需要在不改变兵棋外框的前提下放大主体。 */
+/* 包内 HUD 图例已紧贴主体，不再沿用旧主战坦克/两栖车大留白的放大补偿。 */
 .veh-marker.enlarged-legend-icon .veh-icon {
-  width: 96%;
-  height: 96%;
+  width: 80%;
+  height: 80%;
 }
 
 /* 载具名字（第二十轮：常驻显示在卡片下方，仿兵棋名字标签：阵营色底 + 白字 + 阵营色描边） */
@@ -5986,7 +6083,7 @@ input[type='range']:focus-visible {
 .vehicle-refresh-rule-list section.eligible .vehicle-refresh-rule-main em { color: var(--green); }
 .vehicle-refresh-rule-list section.used .vehicle-refresh-rule-main em { color: #f4cf67; }
 .vehicle-refresh-rule-list section > p { margin: 6px 0 0; color: var(--tx-3); font-size: 9px; line-height: 1.45; }
-.vehicle-refresh-rule-list section > p.note { color: #b99e55; }
+.vehicle-refresh-rule-list section > p.note { color: #b99e55; white-space: pre-wrap; overflow-wrap: anywhere; }
 .vehicle-refresh-rule-actions { display: flex; justify-content: flex-end; gap: 5px; margin-top: 7px; }
 .vehicle-refresh-rule-actions button { min-height: 25px; padding: 0 8px; border: 1px solid var(--line-1); border-radius: 2px; background: var(--bg-btn); color: var(--tx-2); font-size: 9px; cursor: pointer; }
 .vehicle-refresh-rule-actions button:hover { border-color: var(--green); color: var(--green); }
@@ -7270,24 +7367,66 @@ input[type='range']:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.9));
 }
 
-.prop-marker .prop-bg {
+.prop-marker .prop-glyph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--pc);
+  -webkit-mask-image: var(--prop-icon);
+  mask-image: var(--prop-icon);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
+  pointer-events: none;
+}
+
+.prop-zipline-endpoint {
   position: absolute;
-  inset: 1px;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--pc);
   border-radius: 50%;
-  background: var(--pc);
-  opacity: 0.88;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+  background: #0b151b;
+  box-shadow: 0 0 0 1px #0b151b;
+  pointer-events: none;
+}
+.prop-zipline-endpoint.end { background: var(--pc); }
+.mode-config-prop-wrap.selected .prop-zipline-endpoint { outline: 2px solid #fff; outline-offset: 3px; }
+
+.prop-zipline-vertical,
+.prop-air-supply {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--pc);
+  border-radius: 3px;
+  background: #0b151b;
+  color: var(--pc);
+  font: 900 13px/1 Arial, sans-serif;
+  pointer-events: none;
 }
 
-.prop-marker img {
-  position: relative;
-  z-index: 1;
-  width: 62%;
-  height: 62%;
-  object-fit: contain;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.7));
+.prop-air-supply svg {
+  display: block;
+  width: 11px;
+  height: 11px;
 }
 
 .prop-marker-wrap .leaflet-tooltip {
@@ -7612,6 +7751,11 @@ input[type='range']:focus-visible {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+.tb-image-export { display: flex; flex-direction: column; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid var(--line-1); }
+.tb-image-export-button { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.tb-image-export small { color: var(--tx-3); font-size: 12px; line-height: 1.6; }
+.tb-image-export-error { color: #f08078; font-size: 12px; line-height: 1.5; }
 
 .tb-tip {
   font-size: 11px;
@@ -7953,6 +8097,36 @@ input[type='range']:focus-visible {
 }
 
 .objective-state-editor { border-color: var(--objective-state-color); }
+.objective-state-editor { max-height: calc(100% - 28px); overflow-y: auto; }
+.infantry-spawn-panel { margin-top: 10px; border-top: 1px solid var(--line-1); }
+.infantry-spawn-toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 8px; min-height: 36px; padding: 6px 0; border: 0; background: transparent; color: var(--tx-1); font-size: 12px; cursor: pointer; }
+.infantry-spawn-toggle > span:last-child { color: var(--tx-3); font-size: 10px; }
+.infantry-spawn-toggle i { margin-left: 3px; font-size: 9px; }
+.infantry-spawn-controls { display: grid; gap: 8px; padding-bottom: 3px; }
+.infantry-spawn-sides { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.infantry-spawn-sides button { min-height: 30px; border: 1px solid var(--line-1); border-radius: 2px; background: var(--bg-btn); color: var(--tx-3); font-size: 11px; cursor: pointer; }
+.infantry-spawn-sides button.active { border-color: var(--infantry-side-color); color: var(--infantry-side-color); background: color-mix(in srgb, var(--infantry-side-color) 10%, transparent); }
+.infantry-spawn-group { display: flex; align-items: center; gap: 8px; min-height: 32px; padding: 0 7px; border: 1px solid transparent; border-radius: 3px; color: var(--tx-1); font-size: 11px; cursor: pointer; }
+.infantry-spawn-group:has(input:checked) { border-color: color-mix(in srgb, var(--infantry-side-color) 16%, transparent); background: color-mix(in srgb, var(--infantry-side-color) 5%, transparent); }
+.infantry-spawn-group input { width: 12px; height: 12px; margin: 0; accent-color: var(--infantry-side-color); }
+.infantry-spawn-group input:focus-visible, .infantry-spawn-sides button:focus-visible, .infantry-spawn-toggle:focus-visible { outline: 2px solid var(--infantry-side-color); outline-offset: 2px; }
+.infantry-spawn-swatch { display: inline-flex; width: 16px; height: 16px; flex-shrink: 0; color: var(--infantry-side-color); }
+.infantry-spawn-swatch svg, .infantry-spawn-map-symbol svg { display: block; width: 16px; height: 16px; }
+.infantry-spawn-count { margin-left: auto; min-width: 20px; padding: 2px 4px; border-radius: 3px; background: rgba(255, 255, 255, .04); color: var(--tx-3); text-align: center; font-variant-numeric: tabular-nums; }
+.infantry-spawn-hint, .infantry-spawn-missing { margin: 0; color: var(--tx-4); font-size: 10px; line-height: 1.6; }
+.infantry-spawn-missing { color: var(--gold); }
+.infantry-spawn-marker-wrap { border: 0; background: transparent; }
+.infantry-spawn-map-symbol { display: block; width: 16px; height: 16px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .55)); }
+.infantry-spawn-marker-wrap, .infantry-spawn-marker-wrap * { pointer-events: none !important; }
+.base-spawn-detail { border-color: var(--infantry-side-color); max-height: calc(100% - 28px); overflow-y: auto; }
+.base-spawn-detail .point-detail-head { align-items: flex-start; gap: 8px; }
+.base-spawn-detail .point-detail-name { overflow-wrap: anywhere; }
+.base-spawn-side { flex-shrink: 0; padding: 3px 5px; background: color-mix(in srgb, var(--infantry-side-color) 12%, transparent); color: var(--infantry-side-color); font-size: 10px; }
+.base-spawn-summary { margin: 0; color: var(--tx-2); font-size: 11px; line-height: 1.6; }
+.base-spawn-actions { display: flex; gap: 6px; margin-top: 10px; }
+.base-spawn-actions .btn { flex: 1; }
+.base-spawn-detail .infantry-spawn-toggle:disabled { cursor: default; opacity: .6; }
+.spawn-marker.inspected img { filter: drop-shadow(0 0 4px var(--sp-c)) drop-shadow(0 1px 2px rgba(0, 0, 0, .7)); }
 .point-detail-status.objective-owner { color: var(--objective-state-color); background: color-mix(in srgb, var(--objective-state-color) 14%, transparent); }
 .objective-state-controls { display: grid; gap: 7px; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--line-1); }
 .objective-control-label { color: var(--tx-4); font-size: 10px; }

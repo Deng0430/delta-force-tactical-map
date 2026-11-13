@@ -17,7 +17,8 @@ interface TacticalBoardModalProps {
   roundOptionsByStage: Record<string, number[]>
   plans: TacticalPlan[]
   /** 导出战术板：stageMode 为 'current' 当前阶段 / 'all' 全部阶段 */
-  onExport: (stageMode: 'current' | 'all' | 'overview', stageId: string, round: number) => void
+  onExport: (stageMode: 'current' | 'all' | 'overview', stageId: string, round: number) => void | Promise<unknown>
+  onExportImage: () => Promise<void>
   onExportNative: (scope: 'all' | 'stage' | 'current') => void
   onImportNative: (file: File) => Promise<void>
   /** 保存当前战术为方案（自定义名称） */
@@ -43,6 +44,7 @@ export default function TacticalBoardModal({
   roundOptionsByStage,
   plans,
   onExport,
+  onExportImage,
   onExportNative,
   onImportNative,
   onSavePlan,
@@ -56,6 +58,8 @@ export default function TacticalBoardModal({
   const [exportRound, setExportRound] = useState(round)
   const [name, setName] = useState('')
   const [exporting, setExporting] = useState(false)
+  const [exportingImage, setExportingImage] = useState(false)
+  const [imageError, setImageError] = useState('')
   const [nativeMenuOpen, setNativeMenuOpen] = useState(false)
   const importRef = useRef<HTMLInputElement>(null)
   const nativeMenuRef = useRef<HTMLDivElement>(null)
@@ -78,6 +82,7 @@ export default function TacticalBoardModal({
       setExportRound(round)
       setName('')
       setExporting(false)
+      setImageError('')
     }
   }, [open])
 
@@ -111,15 +116,23 @@ export default function TacticalBoardModal({
   }
 
   const stageRounds = roundOptionsByStage[exportStage] ?? roundOptions
+  const handleExportImage = async () => {
+    if (exportingImage) return
+    setExportingImage(true)
+    setImageError('')
+    try { await onExportImage() }
+    catch (error) { setImageError(error instanceof Error ? error.message : '图片导出失败，请稍后重试') }
+    finally { setExportingImage(false) }
+  }
 
   return (
     <div className="tb-overlay" onMouseDown={(e) => {
-      if (e.target === e.currentTarget) onClose()
+      if (!exportingImage && e.target === e.currentTarget) onClose()
     }}>
       <div className="tb-modal">
         <div className="tb-head">
           <span className="tb-title">战术板</span>
-          <button className="tb-close" onClick={onClose} title="关闭" aria-label="关闭">×</button>
+          <button className="tb-close" onClick={onClose} disabled={exportingImage} title="关闭" aria-label="关闭">×</button>
         </div>
 
         {/* 标签页 */}
@@ -141,6 +154,13 @@ export default function TacticalBoardModal({
         {/* 导出 */}
         {tab === 'export' && (
           <div className="tb-body">
+            <div className="tb-image-export">
+              <button className="tb-primary tb-image-export-button" type="button" disabled={exportingImage || exporting} onClick={() => void handleExportImage()}>
+                <i className="fa-solid fa-image" aria-hidden="true" />{exportingImage ? '正在生成图片…' : '导出当前画面 PNG'}
+              </button>
+              <small>当前显示：{stageId} · 回合 {round}。保留地图视野、旋转和已显示图层，不包含工具面板；不受下方 HTML 导出范围影响。</small>
+              {imageError ? <span className="tb-image-export-error" role="alert">{imageError}</span> : null}
+            </div>
             <div className="tb-row">
               <span className="tb-label">地图</span>
               <span className="tb-value">{mapName} · {stageLabel}</span>
@@ -182,7 +202,7 @@ export default function TacticalBoardModal({
                   : '导出全部阶段总览。地图同时呈现各阶段选定回合的战术数据，可分别调整各阶段回合，并在阶段备注与备注总览之间切换。'}
               {' '}导出文件支持缩放、全屏和当前画面 PNG 导出；图标已内嵌，底图与地图引擎仍需联网加载。
             </div>
-            <button className="tb-primary" onClick={() => void handleExport()} disabled={exporting}>
+            <button className="tb-primary" onClick={() => void handleExport()} disabled={exporting || exportingImage}>
               {exporting ? '生成中…' : '导出 HTML 战术板'}
             </button>
             <div className="tb-native-actions">

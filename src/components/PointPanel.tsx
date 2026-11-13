@@ -1,6 +1,7 @@
 import type { CapturePoint, PointStatus, Side, StageConfig, TacticalBattleContext } from '../types'
 import { IconChevronLeft, IconChevronRight } from './icons'
 import { defaultObjectiveState, objectiveStateColor } from './PointMarkers'
+import { readStageObjectiveValue } from '../utils/objectiveStates'
 
 const STATUS_TEXT: Record<PointStatus, string> = {
   active: '争夺中',
@@ -112,7 +113,7 @@ export default function PointPanel({
                 // 未激活据点始终属于守方，不能被旧的手动状态覆盖。
                 const objectiveState = status === 'locked'
                   ? { owner: 'defense' as const, capturingSide: null, progress: 100 }
-                  : battleContext.objectiveStates[point.name] ?? defaultObjectiveState(status)
+                  : readStageObjectiveValue(battleContext.objectiveStates, stage.id, point.name, stages[capturedStageIndex]?.id) ?? defaultObjectiveState(status)
                 const color = objectiveStateColor(objectiveState, view)
                 return (
                   <button

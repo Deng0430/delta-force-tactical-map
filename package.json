@@ -1,7 +1,7 @@
 {
   "name": "map-tools",
   "private": true,
-  "version": "0.1.6-beta.2",
+  "version": "0.2.0",
   "description": "三角洲行动全面战场战术地图编辑与推演工具",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "electron:dev": "electron .",
-    "build:win": "npm run build && electron-builder --win",
+    "build:win": "npm run build -- --mode release && electron-builder --win",
     "android:add": "cap add android",
     "android:sync": "npm run build && cap sync android",
     "android:open": "cap open android"
@@ -44,6 +44,7 @@
     "@tiptap/markdown": "^3.30.1",
     "@tiptap/react": "^3.30.1",
     "@tiptap/starter-kit": "^3.30.1",
+    "html-to-image": "^1.11.13",
     "leaflet-rotate": "^0.2.8"
   }
 }
